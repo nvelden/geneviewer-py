@@ -14,6 +14,7 @@ from __future__ import annotations
 import functools
 import json
 import math
+import os
 import re
 import warnings
 from collections.abc import Mapping
@@ -108,8 +109,11 @@ class GC:
 
     Parameters
     ----------
-    data : pandas.DataFrame
-        The genes: one row per gene, with its start and end positions.
+    data : pandas.DataFrame or str or path-like
+        The genes: one row per gene, with its start and end positions. Or a
+        GenBank file, or a folder of them: their CDS are the genes, one
+        cluster per file, with ``cluster`` and ``strand`` set to the
+        columns of those names.
     start : str
         Column of start positions. Default "start".
     end : str
@@ -147,7 +151,7 @@ class GC:
 
     def __init__(
         self,
-        data: pd.DataFrame,
+        data: pd.DataFrame | str | os.PathLike[str],
         start: str = _MISSING,
         end: str = _MISSING,
         cluster: str | None = _MISSING,
@@ -161,13 +165,16 @@ class GC:
         values = dict(locals())
         del values["data"]
         a = _spec.args(values, _CHART)
+        # GenBank files: their CDS, by file, with their strand
         if isinstance(data, str) or hasattr(data, "__fspath__"):
-            raise NotImplementedError(
-                "GC() from GenBank files is not available yet in this version; "
-                "pass a pandas DataFrame"
-            )
+            from .readers.genbank import read_gbk_cds
+
+            data = read_gbk_cds(data, a["start"], a["end"])
+            for name in ("cluster", "strand"):
+                a.values[name] = name
+                a.spec[name] = name
         if not isinstance(data, pd.DataFrame):
-            raise TypeError("data must be a pandas DataFrame")
+            raise TypeError("data must be a pandas DataFrame or a GenBank file")
         data = data.copy()
         # The spec holds the data as given; the library prepares it as
         # prepare_data() does, which checks it here

@@ -442,3 +442,26 @@ def genbank_to_fasta(
     fasta = folder / f"{file_path_sans_ext(path)}.fasta"
     fasta.write_text("\n".join(records) + "\n", encoding="utf-8")
     return fasta
+
+
+def read_gbk_cds(path: str | os.PathLike[str], start: str, end: str) -> pd.DataFrame:
+    """Read the CDS of GenBank files for a chart, as R's ``GC_chart()`` does.
+
+    Parameters
+    ----------
+    path : str or path-like
+        A GenBank file, or a folder of them.
+    start, end : str
+        The columns of the start and end; rows without them are left out.
+
+    Returns
+    -------
+    pandas.DataFrame
+        ``protein_id``, ``region``, ``translation``, ``cluster``, ``strand``,
+        ``start`` and ``end`` of each CDS.
+    """
+    data = gbk_features_to_df(
+        read_gbk(path), feature="CDS", keys=["protein_id", "region", "translation"]
+    )
+    keep = data[start].notna() & data[end].notna()
+    return data[keep.to_numpy()].reset_index(drop=True)

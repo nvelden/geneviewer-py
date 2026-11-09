@@ -75,9 +75,8 @@ method renames them, as R does):
 
 ## Other differences from R's API
 
-- `GC()` takes a pandas DataFrame; R's `GC_chart()` also reads a folder of
-  GenBank files given as a path. Python gets that with its GenBank reader
-  (M7.5).
+- `GC()` takes a pandas DataFrame, or a GenBank file or folder as a path,
+  as R's `GC_chart()` does.
 - R's `match.arg()` accepts the start of a choice (`"gen"` for `"genes"` in
   `GC_element_style()`); Python needs the whole name.
 - Dates in data: a pandas datetime column whose values all fall at
