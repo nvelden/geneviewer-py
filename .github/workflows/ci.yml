@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "m*-*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+      - run: pip install -e ".[dev]"
+      - run: ruff check
+      - run: ruff format --check
+
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.11", "3.12", "3.13", "3.14"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e ".[dev]"
+      - run: pytest
+
+  # Draws charts in headless Chromium (playwright); Linux only
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+      - run: pip install -e ".[dev]"
+      - run: python -m playwright install --with-deps chromium
+      - run: pytest tests/browser -m browser
+
+  # Compares specs with R's fixtures in geneviewer-js, checked out at the
+  # vendored library's tag (src/geneviewer/static/VERSION, from M7.2 on;
+  # main until then)
+  parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - id: js
+        shell: bash
+        run: |
+          if [ -f src/geneviewer/static/VERSION ]; then
+            echo "ref=v$(cat src/geneviewer/static/VERSION)" >> "$GITHUB_OUTPUT"
+          else
+            echo "ref=main" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v7
+        with:
+          repository: nvelden/geneviewer-js
+          ref: ${{ steps.js.outputs.ref }}
+          path: geneviewer-js
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+      - run: pip install -e ".[dev]"
+      - run: pytest tests/parity
+        env:
+          GENEVIEWER_JS: ${{ github.workspace }}/geneviewer-js

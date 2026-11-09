@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "geneviewer-py"
+version = "0.1.0.dev0"
+description = "Gene cluster charts for Python and Shiny for Python"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Niels van der Velden" }]
+requires-python = ">=3.11"
+dependencies = [
+  "pandas>=2.0",
+  "jsonschema>=4.18",
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+  "Topic :: Scientific/Engineering :: Visualization",
+]
+
+[project.optional-dependencies]
+shiny = ["shiny>=1.0"]
+align = ["biopython>=1.80"]
+dev = ["pytest>=8", "ruff>=0.8", "pytest-playwright>=0.5"]
+
+[project.urls]
+Homepage = "https://github.com/nvelden/geneviewer-py"
+Issues = "https://github.com/nvelden/geneviewer-py/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/geneviewer"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Browser tests need playwright's browsers; CI runs them on Linux only, with
+# `pytest tests/browser -m browser`.
+addopts = "-m 'not browser'"
+markers = [
+  "browser: draws charts in a headless browser (playwright)",
+  "parity: compares specs with R's fixtures (needs GENEVIEWER_JS)",
+]
