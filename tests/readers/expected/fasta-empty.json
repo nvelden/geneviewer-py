@@ -11,6 +11,6 @@
     "columns": [],
     "data": {}
   },
-  "warnings": ["An error occurred while processing file 'inputs/empty.fasta': argument to 'which' is not logical"],
+  "warnings": ["No keys found in 'empty'. Make sure the fasta headers are in the right format. Skipping file."],
   "error": null
 }

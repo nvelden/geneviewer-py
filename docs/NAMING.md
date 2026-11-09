@@ -77,6 +77,17 @@ method renames them, as R does):
 
 - `GC()` takes a pandas DataFrame, or a GenBank file or folder as a path,
   as R's `GC_chart()` does.
+- Readers return R's column types as pandas types: text as `string`,
+  integers as `Int64`, numbers as `float64`, logicals as `boolean`; `NA`
+  is `<NA>` (`NaN` in `float64`). `read_bed()`'s `blockSizes` and
+  `blockStarts` are lists of floats.
+- `read_gbk()` gives each feature as a dict of its qualifiers and `region`.
+  R gives a named character vector, which can repeat a name (two
+  `/db_xref`); in Python the later ones are `db_xref.1`, `db_xref.2`, the
+  names `gbk_features_to_df()` gives their columns in both languages.
+- `genbank_to_fasta()` returns the FASTA file as a `pathlib.Path`; R
+  returns the path invisibly.
+- `get_introns()` gives `start` and `end` as floats, as R's numbers.
 - R's `match.arg()` accepts the start of a choice (`"gen"` for `"genes"` in
   `GC_element_style()`); Python needs the whole name.
 - Dates in data: a pandas datetime column whose values all fall at

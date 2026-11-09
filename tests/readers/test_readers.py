@@ -23,13 +23,9 @@ from geneviewer.readers._common import make_unique
 HERE = Path(__file__).resolve().parent
 FIXTURES = sorted((HERE / "expected").glob("*.json"))
 
-# Fixtures where R is wrong and Python does not copy it
-KNOWN = {
-    "bed-single-blocks": "R errors on BED12 files whose rows all have one block "
-    "(blockSizes read as integers); for Niels to decide",
-    "fasta-empty": "R warns with an internal error (argument to 'which' is not "
-    "logical), Python with 'No keys found'; both return an empty table",
-}
+# Fixtures where R is wrong and Python does not copy it (none: B65 and B66
+# were fixed in R)
+KNOWN: dict[str, str] = {}
 
 DTYPES = {
     "character": "string",
