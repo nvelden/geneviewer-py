@@ -189,9 +189,12 @@ def test_reader_matches_r(path, monkeypatch, tmp_path):
     if last == "mummer_alignment" and fixture["error"] is None:
         if shutil.which("nucmer") is None:
             pytest.skip("MUMmer is not installed")
-        seqtype = fixture["calls"][-1]["args"].get("seqtype", "protein")
-        command = "promer" if seqtype == "protein" else "nucmer"
-        same_mummer = mummer_version(command) == MUMMER_VERSIONS[command]
+        # Both programs: promer's own version (3.07) is the same in
+        # MUMmer 3.23, whose promer aligns differently; nucmer's is not
+        same_mummer = all(
+            mummer_version(command) == version
+            for command, version in MUMMER_VERSIONS.items()
+        )
     monkeypatch.chdir(HERE)
     if fixture["calls"][-1]["fun"] == "genbank_to_fasta":
         # Write next to a copy of the input, not into inputs/
