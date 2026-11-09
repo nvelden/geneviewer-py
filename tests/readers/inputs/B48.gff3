@@ -1,0 +1,4 @@
+##gff-version 3
+chr1	demo	gene	100	900	.	+	.	ID=g1;Name=abcA;Dbxref=GeneID:1;Dbxref=UniProt:P1
+chr1	demo	gene	1000	1900	.	-	.	ID=g2;Name=abcB;Dbxref=GeneID:2
+chr1	demo	gene	2000	2600	.	+	.	ID=g3;Name=abcC

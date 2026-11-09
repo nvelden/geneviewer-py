@@ -1,0 +1,156 @@
+{
+  "calls": [
+    {
+      "fun": "read_gbk",
+      "args": {}
+    }
+  ],
+  "input": "inputs/gbk-folder",
+  "data": null,
+  "result": {
+    "B03": {
+      "LOCUS": "DEMO01 600 bp DNA linear BCT 01-JAN-2024",
+      "FEATURES": {
+        "source": [
+          [
+            [
+              "region",
+              null
+            ]
+          ]
+        ],
+        "gene": [
+          [
+            [
+              "gene",
+              "abcA"
+            ],
+            [
+              "region",
+              "10..300"
+            ]
+          ],
+          [
+            [
+              "gene",
+              "abcB"
+            ],
+            [
+              "region",
+              "350..580"
+            ]
+          ]
+        ],
+        "CDS": [
+          [
+            [
+              "gene",
+              "abcA"
+            ],
+            [
+              "note",
+              "part of a biosynthetic gene cluster for a polyketide"
+            ],
+            [
+              "locus_tag",
+              "DEMO_0001"
+            ],
+            [
+              "region",
+              "10..300"
+            ]
+          ],
+          [
+            [
+              "gene",
+              "abcB"
+            ],
+            [
+              "region",
+              "350..580"
+            ]
+          ]
+        ],
+        "CDS_motif": [
+          [
+            [
+              "note",
+              "motif"
+            ],
+            [
+              "region",
+              "20..80"
+            ]
+          ]
+        ]
+      },
+      "ORIGIN": "atgaaacgca"
+    },
+    "B04": {
+      "LOCUS": "DEMO01 600 bp DNA linear BCT 01-JAN-2024",
+      "FEATURES": {
+        "CDS": [
+          [
+            [
+              "locus_tag",
+              "DEMO_0001"
+            ],
+            [
+              "product",
+              "4'-phosphopantetheinyl transferase (PPTase)"
+            ],
+            [
+              "note",
+              "[pseudo] see ref. 12."
+            ],
+            [
+              "codon_start",
+              "1"
+            ],
+            [
+              "db_xref",
+              "GI:1"
+            ],
+            [
+              "db_xref",
+              "UniProtKB:Q1"
+            ],
+            [
+              "region",
+              "10..300"
+            ]
+          ],
+          [
+            [
+              "locus_tag",
+              "DEMO_0002"
+            ],
+            [
+              "note",
+              "similar to /gene=abcX in other strains"
+            ],
+            [
+              "pseudo",
+              ""
+            ],
+            [
+              "function",
+              "says \"hello\""
+            ],
+            [
+              "product",
+              "(R)-3-hydroxybutyryl-CoA dehydrogenase"
+            ],
+            [
+              "region",
+              "350..580"
+            ]
+          ]
+        ]
+      },
+      "ORIGIN": "atgaaacgca"
+    }
+  },
+  "warnings": [],
+  "error": null
+}

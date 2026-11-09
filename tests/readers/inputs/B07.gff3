@@ -1,0 +1,9 @@
+##gff-version 3
+chr1	demo	gene	100	500	.	+	.	ID=g1;Name=abc%2Cdef;Note=ratio a=b
+chr1	demo	gene	600	900	.	+	.	
+chr1	demo	gene	1000	1200	.	+	.	.
+chr1	demo	gene	1300	1500	.	+	.	ID=g4; Name=x;description=WD40 %26#946%3B propellers;gene_id=G4
+chr1	demo	gene	1600	1700	.	+	.	ID=g5;Note=50% GC
+##FASTA
+>chr1
+ACGTACGT

@@ -1,0 +1,10 @@
+>X_1 [gene=ORF1ab] [location=join(266..13468,13468..21555)]
+MKTAYIAKQR
+>X_2 [gene=ARV1] [location=complement(join(6915..7069,7157..7232,8571..8666))]
+MSDNELLKRL
+>X_3 [gene=abc] [location=complement(<1..2247)]
+MSDNELLKRL
+>X_4 [gene=ori] [location=join(30883..31317,1..108)]
+MSDNELLKRL
+>X_5 [gene=BDH2] [location=join(complement(5441..5600),complement(5095..5373))]
+MSDNELLKRL

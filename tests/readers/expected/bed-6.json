@@ -1,0 +1,48 @@
+{
+  "calls": [
+    {
+      "fun": "read_bed",
+      "args": {}
+    }
+  ],
+  "input": "inputs/six.bed",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "chrom",
+        "type": "character"
+      },
+      {
+        "name": "chromStart",
+        "type": "numeric"
+      },
+      {
+        "name": "chromEnd",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "character"
+      },
+      {
+        "name": "score",
+        "type": "integer"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "chrom": ["chr1", "chr1"],
+      "chromStart": [101, 701],
+      "chromEnd": [500, 1200],
+      "name": ["geneA", "geneB"],
+      "score": [0, 0],
+      "strand": ["+", "-"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

@@ -1,0 +1,103 @@
+{
+  "calls": [
+    {
+      "fun": "read_gff",
+      "args": {}
+    }
+  ],
+  "input": "inputs/gff-folder",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "seqid",
+        "type": "character"
+      },
+      {
+        "name": "source",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "integer"
+      },
+      {
+        "name": "end",
+        "type": "integer"
+      },
+      {
+        "name": "score",
+        "type": "character"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "phase",
+        "type": "character"
+      },
+      {
+        "name": "ID",
+        "type": "character"
+      },
+      {
+        "name": "Name",
+        "type": "character"
+      },
+      {
+        "name": "filename",
+        "type": "character"
+      },
+      {
+        "name": "gene_id",
+        "type": "character"
+      },
+      {
+        "name": "gene_name",
+        "type": "character"
+      },
+      {
+        "name": "transcript_id",
+        "type": "character"
+      },
+      {
+        "name": "tag",
+        "type": "character"
+      },
+      {
+        "name": "level",
+        "type": "character"
+      },
+      {
+        "name": "flag",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "seqid": ["chr1", "chr1", "chr1", "chr1", "chr1", "chr1", "chr1", "chr1", "chr1"],
+      "source": ["demo", "demo", "demo", "demo", "demo", "demo", "demo", "demo", "demo"],
+      "type": ["gene", "gene", "exon", "gene", "gene", "gene", "exon", "gene", "gene"],
+      "start": [100, 100, 100, 1000, 2000, 100, 100, 1000, 2000],
+      "end": [500, 900, 400, 1900, 2600, 900, 400, 1900, 2600],
+      "score": [".", ".", ".", ".", ".", ".", ".", ".", "."],
+      "strand": ["+", "+", "+", "-", "+", "+", "+", "-", "+"],
+      "phase": [".", ".", "0", ".", ".", ".", "0", ".", "."],
+      "ID": ["g1", null, null, null, null, null, null, null, null],
+      "Name": ["abcA", null, null, null, null, null, null, null, null],
+      "filename": ["B48", "genes", "genes", "genes", "genes", "more", "more", "more", "more"],
+      "gene_id": [null, "g1", "g1", "g2", "g3", "g1", "g1", "g2", "g3"],
+      "gene_name": [null, "abcA", null, "a b", null, "abcA", null, "a b", null],
+      "transcript_id": [null, null, "t1", null, null, null, "t1", null, null],
+      "tag": [null, null, "basic,CCDS", null, null, null, "basic,CCDS", null, null],
+      "level": [null, null, null, null, "2", null, null, null, "2"],
+      "flag": [null, null, null, null, null, null, null, null, null]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

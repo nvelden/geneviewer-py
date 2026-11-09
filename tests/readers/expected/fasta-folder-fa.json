@@ -1,0 +1,55 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {
+        "file_extension": "fa"
+      }
+    }
+  ],
+  "input": "inputs/fasta-folder",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "OS",
+        "type": "character"
+      },
+      {
+        "name": "OX",
+        "type": "character"
+      },
+      {
+        "name": "GN",
+        "type": "character"
+      },
+      {
+        "name": "PE",
+        "type": "character"
+      },
+      {
+        "name": "SV",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "OS": ["Homo sapiens", "Homo sapiens"],
+      "OX": ["9606", "9606"],
+      "GN": ["TP53", "TP53"],
+      "PE": ["1", null],
+      "SV": ["4", null],
+      "sequence": ["MEEPQSDPSVEPPLSQETFSDLWKLLPENNVLSPLPSQAMDDLMLSPDDIEQWFTEDPGP", "MEEPQSDPSVEPPLSQETFSDLWKLLPENNVLSPLPSQAMDDLMLSPDDIEQWFTEDPGP"],
+      "cluster": ["c", "c"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

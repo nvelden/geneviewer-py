@@ -1,0 +1,78 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/b08_brackets.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "protein",
+        "type": "character"
+      },
+      {
+        "name": "protein_id",
+        "type": "character"
+      },
+      {
+        "name": "location",
+        "type": "character"
+      },
+      {
+        "name": "OS",
+        "type": "character"
+      },
+      {
+        "name": "OX",
+        "type": "character"
+      },
+      {
+        "name": "GN",
+        "type": "character"
+      },
+      {
+        "name": "PE",
+        "type": "character"
+      },
+      {
+        "name": "SV",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "protein": ["3-oxoacyl-[acyl-carrier-protein] reductase FabG", "autoinhibited H[+]-ATPase isoform 10", null],
+      "protein_id": ["NP_1.1", "NP_2.1", null],
+      "location": ["1..300", "400..900", null],
+      "OS": [null, null, "Arabidopsis thaliana"],
+      "OX": [null, null, "3702"],
+      "GN": [null, null, "FIP1[V]"],
+      "PE": [null, null, "1"],
+      "SV": [null, null, "1"],
+      "sequence": ["MKTAYIAKQR", "MSDNELLKRL", "MSDNELLKRL"],
+      "start": [1, 400, null],
+      "end": [300, 900, null],
+      "cluster": ["b08_brackets", "b08_brackets", "b08_brackets"]
+    }
+  },
+  "warnings": ["No keys found in 'b08_brackets' for seq(s) at index(es): 1. They will be removed."],
+  "error": null
+}

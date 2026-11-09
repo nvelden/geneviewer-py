@@ -1,0 +1,38 @@
+{
+  "calls": [
+    {
+      "fun": "read_bed",
+      "args": {}
+    }
+  ],
+  "input": "inputs/track-names.bed",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "chrom",
+        "type": "character"
+      },
+      {
+        "name": "chromStart",
+        "type": "numeric"
+      },
+      {
+        "name": "chromEnd",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "chrom": ["chr1", "chr1", "chr1", "track_chr"],
+      "chromStart": [1, 21, 41, 61],
+      "chromEnd": [10, 30, 50, 70],
+      "name": ["first", "track_gene", "last#1", "browser_gene"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

@@ -1,0 +1,68 @@
+{
+  "calls": [
+    {
+      "fun": "read_gff",
+      "args": {}
+    }
+  ],
+  "input": "inputs/id.gff3",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "seqid",
+        "type": "character"
+      },
+      {
+        "name": "source",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "integer"
+      },
+      {
+        "name": "end",
+        "type": "integer"
+      },
+      {
+        "name": "score",
+        "type": "character"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "phase",
+        "type": "character"
+      },
+      {
+        "name": "id",
+        "type": "character"
+      },
+      {
+        "name": "ID",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "seqid": ["chr1", "chr1", "chr1"],
+      "source": ["demo", "demo", "demo"],
+      "type": ["gene", "gene", "gene"],
+      "start": [1, 30, 50],
+      "end": [20, 40, 60],
+      "score": [".", ".", "."],
+      "strand": ["+", "+", "-"],
+      "phase": [".", ".", "."],
+      "id": ["custom1", null, "custom3"],
+      "ID": ["standard1", null, null]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

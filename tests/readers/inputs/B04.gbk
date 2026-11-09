@@ -1,0 +1,19 @@
+LOCUS       DEMO01                   600 bp    DNA     linear   BCT 01-JAN-2024
+FEATURES             Location/Qualifiers
+     CDS             10..300
+                     /locus_tag="DEMO_0001"
+                     /product="4'-phosphopantetheinyl transferase (PPTase)"
+                     /note="[pseudo] see ref. 12."
+                     /codon_start=1
+                     /db_xref="GI:1"
+                     /db_xref="UniProtKB:Q1"
+     CDS             350..580
+                     /locus_tag="DEMO_0002"
+                     /note="similar to /gene=abcX in other
+                     strains"
+                     /pseudo=""
+                     /function="says ""hello"""
+                     /product="(R)-3-hydroxybutyryl-CoA dehydrogenase"
+ORIGIN
+        1 atgaaacgca
+//

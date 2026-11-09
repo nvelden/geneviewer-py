@@ -1,0 +1,25 @@
+{
+  "calls": [
+    {
+      "fun": "read_gff",
+      "args": {
+        "fields": ["id"]
+      }
+    }
+  ],
+  "input": "inputs/id.gff3",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "id": ["custom1", null, "custom3"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

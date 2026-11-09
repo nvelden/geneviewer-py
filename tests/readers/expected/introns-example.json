@@ -1,0 +1,73 @@
+{
+  "calls": [
+    {
+      "fun": "get_introns",
+      "args": {}
+    }
+  ],
+  "input": null,
+  "data": {
+    "columns": [
+      {
+        "name": "transcript",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "transcript": ["tx1", "tx1", "tx1"],
+      "type": ["exon", "exon", "exon"],
+      "start": [100, 400, 900],
+      "end": [250, 600, 1100],
+      "strand": ["forward", "forward", "forward"]
+    }
+  },
+  "result": {
+    "columns": [
+      {
+        "name": "transcript",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "transcript": ["tx1", "tx1", "tx1", "tx1", "tx1"],
+      "type": ["exon", "intron", "exon", "intron", "exon"],
+      "start": [100, 251, 400, 601, 900],
+      "end": [250, 399, 600, 899, 1100],
+      "strand": ["forward", "forward", "forward", "forward", "forward"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

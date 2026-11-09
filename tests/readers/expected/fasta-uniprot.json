@@ -1,0 +1,53 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/uniprot.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "OS",
+        "type": "character"
+      },
+      {
+        "name": "OX",
+        "type": "character"
+      },
+      {
+        "name": "GN",
+        "type": "character"
+      },
+      {
+        "name": "PE",
+        "type": "character"
+      },
+      {
+        "name": "SV",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "OS": ["Homo sapiens", "Homo sapiens"],
+      "OX": ["9606", "9606"],
+      "GN": ["TP53", "TP53"],
+      "PE": ["1", null],
+      "SV": ["4", null],
+      "sequence": ["MEEPQSDPSVEPPLSQETFSDLWKLLPENNVLSPLPSQAMDDLMLSPDDIEQWFTEDPGP", "MEEPQSDPSVEPPLSQETFSDLWKLLPENNVLSPLPSQAMDDLMLSPDDIEQWFTEDPGP"],
+      "cluster": ["uniprot", "uniprot"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

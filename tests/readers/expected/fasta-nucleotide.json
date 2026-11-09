@@ -1,0 +1,58 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/nucleotide.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "protein",
+        "type": "character"
+      },
+      {
+        "name": "location",
+        "type": "character"
+      },
+      {
+        "name": "gbkey",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "gene": ["ORF10"],
+      "protein": ["ORF10 protein"],
+      "location": ["29558..29674"],
+      "gbkey": ["CDS"],
+      "sequence": ["ATGGGCTATATAAACGTTTTCGCTTTTCCGTTTACGATATATAGTCTACTCTTGTGCAGAATGAATTCTCGTAACTACATAGCACAAGTAGATGTAGTTAACTTTAATCTCACATAG"],
+      "start": [29558],
+      "end": [29674],
+      "cluster": ["nucleotide"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

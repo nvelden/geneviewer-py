@@ -1,0 +1,73 @@
+{
+  "calls": [
+    {
+      "fun": "read_gff",
+      "args": {}
+    }
+  ],
+  "input": "inputs/B48.gff3",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "seqid",
+        "type": "character"
+      },
+      {
+        "name": "source",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "integer"
+      },
+      {
+        "name": "end",
+        "type": "integer"
+      },
+      {
+        "name": "score",
+        "type": "character"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "phase",
+        "type": "character"
+      },
+      {
+        "name": "ID",
+        "type": "character"
+      },
+      {
+        "name": "Name",
+        "type": "character"
+      },
+      {
+        "name": "Dbxref",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "seqid": ["chr1", "chr1", "chr1"],
+      "source": ["demo", "demo", "demo"],
+      "type": ["gene", "gene", "gene"],
+      "start": [100, 1000, 2000],
+      "end": [900, 1900, 2600],
+      "score": [".", ".", "."],
+      "strand": ["+", "-", "+"],
+      "phase": [".", ".", "."],
+      "ID": ["g1", "g2", "g3"],
+      "Name": ["abcA", "abcB", "abcC"],
+      "Dbxref": ["GeneID:1,UniProt:P1", "GeneID:2", null]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

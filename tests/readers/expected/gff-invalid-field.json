@@ -1,0 +1,15 @@
+{
+  "calls": [
+    {
+      "fun": "read_gff",
+      "args": {
+        "fields": ["type", "nope", "nope2"]
+      }
+    }
+  ],
+  "input": "inputs/HQ113105.1.gff3",
+  "data": null,
+  "result": null,
+  "warnings": [],
+  "error": "Invalid field(s): nope, nope2"
+}

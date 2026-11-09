@@ -1,0 +1,35 @@
+{
+  "calls": [
+    {
+      "fun": "read_gff",
+      "args": {
+        "fields": ["type", "gene_id"]
+      }
+    }
+  ],
+  "input": "inputs/gff-folder",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "gene_id",
+        "type": "character"
+      },
+      {
+        "name": "filename",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "type": ["gene", "gene", "exon", "gene", "gene", "gene", "exon", "gene", "gene"],
+      "gene_id": [null, "g1", "g1", "g2", "g3", "g1", "g1", "g2", "g3"],
+      "filename": ["B48", "genes", "genes", "genes", "genes", "more", "more", "more", "more"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

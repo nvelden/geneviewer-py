@@ -1,0 +1,13 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/does-not-exist.fasta",
+  "data": null,
+  "result": null,
+  "warnings": [],
+  "error": "Provided path does not exist or is not a valid FASTA file or directory."
+}

@@ -1,0 +1,48 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/alignment.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "location",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "gene": ["a", "b"],
+      "location": ["1..30", "40..70"],
+      "sequence": ["MKT-AY..IAKQR--", "MKT-AY..IAKQR--"],
+      "start": [1, 40],
+      "end": [30, 70],
+      "cluster": ["alignment", "alignment"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

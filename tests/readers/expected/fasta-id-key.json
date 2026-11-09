@@ -1,0 +1,38 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/id_key.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "character"
+      },
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "id": ["custom1", null, "custom3"],
+      "gene": ["a", "b", "c"],
+      "sequence": ["MKT", "MAA", "MAG"],
+      "cluster": ["id_key", "id_key", "id_key"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

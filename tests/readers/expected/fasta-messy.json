@@ -1,0 +1,53 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/messy.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "location",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "gene": ["x", "y", "z"],
+      "location": ["1..9", "20..29", "complement(40..49)"],
+      "sequence": ["MKTAYIAKQR*", "", "MKTAYIAKQRQISFVKSHFSRQLEER"],
+      "start": [1, 20, 40],
+      "end": [9, 29, 49],
+      "strand": ["forward", "forward", "complement"],
+      "cluster": ["messy", "messy", "messy"]
+    }
+  },
+  "warnings": ["reading FASTA file inputs/messy.fasta: ignored 18 invalid one-letter sequence codes"],
+  "error": null
+}

@@ -1,0 +1,13 @@
+{
+  "calls": [
+    {
+      "fun": "read_bed",
+      "args": {}
+    }
+  ],
+  "input": "inputs/single-blocks.bed",
+  "data": null,
+  "result": null,
+  "warnings": [],
+  "error": "non-character argument"
+}

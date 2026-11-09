@@ -1,0 +1,78 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/crlf.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "locus_tag",
+        "type": "character"
+      },
+      {
+        "name": "protein",
+        "type": "character"
+      },
+      {
+        "name": "protein_id",
+        "type": "character"
+      },
+      {
+        "name": "location",
+        "type": "character"
+      },
+      {
+        "name": "gbkey",
+        "type": "character"
+      },
+      {
+        "name": "exception",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "gene": ["thrL", "ORF1ab", "PAU8"],
+      "locus_tag": ["b0001", null, null],
+      "protein": ["thr operon leader peptide", "ORF1ab polyprotein", "seripauperin PAU8"],
+      "protein_id": ["NP_414542.1", null, null],
+      "location": ["190..255", "join(266..13468,13468..21555)", "complement(1807..2169)"],
+      "gbkey": ["CDS", "CDS", "CDS"],
+      "exception": [null, "ribosomal slippage", null],
+      "sequence": ["MKRISTTITTTITITTGNGAG", "MESLVPGFNEKTHVQLSLPVLQVRDVLVRGFGDSVEEVLSEARQHLKDGTCGLVEVEKGVLPQLEQPYVFIKRSDARTAPHGHVMVELVAELEGIQYGRSGETLGVLVPHVGEIPVAYRKVLLRKNGNKG", "MVKLTSIAAGVAAIAATASATTTLAQSDERVNLVELGVYVSDIR"],
+      "start": [190, 266, 1807],
+      "end": [255, 21555, 2169],
+      "strand": ["forward", "forward", "complement"],
+      "cluster": ["crlf", "crlf", "crlf"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

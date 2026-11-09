@@ -1,0 +1,23 @@
+{
+  "calls": [
+    {
+      "fun": "read_gbk",
+      "args": {
+        "sections": ["LOCUS"],
+        "features": ["CDS"]
+      }
+    }
+  ],
+  "input": "inputs/BGC0000001.gbk",
+  "data": null,
+  "result": {
+    "BGC0000001": {
+      "LOCUS": "BGC0000001 59320 bp DNA linear BCT 27-JUL-2011",
+      "FEATURES": {
+        "CDS": null
+      }
+    }
+  },
+  "warnings": ["The following features were not found in the FEATURES section: CDS"],
+  "error": null
+}

@@ -1,0 +1,88 @@
+{
+  "calls": [
+    {
+      "fun": "read_gff",
+      "args": {}
+    }
+  ],
+  "input": "inputs/B48.gtf",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "seqid",
+        "type": "character"
+      },
+      {
+        "name": "source",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "integer"
+      },
+      {
+        "name": "end",
+        "type": "integer"
+      },
+      {
+        "name": "score",
+        "type": "character"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "phase",
+        "type": "character"
+      },
+      {
+        "name": "gene_id",
+        "type": "character"
+      },
+      {
+        "name": "gene_name",
+        "type": "character"
+      },
+      {
+        "name": "transcript_id",
+        "type": "character"
+      },
+      {
+        "name": "tag",
+        "type": "character"
+      },
+      {
+        "name": "level",
+        "type": "character"
+      },
+      {
+        "name": "flag",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "seqid": ["chr1", "chr1", "chr1", "chr1"],
+      "source": ["demo", "demo", "demo", "demo"],
+      "type": ["gene", "exon", "gene", "gene"],
+      "start": [100, 100, 1000, 2000],
+      "end": [900, 400, 1900, 2600],
+      "score": [".", ".", ".", "."],
+      "strand": ["+", "+", "-", "+"],
+      "phase": [".", "0", ".", "."],
+      "gene_id": ["g1", "g1", "g2", "g3"],
+      "gene_name": ["abcA", null, "a b", null],
+      "transcript_id": [null, "t1", null, null],
+      "tag": [null, "basic,CCDS", null, null],
+      "level": [null, null, null, "2"],
+      "flag": [null, null, null, null]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

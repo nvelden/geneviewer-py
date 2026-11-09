@@ -1,0 +1,58 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/b08_single.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "protein_id",
+        "type": "character"
+      },
+      {
+        "name": "location",
+        "type": "character"
+      },
+      {
+        "name": "gbkey",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "protein_id": ["ABC1.1"],
+      "location": ["complement(100..400)"],
+      "gbkey": ["CDS"],
+      "sequence": ["MKTAYIAKQR"],
+      "start": [100],
+      "end": [400],
+      "strand": ["complement"],
+      "cluster": ["b08_single"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

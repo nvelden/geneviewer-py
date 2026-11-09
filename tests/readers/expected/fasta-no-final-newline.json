@@ -1,0 +1,33 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/no_final_newline.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "gene": ["x", "y"],
+      "sequence": ["MKT", "MAA"],
+      "cluster": ["no_final_newline", "no_final_newline"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

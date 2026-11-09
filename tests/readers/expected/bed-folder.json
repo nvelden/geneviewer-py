@@ -1,0 +1,93 @@
+{
+  "calls": [
+    {
+      "fun": "read_bed",
+      "args": {}
+    }
+  ],
+  "input": "inputs/bed-folder",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "chrom",
+        "type": "character"
+      },
+      {
+        "name": "chromStart",
+        "type": "numeric"
+      },
+      {
+        "name": "chromEnd",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "character"
+      },
+      {
+        "name": "score",
+        "type": "integer"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "thickStart",
+        "type": "numeric"
+      },
+      {
+        "name": "thickEnd",
+        "type": "integer"
+      },
+      {
+        "name": "itemRgb",
+        "type": "integer"
+      },
+      {
+        "name": "blockCount",
+        "type": "integer"
+      },
+      {
+        "name": "blockSizes",
+        "type": "list"
+      },
+      {
+        "name": "blockStarts",
+        "type": "list"
+      },
+      {
+        "name": "filename",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "chrom": ["chr1", "chr1", "chr2", "chr2"],
+      "chromStart": [1001, 6001, 6, 61],
+      "chromEnd": [5000, 7000, 50, 90],
+      "name": ["tx1", "tx2", "x", "y"],
+      "score": [0, 0, 0, 0],
+      "strand": ["+", "-", "+", "-"],
+      "thickStart": [1201, 6001, null, null],
+      "thickEnd": [4800, 7000, null, null],
+      "itemRgb": [0, 0, null, null],
+      "blockCount": [3, 3, null, null],
+      "blockSizes": [
+        [500, 400, 600],
+        [300, 200, 100],
+        null,
+        null
+      ],
+      "blockStarts": [
+        [1, 2001, 3401],
+        [1, 501, 901],
+        null,
+        null
+      ],
+      "filename": ["a", "a", "b", "b"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

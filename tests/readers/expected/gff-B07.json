@@ -1,0 +1,83 @@
+{
+  "calls": [
+    {
+      "fun": "read_gff",
+      "args": {}
+    }
+  ],
+  "input": "inputs/B07.gff3",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "seqid",
+        "type": "character"
+      },
+      {
+        "name": "source",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "integer"
+      },
+      {
+        "name": "end",
+        "type": "integer"
+      },
+      {
+        "name": "score",
+        "type": "character"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "phase",
+        "type": "character"
+      },
+      {
+        "name": "ID",
+        "type": "character"
+      },
+      {
+        "name": "Name",
+        "type": "character"
+      },
+      {
+        "name": "Note",
+        "type": "character"
+      },
+      {
+        "name": "description",
+        "type": "character"
+      },
+      {
+        "name": "gene_id",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "seqid": ["chr1", "chr1", "chr1", "chr1", "chr1"],
+      "source": ["demo", "demo", "demo", "demo", "demo"],
+      "type": ["gene", "gene", "gene", "gene", "gene"],
+      "start": [100, 600, 1000, 1300, 1600],
+      "end": [500, 900, 1200, 1500, 1700],
+      "score": [".", ".", ".", ".", "."],
+      "strand": ["+", "+", "+", "+", "+"],
+      "phase": [".", ".", ".", ".", "."],
+      "ID": ["g1", null, null, "g4", "g5"],
+      "Name": ["abc,def", null, null, "x", null],
+      "Note": ["ratio a=b", null, null, null, "50% GC"],
+      "description": [null, null, null, "WD40 &#946; propellers", null],
+      "gene_id": [null, null, null, "G4", null]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

@@ -1,0 +1,16 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/empty.fasta",
+  "data": null,
+  "result": {
+    "columns": [],
+    "data": {}
+  },
+  "warnings": ["An error occurred while processing file 'inputs/empty.fasta': argument to 'which' is not logical"],
+  "error": null
+}

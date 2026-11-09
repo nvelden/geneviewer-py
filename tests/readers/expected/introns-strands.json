@@ -1,0 +1,68 @@
+{
+  "calls": [
+    {
+      "fun": "get_introns",
+      "args": {}
+    }
+  ],
+  "input": null,
+  "data": {
+    "columns": [
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "transcript",
+        "type": "character"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "start": [90, 1, 10, 31],
+      "end": [80, 10, 1, 40],
+      "transcript": ["reverse", "forward", "reverse", "forward"],
+      "strand": ["-", "+", "-", "+"]
+    }
+  },
+  "result": {
+    "columns": [
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "transcript",
+        "type": "character"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "start": [10, 11, 90, 1, 11, 31],
+      "end": [1, 79, 80, 10, 30, 40],
+      "transcript": ["reverse", "reverse", "reverse", "forward", "forward", "forward"],
+      "strand": ["-", "-", "-", "+", "+", "+"],
+      "type": ["exon", "intron", "exon", "exon", "intron", "exon"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}
