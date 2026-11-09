@@ -511,7 +511,16 @@ class GC:
             raise ValueError("group column not found in data")
         _data.get_updated_clusters(state["clusters"], a["selection"])
         return self._with(
-            _spec.add(new_spec, "transcript", _spec.flag(a.spec, "group"))
+            _spec.add(
+                new_spec,
+                "transcript",
+                _spec.flag(a.spec, "group"),
+                rename={
+                    "style_utrs": "styleUTRs",
+                    "item_style_utrs": "itemStyleUTRs",
+                    "group_style_utrs": "groupStyleUTRs",
+                },
+            )
         )
 
     def color(

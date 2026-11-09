@@ -249,3 +249,19 @@ def test_geneviewer_palette():
     assert len(geneviewer_palette("okabeIto")) == 8
     with pytest.raises(ValueError, match="name must be one of"):
         geneviewer_palette("rainbow")
+
+
+def test_transcript_names_of_utr_arguments():
+    # A chart after its first transcript() call (introns come in M7.5)
+    base = GC(GENES.assign(transcript="t1"))
+    base = base._with({**base._spec, "transcript": {"transcript": "transcript"}})
+    spec = base.transcript(
+        style_utrs={"fill": "red"},
+        item_style_utrs=[{"index": 0}],
+        group_style_utrs={"A": {"fill": "blue"}},
+    ).to_spec()
+    assert spec["transcript"][1] == {
+        "styleUTRs": {"fill": "red"},
+        "itemStyleUTRs": [{"index": 0}],
+        "groupStyleUTRs": {"A": {"fill": "blue"}},
+    }
