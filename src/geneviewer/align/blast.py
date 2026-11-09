@@ -449,8 +449,7 @@ def protein_blast(
     query_rows = combinations[combinations["rowID.x"] == combinations["rowID.y"]]
     query_rows = query_rows.reset_index(drop=True)
 
-    # With one cluster there is nothing to align; R crashes there (pwalign
-    # gets no sequences), Python gives the query's own hits
+    # With only the query cluster there is nothing to align (R's B67)
     aligned = align_pairs(
         list(to_align["translation1"]), list(to_align["translation2"])
     )

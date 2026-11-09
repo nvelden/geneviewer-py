@@ -40,10 +40,3 @@ which is too slow in Python (1.5 billion cells for the example above).
 
 Identity is counted on the alignment as pwalign returns it: without the
 gaps at either end (Python does the same, so this is not a difference).
-
-## `protein_blast()` with one cluster
-
-R stops with a crash (a segmentation fault in pwalign) when the data has
-only the query cluster, because there is nothing to align. Python returns
-the data with each gene as its own hit; as in R, a hit only one gene has is
-`"No Hit"`.

@@ -61,7 +61,7 @@ def test_synteny_score():
 
 
 def test_protein_blast_one_cluster():
-    # R crashes here (pwalign gets nothing to align); each gene is its own
+    # Nothing to align (R crashed here before B67); each gene is its own
     # hit, and a hit only one gene has is "No Hit"
     data = pd.DataFrame(
         {
