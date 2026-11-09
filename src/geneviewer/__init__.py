@@ -7,6 +7,9 @@ distribution on PyPI is ``geneviewer-py``.
 
 from importlib.metadata import version
 
+from .chart import GC
+from .theme import geneviewer_palette, geneviewer_theme
+
 __version__ = version("geneviewer-py")
 
-__all__ = ["__version__"]
+__all__ = ["GC", "__version__", "geneviewer_palette", "geneviewer_theme"]
