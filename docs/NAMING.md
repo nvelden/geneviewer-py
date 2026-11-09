@@ -27,8 +27,8 @@ such names change in the library and R first, then here, before 1.0).
 | `GC_chart()` | `GC()` | No `elementId`: it sets the id of R's htmlwidget |
 | `GC_align()` | `.align()` | Checks only; the library aligns |
 | `GC_annotation()` | `.annotation()` | |
-| `GC_chartOutput()` | `geneviewer.shiny.output_geneviewer()` | M7.4 |
-| `renderGC_chart()` | `@geneviewer.shiny.render_geneviewer` | M7.4 |
+| `GC_chartOutput()` | `geneviewer.shiny.output_geneviewer()` | `outputId` is `id`, as in Shiny for Python's outputs |
+| `renderGC_chart()` | `@geneviewer.shiny.render_geneviewer` | A decorator; the function's name is the output id |
 | `GC_cluster()` | `.cluster()` | |
 | `GC_clusterFooter()` | `.cluster_footer()` | |
 | `GC_clusterLabel()` | `.cluster_label()` | |
@@ -54,7 +54,7 @@ such names change in the library and R first, then here, before 1.0).
 | `GC_trackMouse()` | `.track_mouse()` | |
 | `GC_transcript()` | `.transcript()` | M7.5/M7.6 (introns) |
 | `GC_zoom()` | `.zoom()` | |
-| `GC_zoom_to()` | `geneviewer.shiny.zoom_to()` | M7.4 |
+| `GC_zoom_to()` | `geneviewer.shiny.zoom_to()` | `outputId` is `id` |
 | `geneviewer_theme()` | `geneviewer_theme()` | |
 | `geneviewer_palette()` | `geneviewer_palette()` | |
 
