@@ -30,7 +30,7 @@ CASES = Path(__file__).parent / "cases"
 # Fixtures that are not cases yet, by the step that adds them
 LATER = {}
 
-# Known differences, waiting for a decision (docs/NAMING.md): fixture, reason
+# Known differences, waiting for a decision: fixture, reason
 DIFFERENCES = {
     "rd-GC-genes-1": (
         "R keeps the names of options passed through ..., so prevent_overlap "
