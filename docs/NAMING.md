@@ -41,8 +41,8 @@ such names change in the library and R first, then here, before 1.0).
 | `GC_grid()` | `.grid()` | |
 | `GC_labels()` | `.labels()` | |
 | `GC_legend()` | `.legend()` | |
-| `GC_links()` | `.links()` | `group=` without `data=` in M7.6 |
-| `GC_normalize()` | `.normalize()` | M7.6 |
+| `GC_links()` | `.links()` | |
+| `GC_normalize()` | `.normalize()` | |
 | `GC_pattern()` | `.pattern()` | |
 | `GC_scale()` | `.scale()` | |
 | `GC_scaleBar()` | `.scale_bar()` | |
@@ -52,7 +52,7 @@ such names change in the library and R first, then here, before 1.0).
 | `GC_toolbar()` | `.toolbar()` | |
 | `GC_tooltip()` | `.tooltip()` | |
 | `GC_trackMouse()` | `.track_mouse()` | |
-| `GC_transcript()` | `.transcript()` | M7.5/M7.6 (introns) |
+| `GC_transcript()` | `.transcript()` | |
 | `GC_zoom()` | `.zoom()` | |
 | `GC_zoom_to()` | `geneviewer.shiny.zoom_to()` | `outputId` is `id` |
 | `geneviewer_theme()` | `geneviewer_theme()` | |
@@ -88,6 +88,10 @@ method renames them, as R does):
 - `genbank_to_fasta()` returns the FASTA file as a `pathlib.Path`; R
   returns the path invisibly.
 - `get_introns()` gives `start` and `end` as floats, as R's numbers.
+- `.links(group=)` finds the links as R does, in R's row order (R's
+  `merge()` reorders the genes of a group; Python follows it). Without
+  `group` or `data`, it says "Either 'group' or 'data' must be provided.";
+  R stops with an internal error there.
 - R's `match.arg()` accepts the start of a choice (`"gen"` for `"genes"` in
   `GC_element_style()`); Python needs the whole name.
 - Dates in data: a pandas datetime column whose values all fall at

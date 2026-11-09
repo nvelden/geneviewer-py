@@ -28,19 +28,7 @@ pytestmark = pytest.mark.parity
 CASES = Path(__file__).parent / "cases"
 
 # Fixtures that are not cases yet, by the step that adds them
-LATER = {
-    # links(group=), transcript() and normalize() process the data (M7.6)
-    "rd-GC-links-1": "M7.6",
-    "rd-GC-links-2": "M7.6",
-    "rd-GC-links-3": "M7.6",
-    "rd-GC-links-4": "M7.6",
-    "rd-GC-normalize-1": "M7.6",
-    "rd-GC-transcript-1": "M7.6",
-    "rd-GC-transcript-2": "M7.6",
-    "cov-links-low-color": "M7.6",
-    "cov-normalize": "M7.6",
-    "cov-transcript-group-styles": "M7.6",
-}
+LATER = {}
 
 # Known differences, waiting for a decision (docs/NAMING.md): fixture, reason
 DIFFERENCES = {

@@ -153,8 +153,10 @@ def test_links_checks():
         chart().links(data=GENES, measure="score")
     with pytest.raises(ValueError, match="'vmin' must be smaller"):
         chart().links(data=GENES, vmin=50, vmax=10)
-    with pytest.raises(NotImplementedError):
-        chart().links("group")
+    with pytest.raises(ValueError, match="Column grp not found"):
+        chart().links("grp")
+    spec = chart().links("group").to_spec()
+    assert spec["links"]["data"]["name1"] == ["Gene 1", "Gene 3"]
 
 
 def test_align_warnings():
