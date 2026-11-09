@@ -1,0 +1,77 @@
+{
+  "calls": [
+    {
+      "fun": "mummer_alignment",
+      "args": {
+        "cluster": ["A", "B", "C"],
+        "seqtype": "nucleotide",
+        "maptype": "many-to-many"
+      }
+    }
+  ],
+  "input": "inputs/mummer",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "start1",
+        "type": "integer"
+      },
+      {
+        "name": "end1",
+        "type": "integer"
+      },
+      {
+        "name": "start2",
+        "type": "integer"
+      },
+      {
+        "name": "end2",
+        "type": "integer"
+      },
+      {
+        "name": "length1",
+        "type": "integer"
+      },
+      {
+        "name": "length2",
+        "type": "integer"
+      },
+      {
+        "name": "identity",
+        "type": "numeric"
+      },
+      {
+        "name": "tag1",
+        "type": "character"
+      },
+      {
+        "name": "tag2",
+        "type": "character"
+      },
+      {
+        "name": "cluster1",
+        "type": "character"
+      },
+      {
+        "name": "cluster2",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "start1": [1, 29661, 1],
+      "end1": [29660, 59320, 19773],
+      "start2": [29661, 1, 1],
+      "end2": [59320, 29660, 19773],
+      "length1": [29660, 29660, 19773],
+      "length2": [29660, 29660, 19773],
+      "identity": [98, 98, 100],
+      "tag1": ["BGC0000001", "BGC0000001", "B"],
+      "tag2": ["B", "B", "C"],
+      "cluster1": ["A", "A", "B"],
+      "cluster2": ["B", "B", "C"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

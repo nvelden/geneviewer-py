@@ -27,7 +27,7 @@ classifiers = [
 
 [project.optional-dependencies]
 shiny = ["shiny>=1.0"]
-align = ["biopython>=1.80"]
+align = ["biopython>=1.85"]
 # hatchling: tests/unit/test_vendored.py builds the wheel without isolation
 dev = ["pytest>=8", "ruff>=0.8", "pytest-playwright>=0.5", "hatchling"]
 

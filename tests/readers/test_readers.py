@@ -7,10 +7,14 @@ the same columns in the same order, the same types (character as
 ``string``, integer as ``Int64``, numeric as ``float64``, logical as
 ``boolean``, list as lists), the same values (NA as ``<NA>`` or ``NaN``),
 the same warnings and the same error message.
+
+Also protein_blast() and mummer_alignment() (fixtures blast-* and mummer-*);
+the mummer-* fixtures that run MUMmer are skipped without it.
 """
 
 import json
 import math
+import shutil
 import warnings
 from pathlib import Path
 
@@ -26,6 +30,21 @@ FIXTURES = sorted((HERE / "expected").glob("*.json"))
 # Fixtures where R is wrong and Python does not copy it (none: B65 and B66
 # were fixed in R)
 KNOWN: dict[str, str] = {}
+
+# Values that differ from R's, by fixture: (column, row) to Python's value.
+# protein_blast() aligns with Biopython, which can pick another of the
+# alignments with the best score than pwalign (docs/differences.md)
+KNOWN_VALUES: dict[str, dict[tuple[str, int], object]] = {
+    "blast-erythromycin": {
+        ("similarity", 28): 74.7,  # R 74.2
+        ("similarity", 34): 81.5,  # R 81.0
+        ("similarity", 63): 73.0,  # R 73.1
+        ("similarity", 64): 72.9,  # R 73.0
+        ("similarity", 69): 74.8,  # R 75.1
+        ("similarity", 85): 63.3,  # R 62.5
+        ("similarity", 129): 48.5,  # R 48.2
+    },
+}
 
 DTYPES = {
     "character": "string",
@@ -51,7 +70,10 @@ def to_frame(table: dict) -> pd.DataFrame:
     return pd.DataFrame(columns)
 
 
-def check_table(actual: pd.DataFrame, expected: dict) -> None:
+def check_table(
+    actual: pd.DataFrame, expected: dict, known: dict | None = None
+) -> None:
+    known = known or {}
     names = [c["name"] for c in expected["columns"]]
     assert list(actual.columns) == names
     nrows = len(expected["data"][names[0]]) if names else 0
@@ -63,7 +85,10 @@ def check_table(actual: pd.DataFrame, expected: dict) -> None:
         for i, (a, e) in enumerate(
             zip(series.tolist(), expected["data"][name], strict=True)
         ):
-            assert same(a, e), f"{name}[{i}]: {a!r}, R {e!r}"
+            if (name, i) in known:
+                assert same(a, known[name, i]), f"{name}[{i}]: {a!r}, known {e!r}"
+            else:
+                assert same(a, e), f"{name}[{i}]: {a!r}, R {e!r}"
 
 
 def same(actual, expected) -> bool:
@@ -137,6 +162,12 @@ def test_reader_matches_r(path, monkeypatch, tmp_path):
     if path.stem in KNOWN:
         pytest.xfail(KNOWN[path.stem])
     fixture = json.loads(path.read_text(encoding="utf-8"))
+    last = fixture["calls"][-1]["fun"]
+    if last == "protein_blast":
+        pytest.importorskip("Bio", reason="protein_blast() needs Biopython")
+    if last == "mummer_alignment" and fixture["error"] is None:
+        if shutil.which("nucmer") is None:
+            pytest.skip("MUMmer is not installed")
     monkeypatch.chdir(HERE)
     if fixture["calls"][-1]["fun"] == "genbank_to_fasta":
         # Write next to a copy of the input, not into inputs/
@@ -154,14 +185,13 @@ def test_reader_matches_r(path, monkeypatch, tmp_path):
     found = [message(str(w.message)) for w in caught if w.category is UserWarning]
     assert found == fixture["warnings"]
 
-    last = fixture["calls"][-1]["fun"]
     if last == "read_gbk":
         assert result == gbk_from_r(fixture["result"])
     elif last == "genbank_to_fasta":
         lines = Path(result).read_text(encoding="utf-8").split("\n")[:-1]
         assert lines == fixture["result"]
     else:
-        check_table(result, fixture["result"])
+        check_table(result, fixture["result"], KNOWN_VALUES.get(path.stem))
 
 
 def test_every_reader_has_fixtures():
@@ -176,4 +206,6 @@ def test_every_reader_has_fixtures():
         "read_fasta",
         "read_bed",
         "get_introns",
+        "protein_blast",
+        "mummer_alignment",
     }

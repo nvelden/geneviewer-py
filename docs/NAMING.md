@@ -88,6 +88,13 @@ method renames them, as R does):
 - `genbank_to_fasta()` returns the FASTA file as a `pathlib.Path`; R
   returns the path invisibly.
 - `get_introns()` gives `start` and `end` as floats, as R's numbers.
+- `protein_blast()` has no `parallel` argument (deprecated and ignored in
+  R). It needs Biopython (`pip install "geneviewer-py[align]"`); its
+  results can differ a little from R's, see `docs/differences.md`.
+- `mummer_alignment()` returns `None` when no pair aligned, as R returns
+  `NULL`. It runs MUMmer without a shell; the options strings are split as
+  a shell would. Paths with spaces are refused, as in R (MUMmer's scripts
+  need it).
 - `.links(group=)` finds the links as R does, in R's row order (R's
   `merge()` reorders the genes of a group; Python follows it). Without
   `group` or `data`, it says "Either 'group' or 'data' must be provided.";
