@@ -14,7 +14,9 @@ the mummer-* fixtures that run MUMmer are skipped without it.
 
 import json
 import math
+import re
 import shutil
+import subprocess
 import warnings
 from pathlib import Path
 
@@ -53,6 +55,24 @@ DTYPES = {
     "logical": "boolean",
     "list": "object",
 }
+
+
+# The MUMmer the mummer-* fixtures were exported with. Other versions can
+# align differently (MUMmer 3.23's promer does), so with them the test only
+# checks that the run works and gives R's columns
+MUMMER_VERSIONS = {"nucmer": "4.0.0rc1", "promer": "3.07"}
+
+
+def mummer_version(command: str) -> str | None:
+    """The version ``<command> --version`` prints, or None."""
+    try:
+        done = subprocess.run(
+            [command, "--version"], capture_output=True, text=True, check=False
+        )
+    except OSError:
+        return None
+    found = re.findall(r"\d+\.\d+[\w.]*", done.stdout + done.stderr)
+    return found[-1] if found else None
 
 
 def to_frame(table: dict) -> pd.DataFrame:
@@ -165,9 +185,13 @@ def test_reader_matches_r(path, monkeypatch, tmp_path):
     last = fixture["calls"][-1]["fun"]
     if last == "protein_blast":
         pytest.importorskip("Bio", reason="protein_blast() needs Biopython")
+    same_mummer = True
     if last == "mummer_alignment" and fixture["error"] is None:
         if shutil.which("nucmer") is None:
             pytest.skip("MUMmer is not installed")
+        seqtype = fixture["calls"][-1]["args"].get("seqtype", "protein")
+        command = "promer" if seqtype == "protein" else "nucmer"
+        same_mummer = mummer_version(command) == MUMMER_VERSIONS[command]
     monkeypatch.chdir(HERE)
     if fixture["calls"][-1]["fun"] == "genbank_to_fasta":
         # Write next to a copy of the input, not into inputs/
@@ -183,6 +207,15 @@ def test_reader_matches_r(path, monkeypatch, tmp_path):
             return
         result = run(fixture)
     found = [message(str(w.message)) for w in caught if w.category is UserWarning]
+    if not same_mummer:
+        # Another MUMmer: it runs, and the result has R's columns
+        assert result is None or list(result.columns)[:4] == [
+            "start1",
+            "end1",
+            "start2",
+            "end2",
+        ]
+        return
     assert found == fixture["warnings"]
 
     if last == "read_gbk":
