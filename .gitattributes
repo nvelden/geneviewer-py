@@ -2,3 +2,5 @@
 # are on every platform (Windows checkouts would change the line endings)
 src/geneviewer/static/** -text
 tests/readers/inputs/** -text
+# The datasets have line breaks inside values; keep them as R wrote them
+src/geneviewer/datasets/** -text
