@@ -1,11 +1,14 @@
-"""Example Shiny for Python app: a chart, its events and ``zoom_to``.
+"""Example Shiny for Python app: three charts, events and ``zoom_to``.
 
 Run it with ``shiny run examples/shiny/app.py``. It needs the ``shiny``
 extra: ``pip install "geneviewer-py[shiny]"``.
 
-Click, double-click or drag parts of the chart, or move the zoom slider,
-and the panel on the right shows each event input. The buttons move the
-slider from the server, and the theme menu sends a new chart.
+Click, double-click or drag parts of the first chart, or move its zoom
+slider, and the panel on the right shows each event input. The buttons move
+the slider from the server, and the theme menu sends a new chart.
+
+The second chart links the genes of two clusters by a column they share, and
+the third draws transcripts; both use the package's example datasets.
 """
 
 import json
@@ -13,7 +16,7 @@ import json
 import pandas as pd
 from shiny import App, reactive, render, ui
 
-from geneviewer import GC
+from geneviewer import GC, datasets
 from geneviewer.shiny import EVENTS, output_geneviewer, render_geneviewer, zoom_to
 
 # The ophA gene cluster of Omphalotus olearius, from the docs site's
@@ -35,6 +38,10 @@ genes = pd.DataFrame(
     }
 )
 
+# Two ophA clusters, and the transcripts of BRCA1
+clusters = datasets.load("ophA_clusters")
+transcripts = datasets.load("BRCA1_splice_variants")
+
 THEMES = ["default", "classic", "dark", "vintage", "infographic", "publication", "bw"]
 
 app_ui = ui.page_sidebar(
@@ -55,12 +62,23 @@ app_ui = ui.page_sidebar(
         ),
         col_widths=[8, 4],
     ),
+    ui.layout_columns(
+        ui.card(
+            ui.card_header("Links between clusters"),
+            output_geneviewer("links", height="300px"),
+        ),
+        ui.card(
+            ui.card_header("Transcripts"),
+            output_geneviewer("transcript", height="300px"),
+        ),
+        col_widths=[6, 6],
+    ),
     title="geneviewer in Shiny for Python",
 )
 
 
 def server(input, output, session):
-    """Draw the chart, move its zoom slider and show its events."""
+    """Draw the charts, move the zoom slider and show the events."""
 
     @render_geneviewer
     def chart():
@@ -76,6 +94,23 @@ def server(input, output, session):
                 zoom=True,
                 rendered=True,
             )
+            .theme(input.theme())
+        )
+
+    @render_geneviewer
+    def links():
+        return (
+            GC(clusters, cluster="cluster", group="class", height="300px")
+            .links(group="class")
+            .labels("name")
+            .theme(input.theme())
+        )
+
+    @render_geneviewer
+    def transcript():
+        return (
+            GC(transcripts, height="300px")
+            .transcript(transcript="ensembl_transcript_id", strand="strand")
             .theme(input.theme())
         )
 

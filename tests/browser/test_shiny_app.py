@@ -52,10 +52,16 @@ def chart_page(page: Page, app) -> Page:
 
 
 def test_app_draws_every_chart(chart_page: Page):
-    outputs = chart_page.locator(".geneviewer-output")
-    expect(outputs).not_to_have_count(0)
-    for i in range(outputs.count()):
-        expect(outputs.nth(i).locator(".gene").first).to_be_visible()
+    expect(chart_page.locator(".geneviewer-output")).to_have_count(3)
+    expect(chart_page.locator("#chart .gene")).to_have_count(7)
+    # Two clusters of ophA_clusters, with a link for each pair of genes of
+    # the same class
+    expect(chart_page.locator("#links .gene")).to_have_count(17)
+    expect(chart_page.locator("#links path.GeneLink")).to_have_count(14)
+    # The five transcripts of BRCA1_splice_variants, with their introns
+    expect(chart_page.locator("#transcript .exon").first).to_be_visible()
+    expect(chart_page.locator("#transcript .intron").first).to_be_visible()
+    expect(chart_page.locator("#transcript .five-prime-label")).to_have_count(5)
     # The first draw reports rendered and the window of the zoom slider
     assert wait_for_event(chart_page, "rendered")["chartId"] == "chart"
     zoom = wait_for_event(chart_page, "zoom")
