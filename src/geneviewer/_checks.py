@@ -356,3 +356,31 @@ def get_relative_height(base_height: Any, relative_height: Any) -> Any:
     if is_str(relative_height) and relative_height.endswith("px"):
         relative_height = relative_height.replace("px", "")
     return float(relative_height)
+
+
+def zoom_window(range: Any) -> list[float] | None:  # noqa: A002 (R's argument name)
+    """Check a zoom window, R's checks of ``GC_zoom_to()``.
+
+    Parameters
+    ----------
+    range : sequence of two numbers or None
+        The window.
+
+    Returns
+    -------
+    list of float or None
+        The window, sorted, or None for everything.
+
+    Raises
+    ------
+    ValueError
+        When it is not None or two numbers.
+    """
+    if range is None:
+        return None
+    values = _r.as_vector(range)
+    if len(values) != 2 or not all(
+        _r.is_number(v) and math.isfinite(v) for v in values
+    ):
+        raise ValueError("'range' must be None or two numbers: [start, end].")
+    return sorted(float(v) for v in values)

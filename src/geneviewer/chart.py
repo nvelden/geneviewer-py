@@ -201,6 +201,43 @@ class GC:
             + ">"
         )
 
+    def widget(self) -> Any:
+        """Return the chart as a Jupyter widget.
+
+        A cell that ends with a chart draws it, so this is only needed to
+        keep the widget: to read the chart's events, move its zoom slider
+        or draw another chart in its place. Needs the ``jupyter`` extra:
+        ``pip install "geneviewer-py[jupyter]"``.
+
+        Returns
+        -------
+        geneviewer.jupyter.GCWidget
+            The widget.
+
+        Raises
+        ------
+        ImportError
+            Without anywidget.
+
+        Examples
+        --------
+        >>> widget = chart.events(select=True).widget()  # doctest: +SKIP
+        >>> widget  # doctest: +SKIP
+        >>> widget.select  # doctest: +SKIP
+        """
+        from .jupyter import GCWidget
+
+        return GCWidget(self)
+
+    def _repr_mimebundle_(self, include: Any = None, exclude: Any = None) -> Any:
+        # In a notebook a chart draws itself, as a widget. Without anywidget
+        # there is nothing to draw with: the notebook shows the text
+        try:
+            from .jupyter import GCWidget
+        except ImportError:
+            return None
+        return GCWidget(self)._repr_mimebundle_(include=include, exclude=exclude)
+
     def to_spec(self, validate: bool = True) -> dict[str, Any]:
         """Return the chart spec, as JSON values.
 

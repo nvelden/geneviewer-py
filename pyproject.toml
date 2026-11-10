@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "geneviewer-py"
-version = "0.1.0"
-description = "Gene cluster charts for Python and Shiny for Python"
+version = "0.2.0"
+description = "Gene cluster charts for Python: in Jupyter notebooks and Shiny for Python"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -27,9 +27,10 @@ classifiers = [
 
 [project.optional-dependencies]
 shiny = ["shiny>=1.0"]
+jupyter = ["anywidget>=0.9"]
 align = ["biopython>=1.85"]
 # hatchling: tests/unit/test_vendored.py builds the wheel without isolation
-dev = ["pytest>=8", "ruff>=0.8", "pytest-playwright>=0.5", "hatchling"]
+dev = ["pytest>=8", "ruff>=0.8", "pytest-playwright>=0.5", "hatchling", "anywidget>=0.9"]
 
 [project.urls]
 Homepage = "https://github.com/nvelden/geneviewer-py"

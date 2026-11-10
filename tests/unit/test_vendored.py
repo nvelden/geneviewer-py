@@ -56,7 +56,13 @@ def test_wheel_includes_static_files(tmp_path):
     (wheel,) = tmp_path.glob("*.whl")
     with zipfile.ZipFile(wheel) as archive:
         names = set(archive.namelist())
-    for file in (*FILES, "SHA256SUMS", "VERSION", "geneviewer-shiny.js"):
+    for file in (
+        *FILES,
+        "SHA256SUMS",
+        "VERSION",
+        "geneviewer-shiny.js",
+        "geneviewer-jupyter.js",
+    ):
         assert f"geneviewer/static/{file}" in names, f"{file} is not in the wheel"
     for file in ("datasets.json", "ophA_clusters.csv"):
         assert f"geneviewer/datasets/{file}" in names, f"{file} is not in the wheel"

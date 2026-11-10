@@ -13,15 +13,56 @@ Documentation: <https://nvelden.github.io/geneviewer-docs/python/>
 ## Install
 
 ```sh
-pip install "geneviewer-py[shiny]"
+pip install "geneviewer-py[jupyter]"
 ```
 
-The extras are `shiny` (charts in Shiny for Python) and `align`
-(`protein_blast()`, with Biopython). The import name is `geneviewer`.
+The extras are `jupyter` (charts in notebooks), `shiny` (charts in Shiny for
+Python) and `align` (`protein_blast()`, with Biopython). The import name is
+`geneviewer`.
 
 ## A first chart
 
-Charts are shown in a Shiny for Python app. Save this as `app.py` and run
+In a Jupyter notebook, a cell that ends with a chart draws it:
+
+```python
+from geneviewer import GC, datasets
+
+genes = datasets.load("ophA_clusters")
+
+(
+    GC(genes, cluster="cluster", group="class", height="300px")
+    .labels("name")
+    .links(group="class")
+    .legend(position="bottom")
+)
+```
+
+`GC()` takes a table with a start and an end column, and each method adds
+or changes a part of the chart, as the `GC_` functions of the R package do.
+[docs/NAMING.md](https://github.com/nvelden/geneviewer-py/blob/main/docs/NAMING.md) lists the Python name of each R function
+and argument.
+
+To read what happens in the chart, keep it as a widget. Its attributes hold
+the chart's events, and `zoom_to()` moves its zoom slider:
+
+```python
+widget = (
+    GC(genes, cluster="cluster", group="class")
+    .zoom()
+    .events(select=True, zoom=True)
+    .widget()
+)
+widget  # draws the chart
+
+# In a later cell
+widget.select  # the gene clicked last
+widget.zoom_to([0, 0.5])
+```
+
+## Shiny for Python
+
+With the `shiny` extra (`pip install "geneviewer-py[shiny]"`), charts are
+shown in a Shiny for Python app. Save this as `app.py` and run
 `shiny run app.py`:
 
 ```python
@@ -48,11 +89,6 @@ def server(input, output, session):
 
 app = App(app_ui, server)
 ```
-
-`GC()` takes a table with a start and an end column, and each method adds
-or changes a part of the chart, as the `GC_` functions of the R package do.
-[docs/NAMING.md](https://github.com/nvelden/geneviewer-py/blob/main/docs/NAMING.md) lists the Python name of each R function
-and argument.
 
 A chart's events are inputs named after the output, such as
 `input.chart_select()` for a click on a gene, and `zoom_to()` moves the
