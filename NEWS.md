@@ -1,3 +1,16 @@
+# geneviewer-py 0.2.0
+
+- Charts in Jupyter notebooks, with the new `jupyter` extra
+  (`pip install "geneviewer-py[jupyter]"`): a cell that ends with a chart
+  draws it. It works where anywidget does: JupyterLab, Jupyter Notebook, VS
+  Code, Google Colab and marimo.
+- `chart.widget()` gives the chart as a widget (`geneviewer.jupyter.GCWidget`)
+  to keep in a variable. Its attributes hold the chart's events, as the
+  inputs of a Shiny app do (`widget.select`, `widget.zoom`, ...),
+  `widget.on("select", callback)` calls a function at each event,
+  `widget.zoom_to()` moves the zoom slider, and setting `widget.chart` draws
+  another chart in the same place.
+
 # geneviewer-py 0.1.0
 
 The first release: the charts of the geneviewer R package and JavaScript

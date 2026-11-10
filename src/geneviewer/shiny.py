@@ -35,7 +35,6 @@ each event is described at https://nvelden.github.io/geneviewer-docs/api#events.
 
 from __future__ import annotations
 
-import math
 from functools import cache
 from importlib import resources
 from typing import Any
@@ -51,6 +50,7 @@ except ImportError as error:  # pragma: no cover
     ) from error
 
 from . import _r
+from ._checks import zoom_window
 from .chart import GC
 
 __all__ = ["EVENTS", "output_geneviewer", "render_geneviewer", "zoom_to"]
@@ -195,14 +195,7 @@ def zoom_to(
     """
     if not isinstance(id, str):
         raise ValueError("'id' must be the output id of the chart.")
-    window = None
-    if range is not None:
-        values = _r.as_vector(range)
-        if len(values) != 2 or not all(
-            _r.is_number(v) and math.isfinite(v) for v in values
-        ):
-            raise ValueError("'range' must be None or two numbers: [start, end].")
-        window = sorted(float(v) for v in values)
+    window = zoom_window(range)
     session = session or get_current_session()
     if session is None:
         raise RuntimeError("zoom_to() works in a Shiny session.")
