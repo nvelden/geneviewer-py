@@ -1,0 +1,149 @@
+"cluster","genus","subgenus","virus","strain","host","accession","gene","product","category","start","end","strand","homolog","identity"
+"HCoV-229E","Alphacoronavirus","Duvinacovirus","Human coronavirus 229E","229E","human","AF304460.1","L","5' untranslated region, starting with the leader","5' UTR",1,292,"forward",NA,NA
+"HCoV-229E","Alphacoronavirus","Duvinacovirus","Human coronavirus 229E","229E","human","AF304460.1","ORF1a","replicase polyprotein 1a","ORF1a",293,12520,"forward","HCoV-229E ORF1a",NA
+"HCoV-229E","Alphacoronavirus","Duvinacovirus","Human coronavirus 229E","229E","human","AF304460.1","ORF1b","replicase polyprotein 1b (after the frameshift)","ORF1b",12520,20568,"forward","HCoV-229E ORF1b",NA
+"HCoV-229E","Alphacoronavirus","Duvinacovirus","Human coronavirus 229E","229E","human","AF304460.1","S","surface glycoprotein","spike",20570,24091,"forward","HCoV-229E S",NA
+"HCoV-229E","Alphacoronavirus","Duvinacovirus","Human coronavirus 229E","229E","human","AF304460.1","4a","4a protein","accessory",24091,24492,"forward","HCoV-229E 4a",NA
+"HCoV-229E","Alphacoronavirus","Duvinacovirus","Human coronavirus 229E","229E","human","AF304460.1","4b","4b protein","accessory",24482,24748,"forward",NA,NA
+"HCoV-229E","Alphacoronavirus","Duvinacovirus","Human coronavirus 229E","229E","human","AF304460.1","E","envelope protein","envelope",24750,24983,"forward","HCoV-229E E",NA
+"HCoV-229E","Alphacoronavirus","Duvinacovirus","Human coronavirus 229E","229E","human","AF304460.1","M","membrane protein","membrane",24995,25672,"forward","HCoV-229E M",NA
+"HCoV-229E","Alphacoronavirus","Duvinacovirus","Human coronavirus 229E","229E","human","AF304460.1","N","nucleocapsid protein","nucleocapsid",25686,26855,"forward","HCoV-229E N",NA
+"HCoV-229E","Alphacoronavirus","Duvinacovirus","Human coronavirus 229E","229E","human","AF304460.1","Ia","ORF Ia (not annotated in the record)","accessory",25861,26235,"forward",NA,NA
+"HCoV-229E","Alphacoronavirus","Duvinacovirus","Human coronavirus 229E","229E","human","AF304460.1","Ib","ORF Ib (not annotated in the record)","accessory",26464,26643,"forward",NA,NA
+"HCoV-229E","Alphacoronavirus","Duvinacovirus","Human coronavirus 229E","229E","human","AF304460.1","3'UTR","3' untranslated region","3' UTR",26856,27317,"forward",NA,NA
+"HCoV-NL63","Alphacoronavirus","Setracovirus","Human coronavirus NL63","Amsterdam I","human","AY567487.2","L","5' untranslated region, starting with the leader","5' UTR",1,286,"forward",NA,NA
+"HCoV-NL63","Alphacoronavirus","Setracovirus","Human coronavirus NL63","Amsterdam I","human","AY567487.2","ORF1a","replicase polyprotein 1a","ORF1a",287,12439,"forward","HCoV-229E ORF1a",57.4
+"HCoV-NL63","Alphacoronavirus","Setracovirus","Human coronavirus NL63","Amsterdam I","human","AY567487.2","ORF1b","replicase polyprotein 1b (after the frameshift)","ORF1b",12439,20475,"forward","HCoV-229E ORF1b",82
+"HCoV-NL63","Alphacoronavirus","Setracovirus","Human coronavirus NL63","Amsterdam I","human","AY567487.2","S","spike protein","spike",20472,24542,"forward","HCoV-229E S",56.5
+"HCoV-NL63","Alphacoronavirus","Setracovirus","Human coronavirus NL63","Amsterdam I","human","AY567487.2","3","protein 3","accessory",24542,25219,"forward","HCoV-229E 4a",34.1
+"HCoV-NL63","Alphacoronavirus","Setracovirus","Human coronavirus NL63","Amsterdam I","human","AY567487.2","E","envelope protein","envelope",25200,25433,"forward","HCoV-229E E",48.8
+"HCoV-NL63","Alphacoronavirus","Setracovirus","Human coronavirus NL63","Amsterdam I","human","AY567487.2","M","membrane protein","membrane",25442,26122,"forward","HCoV-229E M",61.9
+"HCoV-NL63","Alphacoronavirus","Setracovirus","Human coronavirus NL63","Amsterdam I","human","AY567487.2","N","nucleocapsid protein","nucleocapsid",26133,27266,"forward","HCoV-229E N",47.4
+"HCoV-NL63","Alphacoronavirus","Setracovirus","Human coronavirus NL63","Amsterdam I","human","AY567487.2","Ia","ORF Ia (not annotated in the record)","accessory",26155,26376,"forward",NA,NA
+"HCoV-NL63","Alphacoronavirus","Setracovirus","Human coronavirus NL63","Amsterdam I","human","AY567487.2","Ib","ORF Ib (not annotated in the record)","accessory",26419,26712,"forward",NA,NA
+"HCoV-NL63","Alphacoronavirus","Setracovirus","Human coronavirus NL63","Amsterdam I","human","AY567487.2","3'UTR","3' untranslated region","3' UTR",27267,27553,"forward",NA,NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","L","5' untranslated region, starting with the leader","5' UTR",1,214,"forward",NA,NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","ORF1a","replicase polyprotein 1a","ORF1a",215,13618,"forward","MHV ORF1a",NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","ORF1b","replicase polyprotein 1b (after the frameshift)","ORF1b",13618,21756,"forward","MHV ORF1b",NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","2a","p30 accessory protein","accessory",21770,22567,"forward","MHV 2a",NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","HE","hemagglutinin-esterase glycoprotein","hemagglutinin-esterase",22613,23932,"forward","MHV HE",NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","S","spike glycoprotein","spike",23940,28070,"forward","MHV S",NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","4","accessory protein 4","accessory",28162,28581,"forward",NA,NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","5a","accessory protein 5a","accessory",28563,28886,"forward","MHV 5a",NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","E","envelope protein","envelope",28879,29145,"forward","MHV E",NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","M","membrane protein","membrane",29142,29828,"forward","MHV M",NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","N","nucleocapsid protein","nucleocapsid",29843,31210,"forward","MHV N",NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","I","putative internal (I) ORF","accessory",30120,30530,"forward","MHV I",NA
+"MHV","Betacoronavirus","Embecovirus","Murine hepatitis virus","JHM","mouse","AC_000192.1","3'UTR","3' untranslated region","3' UTR",31211,31526,"forward",NA,NA
+"HCoV-OC43","Betacoronavirus","Embecovirus","Human coronavirus OC43","19572 Belgium 2004","human","AY903460.1","L","5' untranslated region, starting with the leader","5' UTR",1,210,"forward",NA,NA
+"HCoV-OC43","Betacoronavirus","Embecovirus","Human coronavirus OC43","19572 Belgium 2004","human","AY903460.1","ORF1a","replicase polyprotein 1a","ORF1a",211,13341,"forward","MHV ORF1a",65.7
+"HCoV-OC43","Betacoronavirus","Embecovirus","Human coronavirus OC43","19572 Belgium 2004","human","AY903460.1","ORF1b","replicase polyprotein 1b (after the frameshift)","ORF1b",13341,21497,"forward","MHV ORF1b",85.2
+"HCoV-OC43","Betacoronavirus","Embecovirus","Human coronavirus OC43","19572 Belgium 2004","human","AY903460.1","2a","ns2 protein","accessory",21507,22343,"forward","MHV 2a",51.8
+"HCoV-OC43","Betacoronavirus","Embecovirus","Human coronavirus OC43","19572 Belgium 2004","human","AY903460.1","HE","HE protein","hemagglutinin-esterase",22355,23626,"forward","MHV HE",57.1
+"HCoV-OC43","Betacoronavirus","Embecovirus","Human coronavirus OC43","19572 Belgium 2004","human","AY903460.1","S","S glycoprotein","spike",23641,27726,"forward","MHV S",63.9
+"HCoV-OC43","Betacoronavirus","Embecovirus","Human coronavirus OC43","19572 Belgium 2004","human","AY903460.1","ns12.9","ns12.9","accessory",27802,28131,"forward","MHV 5a",49.5
+"HCoV-OC43","Betacoronavirus","Embecovirus","Human coronavirus OC43","19572 Belgium 2004","human","AY903460.1","E","E protein","envelope",28118,28372,"forward","MHV E",67.1
+"HCoV-OC43","Betacoronavirus","Embecovirus","Human coronavirus OC43","19572 Belgium 2004","human","AY903460.1","M","M protein","membrane",28387,29079,"forward","MHV M",81
+"HCoV-OC43","Betacoronavirus","Embecovirus","Human coronavirus OC43","19572 Belgium 2004","human","AY903460.1","N","N protein","nucleocapsid",29089,30435,"forward","MHV N",71.1
+"HCoV-OC43","Betacoronavirus","Embecovirus","Human coronavirus OC43","19572 Belgium 2004","human","AY903460.1","I","unknown","accessory",29150,29773,"forward","MHV I",34.8
+"HCoV-OC43","Betacoronavirus","Embecovirus","Human coronavirus OC43","19572 Belgium 2004","human","AY903460.1","3'UTR","3' untranslated region","3' UTR",30436,30723,"forward",NA,NA
+"HCoV-HKU1","Betacoronavirus","Embecovirus","Human coronavirus HKU1","HKU1","human","AY597011.2","L","5' untranslated region, starting with the leader","5' UTR",1,205,"forward",NA,NA
+"HCoV-HKU1","Betacoronavirus","Embecovirus","Human coronavirus HKU1","HKU1","human","AY597011.2","ORF1a","replicase polyprotein 1a","ORF1a",206,13600,"forward","MHV ORF1a",63.1
+"HCoV-HKU1","Betacoronavirus","Embecovirus","Human coronavirus HKU1","HKU1","human","AY597011.2","ORF1b","replicase polyprotein 1b (after the frameshift)","ORF1b",13600,21753,"forward","MHV ORF1b",84.5
+"HCoV-HKU1","Betacoronavirus","Embecovirus","Human coronavirus HKU1","HKU1","human","AY597011.2","HE","hemagglutinin-esterase glycoprotein","hemagglutinin-esterase",21773,22933,"forward","MHV HE",56.4
+"HCoV-HKU1","Betacoronavirus","Embecovirus","Human coronavirus HKU1","HKU1","human","AY597011.2","S","spike glycoprotein","spike",22942,27012,"forward","MHV S",63.6
+"HCoV-HKU1","Betacoronavirus","Embecovirus","Human coronavirus HKU1","HKU1","human","AY597011.2","4","non-structural protein","accessory",27051,27380,"forward","MHV 5a",46.8
+"HCoV-HKU1","Betacoronavirus","Embecovirus","Human coronavirus HKU1","HKU1","human","AY597011.2","E","small membrane protein","envelope",27373,27621,"forward","MHV E",47.6
+"HCoV-HKU1","Betacoronavirus","Embecovirus","Human coronavirus HKU1","HKU1","human","AY597011.2","M","membrane glycoprotein","membrane",27633,28304,"forward","MHV M",75.4
+"HCoV-HKU1","Betacoronavirus","Embecovirus","Human coronavirus HKU1","HKU1","human","AY597011.2","N","nucleocapsid phosphoprotein","nucleocapsid",28320,29645,"forward","MHV N",64.7
+"HCoV-HKU1","Betacoronavirus","Embecovirus","Human coronavirus HKU1","HKU1","human","AY597011.2","I","nucleocapsid phosphoprotein 2","accessory",28342,28959,"forward","MHV I",36.1
+"HCoV-HKU1","Betacoronavirus","Embecovirus","Human coronavirus HKU1","HKU1","human","AY597011.2","3'UTR","3' untranslated region","3' UTR",29646,29926,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","L","5' untranslated region, starting with the leader","5' UTR",1,278,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","ORF1a","replicase polyprotein 1a","ORF1a",279,13433,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","ORF1b","replicase polyprotein 1b (after the frameshift)","ORF1b",13433,21514,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","S","spike protein","spike",21456,25517,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","3","NS3 protein","accessory",25532,25843,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","4a","NS4A protein","accessory",25852,26181,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","4b","NS4B protein","accessory",26093,26833,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","5","NS5 protein","accessory",26840,27514,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","E","envelope protein","envelope",27590,27838,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","M","membrane protein","membrane",27853,28512,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","N","nucleocapsid protein","nucleocapsid",28566,29807,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","8b","ORF8b protein","accessory",28762,29100,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","8c","ORF 8c (not annotated in the record)","accessory",29290,29415,"forward",NA,NA
+"MERS-CoV","Betacoronavirus","Merbecovirus","MERS coronavirus","HCoV-EMC/2012","human","NC_019843.3","3'UTR","3' untranslated region","3' UTR",29808,30119,"forward",NA,NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","L","5' untranslated region, starting with the leader","5' UTR",1,264,"forward",NA,NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","ORF1a","replicase polyprotein 1a","ORF1a",265,13392,"forward","SARS-CoV-1 ORF1a",NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","ORF1b","replicase polyprotein 1b (after the frameshift)","ORF1b",13392,21485,"forward","SARS-CoV-1 ORF1b",NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","S","spike glycoprotein","spike",21492,25259,"forward","SARS-CoV-1 S",NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","3a","Orf3","accessory",25268,26092,"forward","SARS-CoV-1 3a",NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","3b","Orf4","accessory",25689,26153,"forward",NA,NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","E","small envelope E protein","envelope",26117,26347,"forward","SARS-CoV-1 E",NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","M","membrane glycoprotein M","membrane",26398,27063,"forward","SARS-CoV-1 M",NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","6","Orf7","accessory",27074,27265,"forward","SARS-CoV-1 6",NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","7a","Orf8","accessory",27273,27641,"forward","SARS-CoV-1 7a",NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","7b","Orf9","accessory",27638,27772,"forward","SARS-CoV-1 7b",NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","8a","Orf10","accessory",27779,27898,"forward",NA,NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","8b","Orf11","accessory",27864,28118,"forward",NA,NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","N","nucleocapsid protein","nucleocapsid",28120,29388,"forward","SARS-CoV-1 N",NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","9b","Orf13","accessory",28130,28426,"forward","SARS-CoV-1 9b",NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","9c","Orf14","accessory",28583,28795,"forward","SARS-CoV-1 9c",NA
+"SARS-CoV-1","Betacoronavirus","Sarbecovirus","SARS coronavirus","Tor2","human","AY274119.3","3'UTR","3' untranslated region","3' UTR",29389,29751,"forward",NA,NA
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","L","5' untranslated region, starting with the leader","5' UTR",1,265,"forward",NA,NA
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","ORF1a","replicase polyprotein 1a","ORF1a",266,13468,"forward","SARS-CoV-1 ORF1a",80.6
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","ORF1b","replicase polyprotein 1b (after the frameshift)","ORF1b",13468,21555,"forward","SARS-CoV-1 ORF1b",95.6
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","S","surface glycoprotein","spike",21563,25384,"forward","SARS-CoV-1 S",76.4
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","3a","ORF3a protein","accessory",25393,26220,"forward","SARS-CoV-1 3a",72.4
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","3c","ORF 3c (not annotated in the record)","accessory",25457,25582,"forward",NA,NA
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","3d","ORF 3d (not annotated in the record)","accessory",25524,25697,"forward",NA,NA
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","3b","ORF 3b (not annotated in the record)","accessory",25814,25882,"forward","SARS-CoV-2 3b",NA
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","E","envelope protein","envelope",26245,26472,"forward","SARS-CoV-1 E",94.7
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","M","membrane glycoprotein","membrane",26523,27191,"forward","SARS-CoV-1 M",90.5
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","6","ORF6 protein","accessory",27202,27387,"forward","SARS-CoV-1 6",68.9
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","7a","ORF7a protein","accessory",27394,27759,"forward","SARS-CoV-1 7a",85.2
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","7b","ORF7b","accessory",27756,27887,"forward","SARS-CoV-1 7b",81.4
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","8","ORF8 protein","accessory",27894,28259,"forward","SARS-CoV-2 8",NA
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","N","nucleocapsid phosphoprotein","nucleocapsid",28274,29533,"forward","SARS-CoV-1 N",90.5
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","9b","ORF 9b (not annotated in the record)","accessory",28284,28577,"forward","SARS-CoV-1 9b",72.4
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","9c","ORF 9c (not annotated in the record)","accessory",28734,28955,"forward","SARS-CoV-1 9c",77.1
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","10","ORF10 protein","accessory",29558,29674,"forward","SARS-CoV-2 10",NA
+"SARS-CoV-2","Betacoronavirus","Sarbecovirus","SARS coronavirus 2","Wuhan-Hu-1","human","NC_045512.2","3'UTR","3' untranslated region","3' UTR",29675,29903,"forward",NA,NA
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","L","5' untranslated region, starting with the leader","5' UTR",1,265,"forward",NA,NA
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","ORF1a","replicase polyprotein 1a","ORF1a",266,13465,"forward","SARS-CoV-1 ORF1a",98.1
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","ORF1b","replicase polyprotein 1b (after the frameshift)","ORF1b",13465,21552,"forward","SARS-CoV-1 ORF1b",99.4
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","S","spike glycoprotein","spike",21560,25369,"forward","SARS-CoV-1 S",97.4
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","3a","nonstructural protein NS3","accessory",25378,26205,"forward","SARS-CoV-1 3a",97.8
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","3b","ORF 3b (not annotated in the record)","accessory",25799,25867,"forward","SARS-CoV-2 3b",77.3
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","E","envelope protein","envelope",26230,26457,"forward","SARS-CoV-1 E",100
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","M","membrane protein","membrane",26508,27173,"forward","SARS-CoV-1 M",99.5
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","6","nonstructural protein NS6","accessory",27184,27369,"forward","SARS-CoV-1 6",100
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","7a","nonstructural protein NS7a","accessory",27375,27740,"forward","SARS-CoV-1 7a",97.5
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","7b","nonstructural protein NS7b","accessory",27737,27868,"forward","SARS-CoV-1 7b",97.7
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","8","nonstructural protein NS8","accessory",27875,28240,"forward","SARS-CoV-2 8",95
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","N","nucleocapsid protein","nucleocapsid",28255,29514,"forward","SARS-CoV-1 N",99
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","9b","ORF 9b (not annotated in the record)","accessory",28265,28558,"forward","SARS-CoV-1 9b",92.8
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","9c","ORF 9c (not annotated in the record)","accessory",28715,28936,"forward","SARS-CoV-1 9c",90.4
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","10","ORF 10 (not annotated in the record)","accessory",29539,29655,"forward","SARS-CoV-2 10",97.4
+"RaTG13","Betacoronavirus","Sarbecovirus","Bat coronavirus RaTG13","RaTG13","bat","MN996532.2","3'UTR","3' untranslated region","3' UTR",29656,29855,"forward",NA,NA
+"IBV","Gammacoronavirus","Igacovirus","Infectious bronchitis virus","Beaudette","chicken","NC_001451.1","L","5' untranslated region, starting with the leader","5' UTR",1,528,"forward",NA,NA
+"IBV","Gammacoronavirus","Igacovirus","Infectious bronchitis virus","Beaudette","chicken","NC_001451.1","ORF1a","replicase polyprotein 1a","ORF1a",529,12354,"forward",NA,NA
+"IBV","Gammacoronavirus","Igacovirus","Infectious bronchitis virus","Beaudette","chicken","NC_001451.1","ORF1b","replicase polyprotein 1b (after the frameshift)","ORF1b",12354,20417,"forward",NA,NA
+"IBV","Gammacoronavirus","Igacovirus","Infectious bronchitis virus","Beaudette","chicken","NC_001451.1","S","spike protein","spike",20368,23856,"forward",NA,NA
+"IBV","Gammacoronavirus","Igacovirus","Infectious bronchitis virus","Beaudette","chicken","NC_001451.1","3a","3a protein","accessory",23856,24029,"forward",NA,NA
+"IBV","Gammacoronavirus","Igacovirus","Infectious bronchitis virus","Beaudette","chicken","NC_001451.1","3b","3b protein","accessory",24029,24223,"forward",NA,NA
+"IBV","Gammacoronavirus","Igacovirus","Infectious bronchitis virus","Beaudette","chicken","NC_001451.1","E","small virion-associated protein","envelope",24207,24533,"forward",NA,NA
+"IBV","Gammacoronavirus","Igacovirus","Infectious bronchitis virus","Beaudette","chicken","NC_001451.1","M","membrane protein","membrane",24505,25182,"forward",NA,NA
+"IBV","Gammacoronavirus","Igacovirus","Infectious bronchitis virus","Beaudette","chicken","NC_001451.1","5a","5a protein","accessory",25488,25685,"forward",NA,NA
+"IBV","Gammacoronavirus","Igacovirus","Infectious bronchitis virus","Beaudette","chicken","NC_001451.1","5b","5b protein","accessory",25682,25930,"forward",NA,NA
+"IBV","Gammacoronavirus","Igacovirus","Infectious bronchitis virus","Beaudette","chicken","NC_001451.1","N","nucleocapsid protein","nucleocapsid",25873,27102,"forward",NA,NA
+"IBV","Gammacoronavirus","Igacovirus","Infectious bronchitis virus","Beaudette","chicken","NC_001451.1","3'UTR","3' untranslated region","3' UTR",27103,27608,"forward",NA,NA
+"PDCoV","Deltacoronavirus","Buldecovirus","Porcine deltacoronavirus","HKU15-155","pig","NC_039208.1","L","5' untranslated region, starting with the leader","5' UTR",1,532,"forward",NA,NA
+"PDCoV","Deltacoronavirus","Buldecovirus","Porcine deltacoronavirus","HKU15-155","pig","NC_039208.1","ORF1a","replicase polyprotein 1a","ORF1a",533,11407,"forward",NA,NA
+"PDCoV","Deltacoronavirus","Buldecovirus","Porcine deltacoronavirus","HKU15-155","pig","NC_039208.1","ORF1b","replicase polyprotein 1b (after the frameshift)","ORF1b",11407,19335,"forward",NA,NA
+"PDCoV","Deltacoronavirus","Buldecovirus","Porcine deltacoronavirus","HKU15-155","pig","NC_039208.1","S","spike glycoprotein","spike",19317,22796,"forward",NA,NA
+"PDCoV","Deltacoronavirus","Buldecovirus","Porcine deltacoronavirus","HKU15-155","pig","NC_039208.1","E","envelope protein","envelope",22790,23041,"forward",NA,NA
+"PDCoV","Deltacoronavirus","Buldecovirus","Porcine deltacoronavirus","HKU15-155","pig","NC_039208.1","M","membrane protein","membrane",23034,23687,"forward",NA,NA
+"PDCoV","Deltacoronavirus","Buldecovirus","Porcine deltacoronavirus","HKU15-155","pig","NC_039208.1","6","NS6 protein","accessory",23687,23971,"forward",NA,NA
+"PDCoV","Deltacoronavirus","Buldecovirus","Porcine deltacoronavirus","HKU15-155","pig","NC_039208.1","N","nucleocapsid protein","nucleocapsid",23992,25020,"forward",NA,NA
+"PDCoV","Deltacoronavirus","Buldecovirus","Porcine deltacoronavirus","HKU15-155","pig","NC_039208.1","7","NS7 protein","accessory",24086,24688,"forward",NA,NA
+"PDCoV","Deltacoronavirus","Buldecovirus","Porcine deltacoronavirus","HKU15-155","pig","NC_039208.1","3'UTR","3' untranslated region","3' UTR",25021,25425,"forward",NA,NA

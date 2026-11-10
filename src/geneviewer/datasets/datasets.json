@@ -1,0 +1,472 @@
+{
+  "BRCA1_splice_variants": {
+    "title": "BRCA1 Splice Variants",
+    "rows": 119,
+    "columns": [
+      {
+        "name": "ensembl_transcript_id",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "integer"
+      },
+      {
+        "name": "end",
+        "type": "integer"
+      },
+      {
+        "name": "strand",
+        "type": "integer"
+      },
+      {
+        "name": "transcript_length",
+        "type": "integer"
+      }
+    ]
+  },
+  "coronavirus_genomes": {
+    "title": "Genes of eleven coronaviruses from the four genera",
+    "rows": 148,
+    "columns": [
+      {
+        "name": "cluster",
+        "type": "character"
+      },
+      {
+        "name": "genus",
+        "type": "character"
+      },
+      {
+        "name": "subgenus",
+        "type": "character"
+      },
+      {
+        "name": "virus",
+        "type": "character"
+      },
+      {
+        "name": "strain",
+        "type": "character"
+      },
+      {
+        "name": "host",
+        "type": "character"
+      },
+      {
+        "name": "accession",
+        "type": "character"
+      },
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "product",
+        "type": "character"
+      },
+      {
+        "name": "category",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "homolog",
+        "type": "character"
+      },
+      {
+        "name": "identity",
+        "type": "numeric"
+      }
+    ]
+  },
+  "erythromycin_BlastP": {
+    "title": "Erythromycin protein alignment results",
+    "rows": 148,
+    "columns": [
+      {
+        "name": "protein_id",
+        "type": "character"
+      },
+      {
+        "name": "region",
+        "type": "character"
+      },
+      {
+        "name": "translation",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "rowID",
+        "type": "integer"
+      },
+      {
+        "name": "identity",
+        "type": "numeric"
+      },
+      {
+        "name": "similarity",
+        "type": "numeric"
+      },
+      {
+        "name": "BlastP",
+        "type": "character"
+      },
+      {
+        "name": "score",
+        "type": "numeric"
+      },
+      {
+        "name": "Gene",
+        "type": "character"
+      },
+      {
+        "name": "Position",
+        "type": "character"
+      },
+      {
+        "name": "Product",
+        "type": "character"
+      },
+      {
+        "name": "Functions",
+        "type": "character"
+      }
+    ]
+  },
+  "erythromycin_cluster": {
+    "title": "Erythromycin Gene Cluster Data",
+    "rows": 23,
+    "columns": [
+      {
+        "name": "Identifiers",
+        "type": "character"
+      },
+      {
+        "name": "Start",
+        "type": "numeric"
+      },
+      {
+        "name": "End",
+        "type": "numeric"
+      },
+      {
+        "name": "Strand",
+        "type": "character"
+      },
+      {
+        "name": "Product",
+        "type": "character"
+      },
+      {
+        "name": "Functions",
+        "type": "character"
+      }
+    ]
+  },
+  "hs_dystrophin_transcripts": {
+    "title": "Human Dystrophin Transcripts Data",
+    "rows": 202,
+    "columns": [
+      {
+        "name": "transcript",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "integer"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "length",
+        "type": "integer"
+      }
+    ]
+  },
+  "human_hox_genes": {
+    "title": "Human HOX Gene Cluster Data",
+    "rows": 39,
+    "columns": [
+      {
+        "name": "symbol",
+        "type": "character"
+      },
+      {
+        "name": "chromosome_name",
+        "type": "integer"
+      },
+      {
+        "name": "start",
+        "type": "integer"
+      },
+      {
+        "name": "end",
+        "type": "integer"
+      },
+      {
+        "name": "strand",
+        "type": "integer"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      },
+      {
+        "name": "name",
+        "type": "character"
+      }
+    ]
+  },
+  "mitochondrial_gene_order": {
+    "title": "Human and Locust Mitochondrial Gene Order",
+    "rows": 30,
+    "columns": [
+      {
+        "name": "cluster",
+        "type": "character"
+      },
+      {
+        "name": "accession",
+        "type": "character"
+      },
+      {
+        "name": "genome_length",
+        "type": "integer"
+      },
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "product",
+        "type": "character"
+      },
+      {
+        "name": "block",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      }
+    ]
+  },
+  "ophA_clusters": {
+    "title": "ophA Gene Cluster from Omphalotus olearius",
+    "rows": 17,
+    "columns": [
+      {
+        "name": "name",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "class",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ]
+  },
+  "pQEB1_alignment": {
+    "title": "Nucleotide alignment of the pQEB1 plasmids",
+    "rows": 14,
+    "columns": [
+      {
+        "name": "cluster1",
+        "type": "character"
+      },
+      {
+        "name": "start1",
+        "type": "integer"
+      },
+      {
+        "name": "end1",
+        "type": "integer"
+      },
+      {
+        "name": "cluster2",
+        "type": "character"
+      },
+      {
+        "name": "start2",
+        "type": "integer"
+      },
+      {
+        "name": "end2",
+        "type": "integer"
+      },
+      {
+        "name": "length1",
+        "type": "integer"
+      },
+      {
+        "name": "length2",
+        "type": "integer"
+      },
+      {
+        "name": "identity",
+        "type": "numeric"
+      }
+    ]
+  },
+  "pQEB1_plasmids": {
+    "title": "Genes of the blaKPC-2 plasmid pQEB1 and four of its variants",
+    "rows": 401,
+    "columns": [
+      {
+        "name": "cluster",
+        "type": "character"
+      },
+      {
+        "name": "host",
+        "type": "character"
+      },
+      {
+        "name": "accession",
+        "type": "character"
+      },
+      {
+        "name": "locus_tag",
+        "type": "character"
+      },
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "product",
+        "type": "character"
+      },
+      {
+        "name": "category",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      }
+    ]
+  },
+  "tn7_crispr_elements": {
+    "title": "Genes of Tn7 and of Tn7-like transposons carrying a CRISPR-Cas system",
+    "rows": 307,
+    "columns": [
+      {
+        "name": "cluster",
+        "type": "character"
+      },
+      {
+        "name": "strain",
+        "type": "character"
+      },
+      {
+        "name": "strain_short",
+        "type": "character"
+      },
+      {
+        "name": "accession",
+        "type": "character"
+      },
+      {
+        "name": "site",
+        "type": "character"
+      },
+      {
+        "name": "locus_tag",
+        "type": "character"
+      },
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "label",
+        "type": "character"
+      },
+      {
+        "name": "product",
+        "type": "character"
+      },
+      {
+        "name": "category",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      }
+    ]
+  }
+}

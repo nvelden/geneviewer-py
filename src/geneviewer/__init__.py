@@ -7,6 +7,7 @@ distribution on PyPI is ``geneviewer-py``.
 
 from importlib.metadata import version
 
+from . import datasets
 from .align import mummer_alignment, protein_blast
 from .chart import GC
 from .processing import get_introns
@@ -25,6 +26,7 @@ __version__ = version("geneviewer-py")
 __all__ = [
     "GC",
     "__version__",
+    "datasets",
     "gbk_features_to_df",
     "genbank_to_fasta",
     "geneviewer_palette",
