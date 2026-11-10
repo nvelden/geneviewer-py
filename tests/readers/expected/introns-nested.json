@@ -1,0 +1,58 @@
+{
+  "calls": [
+    {
+      "fun": "get_introns",
+      "args": {}
+    }
+  ],
+  "input": null,
+  "data": {
+    "columns": [
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "start": [201, 20, 1, 90, 40],
+      "end": [210, 30, 100, 120, 50],
+      "type": ["exon", "UTR", "exon", "exon", "UTR"]
+    }
+  },
+  "result": {
+    "columns": [
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "transcript",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "start": [1, 20, 40, 90, 121, 201],
+      "end": [100, 30, 50, 120, 200, 210],
+      "type": ["exon", "UTR", "UTR", "exon", "intron", "exon"],
+      "transcript": ["transcript1", "transcript1", "transcript1", "transcript1", "transcript1", "transcript1"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

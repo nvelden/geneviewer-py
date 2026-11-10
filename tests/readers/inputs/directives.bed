@@ -1,0 +1,9 @@
+# BED example
+browser position chr1:1-100
+
+track name=first
+chr1	0	10	first
+  # another track
+track name=second
+chr1	20	30	second
+browser hide all

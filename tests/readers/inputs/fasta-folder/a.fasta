@@ -1,0 +1,7 @@
+>lcl|NC_000913.3_prot_NP_414542.1_1 [gene=thrL] [locus_tag=b0001] [protein=thr operon leader peptide] [protein_id=NP_414542.1] [location=190..255] [gbkey=CDS]
+MKRISTTITTTITITTGNGAG
+>lcl|NC_045512.2_prot_YP_009724389.1_1 [gene=ORF1ab] [protein=ORF1ab polyprotein] [exception=ribosomal slippage] [location=join(266..13468,13468..21555)] [gbkey=CDS]
+MESLVPGFNEKTHVQLSLPVLQVRDVLVRGFGDSVEEVLSEARQHLKDGTCGLVEVEKGVLPQLEQPYVF
+IKRSDARTAPHGHVMVELVAELEGIQYGRSGETLGVLVPHVGEIPVAYRKVLLRKNGNKG
+>lcl|NC_001133.9_prot_NP_009332.1_1 [gene=PAU8] [protein=seripauperin PAU8] [location=complement(1807..2169)] [gbkey=CDS]
+MVKLTSIAAGVAAIAATASATTTLAQSDERVNLVELGVYVSDIR

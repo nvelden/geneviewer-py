@@ -1,0 +1,4 @@
+chr1	demo	gene	100	900	.	+	.	gene_id "g1"; gene_name "abcA";
+chr1	demo	exon	100	400	.	+	0	gene_id "g1"; transcript_id "t1"; tag "basic"; tag "CCDS";
+chr1	demo	gene	1000	1900	.	-	.	gene_id "g2";  gene_name "a b"
+chr1	demo	gene	2000	2600	.	+	.	gene_id g3; level 2; flag

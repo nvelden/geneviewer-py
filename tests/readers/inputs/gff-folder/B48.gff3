@@ -1,0 +1,2 @@
+##gff-version 3
+chr1	demo	gene	100	500	.	+	.	ID=g1;Name=abcA

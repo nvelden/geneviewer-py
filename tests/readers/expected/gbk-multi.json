@@ -1,0 +1,21 @@
+{
+  "calls": [
+    {
+      "fun": "read_gbk",
+      "args": {}
+    }
+  ],
+  "input": "inputs/multi.gbk",
+  "data": null,
+  "result": {
+    "multi": {
+      "LOCUS": "AAA 20 bp DNA linear BCT 01-JAN-2024",
+      "DEFINITION": "Record AAA.",
+      "VERSION": "AAA.1",
+      "FEATURES": {},
+      "ORIGIN": "acgtacgtacgtacgtacgt"
+    }
+  },
+  "warnings": ["Multiple sequence records found in multi. Only the first record will be processed."],
+  "error": null
+}

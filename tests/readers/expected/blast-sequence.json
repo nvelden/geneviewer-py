@@ -1,0 +1,100 @@
+{
+  "calls": [
+    {
+      "fun": "protein_blast",
+      "args": {
+        "query": 1
+      }
+    }
+  ],
+  "input": null,
+  "data": {
+    "columns": [
+      {
+        "name": "protein_id",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "numeric"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "protein_id": ["a", "b", "c", "d"],
+      "cluster": [1, 1, 2, 2],
+      "start": [1, 10, 1, 10],
+      "end": [5, 15, 5, 15],
+      "sequence": ["MKVLLAW", "MKLGGTT", "MKVLLAW", "PPPPKLGG"]
+    }
+  },
+  "result": {
+    "columns": [
+      {
+        "name": "protein_id",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "translation",
+        "type": "character"
+      },
+      {
+        "name": "rowID",
+        "type": "integer"
+      },
+      {
+        "name": "identity",
+        "type": "numeric"
+      },
+      {
+        "name": "similarity",
+        "type": "numeric"
+      },
+      {
+        "name": "BlastP",
+        "type": "character"
+      },
+      {
+        "name": "score",
+        "type": "numeric"
+      }
+    ],
+    "data": {
+      "protein_id": ["a", "b", "c", "d"],
+      "cluster": ["1", "1", "2", "2"],
+      "start": [1, 10, 1, 10],
+      "end": [5, 15, 5, 15],
+      "translation": ["MKVLLAW", "MKLGGTT", "MKVLLAW", "PPPPKLGG"],
+      "rowID": [1, 2, 3, 4],
+      "identity": [100, 100, 100, 50],
+      "similarity": [100, 100, 100, 50],
+      "BlastP": ["a", "b", "a", "b"],
+      "score": [2, 2, 1.75, 1.75]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

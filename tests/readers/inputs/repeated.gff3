@@ -1,0 +1,4 @@
+##gff-version 3
+chr1	demo	gene	1	20	.	+	.	ID=g1;Note=a;Note=b
+chr1	demo	gene	30	40	.	+	.	.
+chr1	demo	gene	50	60	.	-	.	ID=g3;Note=

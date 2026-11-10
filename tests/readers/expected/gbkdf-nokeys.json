@@ -1,0 +1,22 @@
+{
+  "calls": [
+    {
+      "fun": "read_gbk",
+      "args": {}
+    },
+    {
+      "fun": "gbk_features_to_df",
+      "args": {
+        "keys": ["nokey"]
+      }
+    }
+  ],
+  "input": "inputs/B04.gbk",
+  "data": null,
+  "result": {
+    "columns": [],
+    "data": {}
+  },
+  "warnings": ["None of the specified keys found in B04"],
+  "error": null
+}

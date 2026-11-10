@@ -1,0 +1,11 @@
+;comment before the first record
+
+>a [gene=x] [location=1..9]  
+mkta yi
+;comment inside a sequence
+AKQR*
+
+>b [gene=y] [location=20..29]
+>c [gene=z] [location=complement(40..49)]
+      1 mktayiakqr qisfvkshfs
+     21 rqleer

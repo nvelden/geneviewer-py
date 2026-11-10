@@ -1,0 +1,63 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/ncbi_unbracketed.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "protein",
+        "type": "character"
+      },
+      {
+        "name": "protein_id",
+        "type": "character"
+      },
+      {
+        "name": "location",
+        "type": "character"
+      },
+      {
+        "name": "gbkey",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "protein": ["putative phosphoenolpyruvate synthase"],
+      "protein_id": ["ADX66475.1"],
+      "location": ["complement(<1..2247)"],
+      "gbkey": ["CDS"],
+      "sequence": ["MRATGLVRGRAAKRFGRAGGAGDAIGQCRATGHDCLGGSAMIEQYVWDLHEVDETQVAVVGGKGAHLGGLSRIEGIRVPAG"],
+      "start": [1],
+      "end": [2247],
+      "strand": ["complement"],
+      "cluster": ["ncbi_unbracketed"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

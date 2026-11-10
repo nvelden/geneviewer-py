@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "geneviewer-py"
-version = "0.1.0.dev0"
+version = "0.1.0"
 description = "Gene cluster charts for Python and Shiny for Python"
 readme = "README.md"
 license = "MIT"
@@ -27,11 +27,14 @@ classifiers = [
 
 [project.optional-dependencies]
 shiny = ["shiny>=1.0"]
-align = ["biopython>=1.80"]
-dev = ["pytest>=8", "ruff>=0.8", "pytest-playwright>=0.5"]
+align = ["biopython>=1.85"]
+# hatchling: tests/unit/test_vendored.py builds the wheel without isolation
+dev = ["pytest>=8", "ruff>=0.8", "pytest-playwright>=0.5", "hatchling"]
 
 [project.urls]
 Homepage = "https://github.com/nvelden/geneviewer-py"
+Documentation = "https://nvelden.github.io/geneviewer-docs/python/"
+Changelog = "https://github.com/nvelden/geneviewer-py/blob/main/NEWS.md"
 Issues = "https://github.com/nvelden/geneviewer-py/issues"
 
 [tool.hatch.build.targets.wheel]
@@ -43,6 +46,8 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "D"]
+# Magic methods and __init__ are documented in their class
+ignore = ["D105", "D107"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"

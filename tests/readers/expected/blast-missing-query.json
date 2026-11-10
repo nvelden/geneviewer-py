@@ -1,0 +1,45 @@
+{
+  "calls": [
+    {
+      "fun": "protein_blast",
+      "args": {
+        "query": "Z"
+      }
+    }
+  ],
+  "input": null,
+  "data": {
+    "columns": [
+      {
+        "name": "protein_id",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "translation",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "protein_id": ["A1", "A2", "B1", "B2"],
+      "cluster": ["A", "A", "B", "B"],
+      "start": [1, 200, 1, 200],
+      "end": [150, 350, 150, 350],
+      "translation": ["MKTAYIAKQRQISFVKSHFSRQ", "MSDNELLKRLGEAVLAHPTTG", "MKTAYIAKQRQISFVKSHFSRQ", "MLPGGRTSWVQEHCDKAYNIF"]
+    }
+  },
+  "result": null,
+  "warnings": [],
+  "error": "Query not found in cluster columnm."
+}

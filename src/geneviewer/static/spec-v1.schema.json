@@ -1,0 +1,2816 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/nvelden/geneviewer-js/schema/spec-v1.schema.json",
+  "title": "geneviewer chart spec, version 1",
+  "description": "What newChart() draws. Each top-level key is a GC_* function of the R package, each property one of its arguments in camelCase; see schema/NAMING.md.",
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "const": 1,
+      "default": 1,
+      "description": "The spec version. Optional: a spec without one is version 1."
+    },
+    "data": {
+      "$ref": "#/$defs/data",
+      "description": "The genes: an array of rows, or columns (an object of equal-length arrays), as R and Python send them."
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The columns of data that hold each gene's position, cluster, group and strand.",
+      "properties": {
+        "start": {
+          "$ref": "#/$defs/column",
+          "description": "Column with the start position of each gene.",
+          "default": "start"
+        },
+        "end": {
+          "$ref": "#/$defs/column",
+          "description": "Column with the end position of each gene.",
+          "default": "end"
+        },
+        "cluster": {
+          "$ref": "#/$defs/column",
+          "description": "Column that splits the genes into clusters. Default: one cluster."
+        },
+        "group": {
+          "$ref": "#/$defs/column",
+          "description": "Column that groups the genes, which sets their colours and the legend."
+        },
+        "strand": {
+          "$ref": "#/$defs/column",
+          "description": "Column with the strand of each gene: 1, \"forward\", \"sense\" or \"+\" for forward; -1, 0, \"reverse\", \"antisense\", \"complement\" or \"-\" for reverse. Default: a column named strand if the data has one; otherwise a gene with start less than end is forward and any other gene is reverse."
+        }
+      }
+    },
+    "width": {
+      "type": [
+        "number",
+        "string"
+      ],
+      "description": "Width of the chart: pixels, or a CSS length such as \"100%\".",
+      "default": "100%"
+    },
+    "height": {
+      "type": [
+        "number",
+        "string"
+      ],
+      "description": "Height of the chart: pixels, or a CSS length such as \"400px\".",
+      "default": "400px"
+    },
+    "style": {
+      "$ref": "#/$defs/style",
+      "description": "CSS styles of the chart's element, e.g. { backgroundColor: \"white\" }."
+    },
+    "cluster": {
+      "description": "Layout of the genes in a cluster: strands on separate rows, overlapping genes on separate tracks, and the cluster's style. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/clusterEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/clusterEntry"
+          }
+        }
+      ]
+    },
+    "clusterTitle": {
+      "description": "Title and subtitle above each cluster. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/clusterTitleEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/clusterTitleEntry"
+          }
+        }
+      ]
+    },
+    "clusterLabel": {
+      "description": "Label in the left or right margin of each cluster. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/clusterLabelEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/clusterLabelEntry"
+          }
+        }
+      ]
+    },
+    "clusterFooter": {
+      "description": "Footer below each cluster: a title and subtitle. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/clusterFooterEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/clusterFooterEntry"
+          }
+        }
+      ]
+    },
+    "color": {
+      "description": "Colours of the gene groups, for the genes and the legend.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/colorEntry"
+        }
+      ]
+    },
+    "coordinates": {
+      "description": "Start and end positions written at the genes. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/coordinatesEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/coordinatesEntry"
+          }
+        }
+      ]
+    },
+    "elementStyle": {
+      "description": "Overrides for single elements: a gene, label or coordinate, a title or subtitle, a legend label or marker, a scale bar or axis. Each entry is one element; later entries for the same element add to earlier ones.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/elementStyleEntry"
+      }
+    },
+    "events": {
+      "description": "Which interactions the chart reports, and whether parts are clickable.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/eventsEntry"
+        }
+      ]
+    },
+    "genes": {
+      "description": "The gene markers. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/genesEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/genesEntry"
+          }
+        }
+      ]
+    },
+    "grid": {
+      "description": "Size and margins of each cluster, and the direction clusters are laid out in. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/gridEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/gridEntry"
+          }
+        }
+      ]
+    },
+    "labels": {
+      "description": "Labels of the genes. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/labelsEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/labelsEntry"
+          }
+        }
+      ]
+    },
+    "legend": {
+      "description": "The legend of the gene groups.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/legendEntry"
+        }
+      ]
+    },
+    "links": {
+      "description": "Links between genes of different clusters, drawn from a table of pairs. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/linksEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/linksEntry"
+          }
+        }
+      ]
+    },
+    "pattern": {
+      "description": "Pattern fills of the genes, exons and legend markers by group, e.g. for black and white figures.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/patternEntry"
+        }
+      ]
+    },
+    "scale": {
+      "description": "The position scale of each cluster: its range, axis and scale breaks. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/scaleEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scaleEntry"
+          }
+        }
+      ]
+    },
+    "scaleBar": {
+      "description": "A scale bar in each cluster. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/scaleBarEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scaleBarEntry"
+          }
+        }
+      ]
+    },
+    "sequence": {
+      "description": "The line the genes sit on, with marks at scale breaks. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sequenceEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sequenceEntry"
+          }
+        }
+      ]
+    },
+    "theme": {
+      "description": "The default look of every part of the chart. A built-in theme's name, or an object that starts from one and changes it. Options set in the other components take precedence.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/themeName"
+        },
+        {
+          "$ref": "#/$defs/themeEntry"
+        }
+      ]
+    },
+    "title": {
+      "description": "The chart's title and subtitle.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/titleEntry"
+        }
+      ]
+    },
+    "toolbar": {
+      "description": "The chart's own buttons: undo, redo, reset, reset zoom and save.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/toolbarEntry"
+        }
+      ]
+    },
+    "tooltip": {
+      "description": "The tooltip shown over a gene. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/tooltipEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tooltipEntry"
+          }
+        }
+      ]
+    },
+    "trackMouse": {
+      "description": "Shows the position under the mouse, e.g. to place annotations. An array of entries applies them in order; an entry with clusters only to those clusters.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/trackMouseEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/trackMouseEntry"
+          }
+        }
+      ]
+    },
+    "transcript": {
+      "description": "Transcripts: exons, introns and UTRs. An array of entries applies them in order; an entry with selection only to those transcripts.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/transcriptEntry"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/transcriptEntry"
+          }
+        }
+      ]
+    },
+    "zoom": {
+      "description": "A slider below the clusters to zoom in on part of them.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/zoomEntry"
+        }
+      ]
+    },
+    "annotation": {
+      "description": "Annotations drawn in the clusters: text, lines, arrows, symbols and more.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/annotationEntry"
+      }
+    },
+    "align": {
+      "description": "Aligns the clusters on one gene: each cluster's scale is set so the gene is at the same place in every cluster.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/alignEntry"
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "clusterRef": {
+      "description": "A cluster: its name, or its 1-based position.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer",
+          "minimum": 1
+        }
+      ]
+    },
+    "clusters": {
+      "description": "Clusters by name or 1-based position.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/clusterRef"
+      }
+    },
+    "column": {
+      "description": "The name of a column of the data.",
+      "type": "string"
+    },
+    "color": {
+      "description": "A CSS colour.",
+      "type": "string"
+    },
+    "colors": {
+      "description": "Colours: one colour, an array recycled over the groups, or an object of colours by group.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/color"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/color"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/color"
+          }
+        }
+      ]
+    },
+    "style": {
+      "description": "Styles as in R: CSS-like keys in camelCase (fill, fontSize, ...) and their values.",
+      "type": "object",
+      "additionalProperties": true
+    },
+    "itemStyle": {
+      "description": "Styles of single items, each with the item's 0-based index in its cluster.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "groupStyle": {
+      "description": "Styles by group: an object of style objects, keyed by group value.",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/style"
+      }
+    },
+    "margin": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "top": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "right": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "bottom": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "left": {
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      }
+    },
+    "scaleBreak": {
+      "type": "object",
+      "required": [
+        "start",
+        "end"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "type": "number"
+        },
+        "end": {
+          "type": "number"
+        },
+        "cluster": {
+          "$ref": "#/$defs/clusterRef"
+        }
+      }
+    },
+    "themeName": {
+      "enum": [
+        "default",
+        "classic",
+        "dark",
+        "vintage",
+        "infographic",
+        "publication",
+        "bw"
+      ]
+    },
+    "data": {
+      "description": "Table data: an array of rows, or columns (an object of equal-length arrays).",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
+          }
+        }
+      ]
+    },
+    "clusterEntry": {
+      "type": "object",
+      "properties": {
+        "separateStrands": {
+          "type": "boolean",
+          "description": "Whether forward and reverse genes go on separate rows."
+        },
+        "strandSpacing": {
+          "type": "number",
+          "description": "Space between the forward and reverse rows, with separateStrands."
+        },
+        "preventGeneOverlap": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "const": "nested"
+            }
+          ],
+          "description": "Overlapping genes go on separate tracks: true for all overlapping genes, \"nested\" only for genes that lie inside another gene. The track of each gene is in its geneTrack field."
+        },
+        "overlapMin": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "How much two genes must overlap to go on separate tracks: base pairs, or a share of the shorter gene such as \"10%\". Default: any overlap."
+        },
+        "overlapSpacing": {
+          "type": "number",
+          "description": "Space between tracks, with preventGeneOverlap."
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "style": {
+          "$ref": "#/$defs/style",
+          "description": "CSS styles of the cluster's element."
+        },
+        "margin": {
+          "$ref": "#/$defs/margin",
+          "description": "Margins of the cluster, in pixels."
+        },
+        "width": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Width of the cluster."
+        },
+        "height": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Height of the cluster."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "clusterTitleEntry": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            }
+          ],
+          "description": "Title of each cluster; an array is recycled over the clusters."
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            }
+          ],
+          "description": "Subtitle of each cluster; an array is recycled over the clusters."
+        },
+        "subtitleFont": {
+          "$ref": "#/$defs/style",
+          "description": "Font options of the subtitle."
+        },
+        "titleFont": {
+          "$ref": "#/$defs/style",
+          "description": "Font options of the title."
+        },
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the title.",
+          "default": true
+        },
+        "height": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Height of the title, e.g. \"40px\"."
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "align": {
+          "oneOf": [
+            {
+              "enum": [
+                "left",
+                "center",
+                "right"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "left",
+                  "center",
+                  "right"
+                ]
+              }
+            }
+          ],
+          "description": "Alignment of the title and subtitle; x moves them from there. Default: the theme's, otherwise \"center\"."
+        },
+        "spacing": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Pixels between the title and subtitle. Default: the theme's, otherwise 20."
+        },
+        "x": {
+          "type": "number",
+          "description": "Horizontal offset of the title, in pixels."
+        },
+        "y": {
+          "type": "number",
+          "description": "Vertical offset of the title, in pixels."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "clusterLabelEntry": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            }
+          ],
+          "description": "Text of the label; an array is recycled over the clusters."
+        },
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the label.",
+          "default": true
+        },
+        "width": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Width of the label, which sets the cluster's margin on that side. Default: a margin set with grid, otherwise the theme's, otherwise \"100px\"."
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "position": {
+          "enum": [
+            "left",
+            "right"
+          ],
+          "description": "Side of the label. Default: the theme's, otherwise \"left\"."
+        },
+        "align": {
+          "oneOf": [
+            {
+              "enum": [
+                "left",
+                "center",
+                "right"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "left",
+                  "center",
+                  "right"
+                ]
+              }
+            }
+          ],
+          "description": "Alignment of the label's lines in its margin; x moves it from there. Default: the theme's, otherwise \"center\"."
+        },
+        "wrapLabel": {
+          "type": "boolean",
+          "description": "Whether long labels wrap over several lines. Default: the theme's, otherwise true."
+        },
+        "wrapOptions": {
+          "type": "object",
+          "description": "Options for wrapping the label."
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            }
+          ],
+          "description": "A second line below the title, e.g. the species."
+        },
+        "subtitleFont": {
+          "$ref": "#/$defs/style",
+          "description": "Font options of the subtitle. Default: 11px, not bold."
+        },
+        "spacing": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Pixels between the middle of the title's last line and the subtitle. Default: the theme's, otherwise 1.2 times the mean font size of the two."
+        },
+        "x": {
+          "type": "number",
+          "description": "Horizontal offset of the label, in pixels."
+        },
+        "y": {
+          "type": "number",
+          "description": "Vertical offset of the label, in pixels."
+        },
+        "fontSize": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Font size, e.g. \"12px\"."
+        },
+        "fontStyle": {
+          "type": "string",
+          "description": "Font style, e.g. \"italic\"."
+        },
+        "fontWeight": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Font weight, e.g. \"bold\"."
+        },
+        "fontFamily": {
+          "type": "string",
+          "description": "Font family."
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Mouse cursor over it."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "clusterFooterEntry": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            }
+          ],
+          "description": "Title of each footer; an array is recycled over the clusters."
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            }
+          ],
+          "description": "Subtitle of each footer."
+        },
+        "show": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "boolean"
+              }
+            }
+          ],
+          "description": "Whether to show the footer.",
+          "default": true
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "subtitleFont": {
+          "$ref": "#/$defs/style",
+          "description": "Font options of the subtitle."
+        },
+        "titleFont": {
+          "$ref": "#/$defs/style",
+          "description": "Font options of the title."
+        },
+        "align": {
+          "oneOf": [
+            {
+              "enum": [
+                "left",
+                "center",
+                "right"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "left",
+                  "center",
+                  "right"
+                ]
+              }
+            }
+          ],
+          "description": "Alignment of the title and subtitle; x moves them from there. Default: the theme's, otherwise \"left\"."
+        },
+        "spacing": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Pixels between the title and subtitle. Default: the theme's, otherwise 12."
+        },
+        "x": {
+          "type": "number",
+          "description": "Horizontal offset of the footer, in pixels."
+        },
+        "y": {
+          "type": "number",
+          "description": "Vertical offset of the footer, in pixels."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "colorEntry": {
+      "type": "object",
+      "properties": {
+        "colorScheme": {
+          "type": "string",
+          "description": "Name of a colour scheme: a D3 scheme such as \"schemeTableau10\", or a geneviewer palette such as \"okabeIto\"."
+        },
+        "customColors": {
+          "$ref": "#/$defs/colors",
+          "description": "Colours of the groups: an array recycled over the groups, or an object of colours by group. Groups left out keep the colours of colorScheme, the theme's palette or the defaults."
+        }
+      },
+      "additionalProperties": false
+    },
+    "coordinatesEntry": {
+      "type": "object",
+      "properties": {
+        "show": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "boolean"
+              }
+            }
+          ],
+          "description": "Whether to show the coordinates.",
+          "default": true
+        },
+        "tickValuesTop": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "Positions written above the cluster, in place of the genes' own."
+        },
+        "tickValuesBottom": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "Positions written below the cluster, in place of the genes' own."
+        },
+        "ticksFormat": {
+          "type": "string",
+          "description": "D3 number format of the positions. Default: \",.0f\"."
+        },
+        "tickStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the ticks."
+        },
+        "textStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the text."
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "groupStyle": {
+          "$ref": "#/$defs/groupStyle",
+          "description": "Styles by group, for the coordinates of every gene of that group: show = false leaves them out, tick styles their ticks, the rest their text."
+        },
+        "styleBy": {
+          "$ref": "#/$defs/column",
+          "description": "Column whose values groupStyle matches. Default: fields.group."
+        },
+        "rotate": {
+          "type": "number",
+          "description": "Rotation of the coordinates, in degrees.",
+          "default": -45
+        },
+        "yPositionTop": {
+          "type": "number",
+          "description": "Vertical position of the coordinates above the genes, from 1 (bottom) to 100 (top) of the cluster.",
+          "default": 53
+        },
+        "yPositionBottom": {
+          "type": "number",
+          "description": "Vertical position of the coordinates below the genes, from 1 (bottom) to 100 (top) of the cluster.",
+          "default": 48
+        },
+        "overlapThreshold": {
+          "type": "number",
+          "description": "Distance in pixels below which coordinates of neighbouring genes go on the other side.",
+          "default": 20
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "elementStyleEntry": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "enum": [
+            "genes",
+            "labels",
+            "coordinates",
+            "clusterTitle",
+            "clusterFooter",
+            "clusterLabel",
+            "legend",
+            "title",
+            "scaleBar",
+            "scale"
+          ],
+          "description": "The component of the element.",
+          "default": "genes"
+        },
+        "rowID": {
+          "type": "number",
+          "description": "For genes, labels and coordinates: the gene's rowID, as reported in select and dblclick events."
+        },
+        "cluster": {
+          "$ref": "#/$defs/clusterRef",
+          "description": "For cluster titles, footers, labels, scale bars and axes: the cluster's name or 1-based position."
+        },
+        "part": {
+          "enum": [
+            "title",
+            "subtitle",
+            "label",
+            "marker"
+          ],
+          "description": "For titles, footers and cluster labels: \"title\" or \"subtitle\"; for the legend: \"label\" or \"marker\"."
+        },
+        "end": {
+          "enum": [
+            "start",
+            "end"
+          ],
+          "description": "For coordinates: the start or end coordinate. Default: both."
+        },
+        "group": {
+          "type": "string",
+          "description": "For the legend: the group's original value, as reported in events."
+        }
+      },
+      "additionalProperties": true,
+      "description": "One element's override. The other properties are the element's options under their JavaScript names: fill, stroke, fontSize, text, moveX, moveY, show and so on."
+    },
+    "eventsEntry": {
+      "type": "object",
+      "properties": {
+        "click": {
+          "type": "boolean",
+          "description": "Whether clicks are reported, in a spec with an events key; a spec without one reports nothing.",
+          "default": true
+        },
+        "highlight": {
+          "type": "boolean",
+          "description": "Whether the part under the mouse is outlined, to show what a click selects.",
+          "default": false
+        },
+        "rendered": {
+          "type": "boolean",
+          "description": "Whether each finished draw is reported as a rendered event.",
+          "default": false
+        },
+        "renderId": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "Identifies this draw in the rendered event. A new value also restarts the zoom at its range. Default: a new unique id for each draw."
+        },
+        "dblclick": {
+          "type": "boolean",
+          "description": "Whether double-clicks are reported, for editing.",
+          "default": false
+        },
+        "select": {
+          "type": "boolean",
+          "description": "Whether elements can be selected.",
+          "default": false
+        },
+        "legendClick": {
+          "type": "boolean",
+          "description": "Whether clicks on the legend are reported.",
+          "default": true
+        },
+        "drag": {
+          "type": "boolean",
+          "description": "Whether labels, titles, scale bars, axes and legend items can be dragged. Moves can be undone and redone.",
+          "default": false
+        },
+        "zoom": {
+          "type": "boolean",
+          "description": "Whether the zoom window is reported, on the first draw and after every change.",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "genesEntry": {
+      "type": "object",
+      "properties": {
+        "group": {
+          "$ref": "#/$defs/column",
+          "description": "Column that groups the genes for their colours. Default: fields.group."
+        },
+        "marker": {
+          "enum": [
+            "arrow",
+            "boxarrow",
+            "box",
+            "cbox",
+            "rbox"
+          ],
+          "description": "Shape of the markers."
+        },
+        "markerSize": {
+          "enum": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "description": "Size of the markers."
+        },
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the genes.",
+          "default": true
+        },
+        "colorScheme": {
+          "type": "string",
+          "description": "Colour scheme of the groups. Default: the colours of the color component."
+        },
+        "customColors": {
+          "$ref": "#/$defs/colors",
+          "description": "Colours of the groups: an array recycled over the groups, or an object by group."
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "itemStyle": {
+          "$ref": "#/$defs/itemStyle",
+          "description": "Styles of single genes, by their 0-based index in the cluster."
+        },
+        "groupStyle": {
+          "$ref": "#/$defs/groupStyle",
+          "description": "Styles by group, for every gene of that group. A gene's itemStyle takes precedence."
+        },
+        "styleBy": {
+          "$ref": "#/$defs/column",
+          "description": "Column whose values groupStyle matches, or \"geneTrack\" for the track of each gene. Default: group."
+        },
+        "cornerRadius": {
+          "type": "number",
+          "description": "Radius in pixels of the markers' corners. Default: sharp, and 5 for \"rbox\"."
+        },
+        "x": {
+          "type": "number",
+          "description": "Horizontal offset of the genes, in pixels."
+        },
+        "y": {
+          "type": "number",
+          "description": "Vertical position of the genes, from 1 (bottom) to 100 (top) of the cluster.",
+          "default": 50
+        },
+        "stroke": {
+          "$ref": "#/$defs/color",
+          "description": "Outline colour of the genes."
+        },
+        "strokeWidth": {
+          "type": "number",
+          "description": "Outline width of the genes, in pixels.",
+          "default": 1
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Mouse cursor over a gene.",
+          "default": "default"
+        },
+        "arrowheadWidth": {
+          "type": "number",
+          "description": "Width of the arrowhead, in pixels. Default: from markerSize."
+        },
+        "arrowheadHeight": {
+          "type": "number",
+          "description": "Height of the arrowhead, in pixels. Default: from markerSize."
+        },
+        "markerHeight": {
+          "type": "number",
+          "description": "Height of the gene body, in pixels. Default: from markerSize."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "gridEntry": {
+      "type": "object",
+      "properties": {
+        "margin": {
+          "$ref": "#/$defs/margin",
+          "description": "Margins of the cluster in pixels."
+        },
+        "width": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Width of the cluster; a number is a percentage."
+        },
+        "height": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Height of the cluster."
+        },
+        "direction": {
+          "enum": [
+            "column",
+            "row"
+          ],
+          "description": "Clusters below each other (\"column\") or side by side (\"row\").",
+          "default": "column"
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        }
+      },
+      "additionalProperties": false
+    },
+    "labelsEntry": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/column",
+          "description": "Column with the label of each gene. Default: fields.group."
+        },
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the labels.",
+          "default": true
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "itemStyle": {
+          "$ref": "#/$defs/itemStyle",
+          "description": "Styles of single labels, by their 0-based index in the cluster."
+        },
+        "groupStyle": {
+          "$ref": "#/$defs/groupStyle",
+          "description": "Styles by group, for the labels of every gene of that group."
+        },
+        "styleBy": {
+          "$ref": "#/$defs/column",
+          "description": "Column whose values groupStyle matches, e.g. the label column, or \"geneTrack\". Default: fields.group."
+        },
+        "x": {
+          "type": "number",
+          "description": "Horizontal offset of the labels, in pixels."
+        },
+        "y": {
+          "type": "number",
+          "description": "Vertical position of the labels, from 1 (bottom) to 100 (top) of the cluster.",
+          "default": 55
+        },
+        "dx": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Horizontal shift of each label, e.g. \"0.5em\"."
+        },
+        "dy": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Vertical shift of each label, e.g. \"-1em\"."
+        },
+        "rotate": {
+          "type": "number",
+          "description": "Rotation of the labels, in degrees.",
+          "default": 0
+        },
+        "start": {
+          "type": "number",
+          "description": "Position where the labels start; labels of genes before it are not drawn."
+        },
+        "end": {
+          "type": "number",
+          "description": "Position where the labels end; labels of genes after it are not drawn."
+        },
+        "adjustLabels": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "enum": [
+                "hide",
+                "spread"
+              ]
+            }
+          ],
+          "description": "Overlapping labels: true moves them apart, \"hide\" hides them, \"spread\" spreads them out with leader lines, false leaves them.",
+          "default": true
+        },
+        "spreadPosition": {
+          "enum": [
+            "bottom",
+            "top"
+          ],
+          "description": "With adjustLabels \"spread\": the side of the genes the labels go to.",
+          "default": "bottom"
+        },
+        "leaderLine": {
+          "oneOf": [
+            {
+              "const": false
+            },
+            {
+              "$ref": "#/$defs/style"
+            }
+          ],
+          "description": "Style of the lines to spread labels (stroke, strokeWidth, length in pixels); false draws none."
+        },
+        "textAnchor": {
+          "enum": [
+            "start",
+            "middle",
+            "end"
+          ],
+          "description": "Text alignment of each label at its gene.",
+          "default": "middle"
+        },
+        "labelAdjustment": {
+          "$ref": "#/$defs/style",
+          "description": "How overlapping labels are moved: rotation, offsetX, offsetY, dx, dy."
+        },
+        "fontSize": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Font size, e.g. \"12px\"."
+        },
+        "fontStyle": {
+          "type": "string",
+          "description": "Font style, e.g. \"italic\"."
+        },
+        "fontWeight": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Font weight, e.g. \"bold\"."
+        },
+        "fontFamily": {
+          "type": "string",
+          "description": "Font family."
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Mouse cursor over it."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "legendEntry": {
+      "type": "object",
+      "properties": {
+        "group": {
+          "$ref": "#/$defs/column",
+          "description": "Column whose values the legend lists. Default: fields.group."
+        },
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the legend.",
+          "default": true
+        },
+        "backgroundColor": {
+          "$ref": "#/$defs/color",
+          "description": "Background colour; style.backgroundColor takes precedence. Default: the theme's, otherwise transparent."
+        },
+        "order": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Order of the groups in the legend."
+        },
+        "position": {
+          "enum": [
+            "top",
+            "bottom"
+          ],
+          "description": "Above or below the clusters. Default: the theme's, otherwise \"bottom\"."
+        },
+        "align": {
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "description": "Alignment of the legend items; each row on its own. Default: the theme's, otherwise \"left\"."
+        },
+        "style": {
+          "$ref": "#/$defs/style",
+          "description": "CSS styles of the legend's element."
+        },
+        "markerStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Options of the legend items (markers), such as cursor."
+        },
+        "textStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Options of the legend text, such as fontSize."
+        },
+        "cornerRadius": {
+          "type": "number",
+          "description": "Radius in pixels of the markers' corners. Default: square."
+        },
+        "groupStyle": {
+          "$ref": "#/$defs/groupStyle",
+          "description": "Styles by group for the text of that group's entry; styles under marker go to its marker."
+        },
+        "x": {
+          "type": "number",
+          "description": "Horizontal offset of the legend, in pixels."
+        },
+        "y": {
+          "type": "number",
+          "description": "Vertical offset of the legend, in pixels."
+        },
+        "width": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Width of the legend. Default: the chart's width."
+        },
+        "orientation": {
+          "enum": [
+            "horizontal",
+            "vertical"
+          ],
+          "description": "Entries side by side or below each other.",
+          "default": "horizontal"
+        },
+        "adjustHeight": {
+          "type": "boolean",
+          "description": "Whether the legend's height follows its entries.",
+          "default": true
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "linksEntry": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/data",
+          "description": "The links: one row per pair, made by R or Python (get_links) or by hand."
+        },
+        "group": {
+          "$ref": "#/$defs/column",
+          "description": "The column the genes were matched on (R and Python: get_links). Its values pick the genes labelled with the measure; without it, links.data was given and labelPosition \"gene\" draws no labels."
+        },
+        "value1": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            }
+          ],
+          "description": "Values of group matched in the first cluster of each pair; only their genes are labelled with the measure."
+        },
+        "value2": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            }
+          ],
+          "description": "Values of group matched in the second cluster of each pair; only their genes are labelled with the measure."
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "curve": {
+          "type": "boolean",
+          "description": "Whether links are curved. Default: the theme's, otherwise true."
+        },
+        "measure": {
+          "enum": [
+            "identity",
+            "similarity",
+            "none"
+          ],
+          "description": "The measure that sets the links' colour.",
+          "default": "identity"
+        },
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the links.",
+          "default": true
+        },
+        "label": {
+          "type": "boolean",
+          "description": "Whether to write the measure on the links.",
+          "default": true
+        },
+        "labelPosition": {
+          "enum": [
+            "gene",
+            "link"
+          ],
+          "description": "Where the measure goes: with the gene's label (\"gene\") or in the middle of the link (\"link\").",
+          "default": "gene"
+        },
+        "normalColor": {
+          "$ref": "#/$defs/color",
+          "description": "Colour of links. Default: the theme's, otherwise \"#969696\"."
+        },
+        "invertedColor": {
+          "$ref": "#/$defs/color",
+          "description": "Colour of inverted links. Default: the theme's, otherwise \"#d62728\"."
+        },
+        "lowColor": {
+          "$ref": "#/$defs/color",
+          "description": "Colour links fade to at a low measure. Default: the theme's, otherwise white."
+        },
+        "vmin": {
+          "type": "number",
+          "description": "Measure of the lightest colour, and the low end of the colour bar. Default: the theme's, otherwise 0."
+        },
+        "vmax": {
+          "type": "number",
+          "description": "Measure of the full colour, and the high end of the colour bar. Default: the theme's, otherwise 100."
+        },
+        "useGroupColors": {
+          "type": "boolean",
+          "description": "Whether links take the colour of their group.",
+          "default": false
+        },
+        "colorBar": {
+          "type": "boolean",
+          "description": "Whether to show the colour bar. Default: the theme's, otherwise true."
+        },
+        "colorBarOptions": {
+          "type": "object",
+          "description": "Options of the colour bar: position, orientation, labels, x, y, width, height, title and its styles."
+        },
+        "linkWidth": {
+          "type": "number",
+          "description": "Width of the links: 1 is the full width of the genes, 0 none."
+        },
+        "linkStyle": {
+          "$ref": "#/$defs/style",
+          "description": "CSS styles of the links."
+        },
+        "labelStyle": {
+          "$ref": "#/$defs/style",
+          "description": "CSS styles of the measure labels."
+        },
+        "y": {
+          "type": "number",
+          "description": "Vertical position of the links, from 1 (bottom) to 100 (top) of the cluster.",
+          "default": 50
+        },
+        "labelAdjustment": {
+          "$ref": "#/$defs/style",
+          "description": "How overlapping measures on the links are moved: rotation, offsetX, offsetY, dx, dy."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "patternEntry": {
+      "type": "object",
+      "properties": {
+        "patterns": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          ],
+          "description": "Pattern names: an array recycled over the groups, or an object by group (groups left out get none). Default: a pattern for each group in a fixed order."
+        },
+        "color": {
+          "$ref": "#/$defs/colors",
+          "description": "Colour of the pattern: one colour, an array recycled over the groups, or an object by group.",
+          "default": "black"
+        },
+        "background": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/colors"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Colour behind the pattern, in the same forms as color; null keeps the gene colours.",
+          "default": "white"
+        },
+        "size": {
+          "type": "number",
+          "description": "Width and height of one pattern tile in pixels.",
+          "default": 6
+        },
+        "strokeWidth": {
+          "type": "number",
+          "description": "Width of the pattern lines in pixels.",
+          "default": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "scaleEntry": {
+      "type": "object",
+      "properties": {
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "start": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Start of the scale. Default: the first gene's start, less padding."
+        },
+        "end": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "End of the scale. Default: the last gene's end, plus padding."
+        },
+        "padding": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Room on either side: a number, or a share such as \"2%\". Default: the theme's, otherwise 2."
+        },
+        "hidden": {
+          "type": "boolean",
+          "description": "Whether the axis is hidden.",
+          "default": false
+        },
+        "breaks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scaleBreak"
+          },
+          "description": "Stretches of the scale left out, with break marks on the line, in the data's positions."
+        },
+        "tickValues": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "Positions of the ticks. Default: chosen by D3."
+        },
+        "reverse": {
+          "type": "boolean",
+          "description": "Whether the scale runs from right to left.",
+          "default": false
+        },
+        "axisPosition": {
+          "enum": [
+            "top",
+            "bottom"
+          ],
+          "description": "Axis above or below the genes. Default: the theme's, otherwise \"bottom\"."
+        },
+        "axisType": {
+          "enum": [
+            "position",
+            "range"
+          ],
+          "description": "Whether ticks show positions, or the range from the scale's start.",
+          "default": "position"
+        },
+        "y": {
+          "type": "number",
+          "description": "Vertical position of the axis, from 1 to 100."
+        },
+        "autoBreaks": {
+          "type": "boolean",
+          "description": "Whether to add scale breaks at large gaps between genes.",
+          "default": false
+        },
+        "autoBreakThreshold": {
+          "type": "number",
+          "description": "Gaps larger than this percentage of the cluster become scale breaks, with autoBreaks.",
+          "default": 20
+        },
+        "breakPadding": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Room left on either side of a break: a percentage of the region shown, or base pairs as a string such as \"500bp\".",
+          "default": 1
+        },
+        "ticksCount": {
+          "type": "number",
+          "description": "Number of ticks. Default: the theme's, otherwise 10."
+        },
+        "ticksFormat": {
+          "type": "string",
+          "description": "D3 number format of the ticks. Default: \",.0f\" for positions, \".2s\" for ranges."
+        },
+        "tickStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the ticks."
+        },
+        "textStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the tick text."
+        },
+        "lineStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the axis line."
+        }
+      },
+      "additionalProperties": true,
+      "description": "The other properties are further options under their JavaScript names, as R passes them through `...`."
+    },
+    "scaleBarEntry": {
+      "type": "object",
+      "properties": {
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the scale bar.",
+          "default": true
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "lineStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the bar's line."
+        },
+        "tickStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the bar's ticks."
+        },
+        "labelStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the bar's label."
+        },
+        "title": {
+          "type": "string",
+          "description": "Text of the scale bar.",
+          "default": "1 kb"
+        },
+        "unit": {
+          "type": "number",
+          "description": "Length of the scale bar, in base pairs.",
+          "default": 1000
+        },
+        "x": {
+          "type": "number",
+          "description": "Horizontal offset of the scale bar, in pixels."
+        },
+        "y": {
+          "type": "number",
+          "description": "Vertical offset of the scale bar, in pixels."
+        },
+        "textPadding": {
+          "type": "number",
+          "description": "Space between the text and the bar, in pixels.",
+          "default": 0
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "sequenceEntry": {
+      "type": "object",
+      "properties": {
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the line.",
+          "default": true
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "y": {
+          "type": "number",
+          "description": "Vertical position of the line. Default: the theme's, otherwise 50."
+        },
+        "lineStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the line."
+        },
+        "markerStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the break marks, plus markerHeight, tiltAmount and gap."
+        },
+        "start": {
+          "type": "number",
+          "description": "Position where the line starts. Default: the scale's start."
+        },
+        "end": {
+          "type": "number",
+          "description": "Position where the line ends. Default: the scale's end."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "themeEntry": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "$ref": "#/$defs/themeName",
+          "description": "The built-in theme to start from; R's list of theme settings is the theme object itself. Default: the current theme."
+        },
+        "textScale": {
+          "type": "number",
+          "description": "Text size as a factor of the default font sizes."
+        },
+        "fontFamily": {
+          "type": "string",
+          "description": "Font family of all text."
+        },
+        "textColor": {
+          "$ref": "#/$defs/color",
+          "description": "Colour of all text."
+        },
+        "lineColor": {
+          "$ref": "#/$defs/color",
+          "description": "Colour of the lines: sequence, axis, coordinates, scale bar and leader lines."
+        },
+        "background": {
+          "$ref": "#/$defs/color",
+          "description": "Background colour of the chart, also the fill of UTRs."
+        },
+        "palette": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/color"
+              }
+            }
+          ],
+          "description": "Gene colours: a colour scheme's name or an array of colours, in the order of the groups."
+        },
+        "pattern": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "const": false
+            }
+          ],
+          "description": "Patterns, with the properties of the pattern component; false removes the theme's patterns."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Theme settings. The other properties are options per component, named after the component and with the component's option names (e.g. labels: { fontSize: \"10px\" }, legend: { textStyle: { fill: \"grey\" } })."
+    },
+    "titleEntry": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The title."
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "The subtitle."
+        },
+        "style": {
+          "$ref": "#/$defs/style",
+          "description": "CSS styles of the title's element."
+        },
+        "subtitleFont": {
+          "$ref": "#/$defs/style",
+          "description": "Font options of the subtitle."
+        },
+        "titleFont": {
+          "$ref": "#/$defs/style",
+          "description": "Font options of the title."
+        },
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the title.",
+          "default": true
+        },
+        "height": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Height of the title. Default: the theme's, otherwise 50 pixels with a subtitle and 40 without."
+        },
+        "align": {
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "description": "Alignment of the title and subtitle. Default: the theme's, otherwise \"center\"."
+        },
+        "spacing": {
+          "type": "number",
+          "description": "Pixels between the title and subtitle. Default: the theme's, otherwise 20."
+        },
+        "x": {
+          "type": "number",
+          "description": "Horizontal offset of the title, in pixels."
+        },
+        "y": {
+          "type": "number",
+          "description": "Vertical offset of the title, in pixels."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "toolbarEntry": {
+      "type": "object",
+      "properties": {
+        "show": {
+          "enum": [
+            "hover",
+            "always",
+            "never"
+          ],
+          "description": "When the toolbar shows. Default: \"hover\"."
+        },
+        "position": {
+          "enum": [
+            "topright",
+            "topleft",
+            "bottomright",
+            "bottomleft"
+          ],
+          "description": "The corner of the toolbar. Default: \"topright\"."
+        },
+        "buttons": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "undo",
+              "redo",
+              "reset",
+              "zoom",
+              "save"
+            ]
+          },
+          "description": "The buttons, in their order. Default: all."
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the icons in pixels. Default: 20."
+        },
+        "color": {
+          "$ref": "#/$defs/color",
+          "description": "Colour of the icons. Default: \"#D3D3D3\"."
+        },
+        "hoverColor": {
+          "$ref": "#/$defs/color",
+          "description": "Colour of an icon under the mouse. Default: \"#555555\"."
+        },
+        "tooltipBackground": {
+          "$ref": "#/$defs/color",
+          "description": "Background of the tooltips and the save menu. Default: \"#333333\"."
+        },
+        "tooltipColor": {
+          "$ref": "#/$defs/color",
+          "description": "Text colour of the tooltips and the menu. Default: \"white\"."
+        },
+        "tooltipBorder": {
+          "type": "string",
+          "description": "CSS border of the tooltips and the menu. Default: none."
+        },
+        "tooltipRadius": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Corner radius of the tooltips and the menu. Default: 3."
+        },
+        "tooltipShadow": {
+          "type": "string",
+          "description": "CSS box shadow of the tooltips and the menu. Default: none."
+        },
+        "fontFamily": {
+          "type": "string",
+          "description": "Font of the tooltips and the menu. Default: Arial."
+        },
+        "icons": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Icons by button, as Font Awesome names, e.g. { save: \"camera\" }. Buttons left out keep theirs."
+        }
+      },
+      "additionalProperties": false
+    },
+    "tooltipEntry": {
+      "type": "object",
+      "properties": {
+        "formatter": {
+          "type": "string",
+          "description": "HTML of the tooltip; {column} is replaced by the gene's value.",
+          "default": "<b>Start:</b> {start}<br><b>End:</b> {end}"
+        },
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the tooltip.",
+          "default": true
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "triggers": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "markers",
+              "genes",
+              "labels",
+              "exons",
+              "introns",
+              "utrs"
+            ]
+          },
+          "description": "The parts that show the tooltip.",
+          "default": [
+            "markers",
+            "genes",
+            "labels",
+            "exons",
+            "introns",
+            "utrs"
+          ]
+        },
+        "opacity": {
+          "type": "number",
+          "description": "Opacity of the tooltip when hidden.",
+          "default": 0
+        },
+        "position": {
+          "type": "string",
+          "description": "CSS position of the tooltip.",
+          "default": "absolute"
+        },
+        "pointerEvents": {
+          "type": "string",
+          "description": "CSS pointer-events of the tooltip.",
+          "default": "none"
+        },
+        "backgroundColor": {
+          "$ref": "#/$defs/color",
+          "description": "Background colour."
+        },
+        "color": {
+          "$ref": "#/$defs/color",
+          "description": "Text colour."
+        },
+        "padding": {
+          "type": "string",
+          "description": "Padding, as CSS."
+        },
+        "borderRadius": {
+          "type": "string",
+          "description": "Corner radius, as CSS."
+        },
+        "border": {
+          "type": "string",
+          "description": "Border, as CSS."
+        },
+        "boxShadow": {
+          "type": "string",
+          "description": "Shadow, as CSS."
+        },
+        "fontFamily": {
+          "type": "string",
+          "description": "Font family."
+        },
+        "fontSize": {
+          "type": "string",
+          "description": "Font size, as CSS."
+        },
+        "lineHeight": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Line height, as CSS."
+        },
+        "zIndex": {
+          "type": "number",
+          "description": "Stacking order, as CSS."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "trackMouseEntry": {
+      "type": "object",
+      "properties": {
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the position.",
+          "default": true
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Mouse cursor over the clusters.",
+          "default": "crosshair"
+        },
+        "backgroundColor": {
+          "$ref": "#/$defs/color",
+          "description": "Background colour."
+        },
+        "color": {
+          "$ref": "#/$defs/color",
+          "description": "Text colour."
+        },
+        "padding": {
+          "type": "string",
+          "description": "Padding, as CSS."
+        },
+        "borderRadius": {
+          "type": "string",
+          "description": "Corner radius, as CSS."
+        },
+        "border": {
+          "type": "string",
+          "description": "Border, as CSS."
+        },
+        "boxShadow": {
+          "type": "string",
+          "description": "Shadow, as CSS."
+        },
+        "fontFamily": {
+          "type": "string",
+          "description": "Font family."
+        },
+        "fontSize": {
+          "type": "string",
+          "description": "Font size, as CSS."
+        },
+        "lineHeight": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Line height, as CSS."
+        },
+        "zIndex": {
+          "type": "number",
+          "description": "Stacking order, as CSS."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "transcriptEntry": {
+      "type": "object",
+      "properties": {
+        "transcript": {
+          "$ref": "#/$defs/column",
+          "description": "Column that groups the rows into transcripts."
+        },
+        "type": {
+          "$ref": "#/$defs/column",
+          "description": "Column with the feature type of each row (\"exon\", \"intron\", \"UTR\")."
+        },
+        "strand": {
+          "$ref": "#/$defs/column",
+          "description": "Column with the strand of each transcript, read as fields.strand."
+        },
+        "group": {
+          "$ref": "#/$defs/column",
+          "description": "Column that groups the transcripts for their colours."
+        },
+        "selection": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            }
+          ],
+          "description": "Only these transcripts are drawn."
+        },
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the transcripts.",
+          "default": true
+        },
+        "colorScheme": {
+          "type": "string",
+          "description": "Colour scheme of the groups. Default: the colours of the color component."
+        },
+        "customColors": {
+          "$ref": "#/$defs/colors",
+          "description": "Colours of the groups: an array recycled over the groups, or an object by group."
+        },
+        "styleExons": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the exons."
+        },
+        "styleIntrons": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the introns."
+        },
+        "styleUTRs": {
+          "$ref": "#/$defs/style",
+          "description": "Styles of the UTRs."
+        },
+        "itemStyleExons": {
+          "$ref": "#/$defs/itemStyle",
+          "description": "Styles of single exons, by 0-based index."
+        },
+        "itemStyleIntrons": {
+          "$ref": "#/$defs/itemStyle",
+          "description": "Styles of single introns, by 0-based index."
+        },
+        "itemStyleUTRs": {
+          "$ref": "#/$defs/itemStyle",
+          "description": "Styles of single UTRs, by 0-based index."
+        },
+        "groupStyleExons": {
+          "$ref": "#/$defs/groupStyle",
+          "description": "Styles by group, for every exon of that group."
+        },
+        "groupStyleIntrons": {
+          "$ref": "#/$defs/groupStyle",
+          "description": "Styles by group, for every intron of that group."
+        },
+        "groupStyleUTRs": {
+          "$ref": "#/$defs/groupStyle",
+          "description": "Styles by group, for every UTR of that group."
+        },
+        "styleBy": {
+          "$ref": "#/$defs/column",
+          "description": "Column whose values the group styles match. Default: group."
+        },
+        "labelOptions": {
+          "$ref": "#/$defs/style",
+          "description": "Options of the transcript labels."
+        },
+        "x": {
+          "type": "number",
+          "description": "Horizontal offset of the transcripts, in pixels."
+        },
+        "y": {
+          "type": "number",
+          "description": "Vertical position of the transcripts, from 1 (bottom) to 100 (top) of the cluster.",
+          "default": 50
+        }
+      },
+      "additionalProperties": true,
+      "description": "Other properties are passed to the renderer as they are."
+    },
+    "zoomEntry": {
+      "type": "object",
+      "properties": {
+        "show": {
+          "type": "boolean",
+          "description": "Whether to show the slider.",
+          "default": true
+        },
+        "range": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The window shown first, [start, end] in the units of mode. Default: everything."
+        },
+        "mode": {
+          "enum": [
+            "relative",
+            "absolute"
+          ],
+          "description": "\"relative\": every cluster shows the same share of its range; \"absolute\": the same base pairs. Default: \"relative\"."
+        },
+        "min": {
+          "type": "number",
+          "description": "The narrowest window, in the units of mode. Default: 1% of the slider."
+        },
+        "update": {
+          "enum": [
+            "live",
+            "release"
+          ],
+          "description": "Draw while the slider moves, or when it is let go. Default: \"live\"."
+        },
+        "height": {
+          "type": "number",
+          "description": "Height of the slider in pixels. Default: 24."
+        },
+        "overview": {
+          "type": "boolean",
+          "description": "Whether the slider shows the genes of each cluster. Default: true."
+        },
+        "color": {
+          "$ref": "#/$defs/color",
+          "description": "One colour for the overview's genes in place of their group colours."
+        },
+        "style": {
+          "$ref": "#/$defs/style",
+          "description": "CSS styles of the slider's track."
+        },
+        "windowStyle": {
+          "$ref": "#/$defs/style",
+          "description": "CSS styles of the window."
+        },
+        "handleStyle": {
+          "$ref": "#/$defs/style",
+          "description": "CSS styles of the two handles."
+        }
+      },
+      "additionalProperties": false
+    },
+    "annotationEntry": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "text",
+            "textMarker",
+            "line",
+            "arrow",
+            "symbol",
+            "rectangle",
+            "promoter",
+            "terminator",
+            "arc"
+          ],
+          "description": "The kind of annotation.",
+          "default": "text"
+        },
+        "clusters": {
+          "$ref": "#/$defs/clusters",
+          "description": "The clusters this entry applies to, by name or 1-based position. Default: all clusters."
+        },
+        "x": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Position along the scale (text, symbol, promoter, terminator); an array draws one per position; an array draws one per value."
+        },
+        "y": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Vertical position, from 1 to 100 (text, symbol, promoter, terminator); an array draws one per value."
+        },
+        "text": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            }
+          ],
+          "description": "The text (text, textMarker, arc); an array draws one per value."
+        },
+        "x1": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Start position along the scale (line, arrow, textMarker, arc); an array draws one per value."
+        },
+        "x2": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "End position along the scale (line, arrow, textMarker, arc); an array draws one per value."
+        },
+        "y1": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Start height, from 1 to 100 (line, arrow, textMarker, arc); an array draws one per value."
+        },
+        "y2": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "End height, from 1 to 100 (line, arrow, textMarker, arc); an array draws one per value."
+        },
+        "position": {
+          "description": "textMarker: the position along the scale; rectangle: corners [[x1, y1], [x2, y2]], or an array of them."
+        },
+        "labelX": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Horizontal offset of the text, in pixels (textMarker, arc); an array draws one per value."
+        },
+        "labelY": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Vertical offset of the text, in pixels (textMarker, arc); an array draws one per value."
+        },
+        "showArrow": {
+          "type": "boolean",
+          "description": "Whether the textMarker has an arrowhead."
+        },
+        "arrowSize": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Size of the arrowhead, in pixels (arrow, textMarker); an array draws one per value."
+        },
+        "symbol": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "description": "Symbol: circle, cross, diamond, square, star, triangle or wye."
+        },
+        "size": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Size of the symbol, in square pixels; an array draws one per value."
+        },
+        "rotation": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Rotation, in degrees (symbol, rectangle, promoter, terminator); an array draws one per value."
+        },
+        "direction": {
+          "enum": [
+            "forward",
+            "reverse"
+          ],
+          "description": "Direction of a promoter or terminator."
+        },
+        "scale": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Size factor of a promoter or terminator; an array draws one per value."
+        },
+        "midY": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Height of the arc's middle, from 1 to 100; an array draws one per value."
+        },
+        "stroke": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "description": "Line colour of an arc."
+        },
+        "strokeWidth": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "Line width of an arc, in pixels; an array draws one per value."
+        },
+        "style": {
+          "$ref": "#/$defs/style",
+          "description": "Style of the annotation (text, line, symbol, rectangle, promoter, terminator)."
+        },
+        "textStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Style of the text (textMarker, arc)."
+        },
+        "arrowStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Style of the arrowhead (arrow, textMarker)."
+        },
+        "lineStyle": {
+          "$ref": "#/$defs/style",
+          "description": "Style of the line (arrow, textMarker, arc)."
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ],
+      "description": "One annotation. The other properties are the options of its type, under their JavaScript names (x, y, text, ...)."
+    },
+    "alignEntry": {
+      "type": "object",
+      "properties": {
+        "idColumn": {
+          "$ref": "#/$defs/column",
+          "description": "Column that identifies the gene to align on."
+        },
+        "id": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "The value of idColumn of the gene to align on; one gene per cluster."
+        },
+        "align": {
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "description": "The side of the gene the clusters align on.",
+          "default": "left"
+        }
+      },
+      "required": [
+        "idColumn",
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

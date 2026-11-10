@@ -1,0 +1,16 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/ncbi_protein.fasta",
+  "data": null,
+  "result": {
+    "columns": [],
+    "data": {}
+  },
+  "warnings": ["No keys found in 'ncbi_protein'. Make sure the fasta headers are in the right format. Skipping file."],
+  "error": null
+}

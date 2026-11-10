@@ -1,0 +1,38 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/repeated.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "note",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "gene": ["a", "b"],
+      "note": ["first,second", null],
+      "sequence": ["MKT", "MAA"],
+      "cluster": ["repeated", "repeated"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

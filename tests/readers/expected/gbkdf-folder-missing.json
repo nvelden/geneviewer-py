@@ -1,0 +1,22 @@
+{
+  "calls": [
+    {
+      "fun": "read_gbk",
+      "args": {}
+    },
+    {
+      "fun": "gbk_features_to_df",
+      "args": {
+        "feature": "tRNA"
+      }
+    }
+  ],
+  "input": "inputs/gbk-folder",
+  "data": null,
+  "result": {
+    "columns": [],
+    "data": {}
+  },
+  "warnings": ["Feature tRNA not found in cluster B03", "Feature tRNA not found in cluster B04"],
+  "error": null
+}

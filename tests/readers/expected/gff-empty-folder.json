@@ -1,0 +1,13 @@
+{
+  "calls": [
+    {
+      "fun": "read_gff",
+      "args": {}
+    }
+  ],
+  "input": "inputs/no-gff",
+  "data": null,
+  "result": null,
+  "warnings": [],
+  "error": "No .gff or .gtf files found in the specified directory."
+}

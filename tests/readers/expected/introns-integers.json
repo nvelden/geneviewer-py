@@ -1,0 +1,68 @@
+{
+  "calls": [
+    {
+      "fun": "get_introns",
+      "args": {}
+    }
+  ],
+  "input": null,
+  "data": {
+    "columns": [
+      {
+        "name": "start",
+        "type": "integer"
+      },
+      {
+        "name": "end",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "start": [1, 30, 60],
+      "end": [20, 50, 80],
+      "name": ["e1", "e2", "e3"],
+      "type": ["5'UTR", "CDS exon", "gene"]
+    }
+  },
+  "result": {
+    "columns": [
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "name",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "transcript",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "start": [1, 21, 30, 60],
+      "end": [20, 29, 50, 80],
+      "name": ["e1", "e1", "e2", "e3"],
+      "type": ["5'UTR", "intron", "CDS exon", "gene"],
+      "transcript": ["transcript1", "transcript1", "transcript1", "transcript1"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

@@ -1,0 +1,53 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/b08_join.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "location",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "gene": ["ORF1ab", "ARV1", "abc", "ori", "BDH2"],
+      "location": ["join(266..13468,13468..21555)", "complement(join(6915..7069,7157..7232,8571..8666))", "complement(<1..2247)", "join(30883..31317,1..108)", "join(complement(5441..5600),complement(5095..5373))"],
+      "sequence": ["MKTAYIAKQR", "MSDNELLKRL", "MSDNELLKRL", "MSDNELLKRL", "MSDNELLKRL"],
+      "start": [266, 6915, 1, 30883, 5095],
+      "end": [21555, 8666, 2247, 31317, 5600],
+      "strand": ["forward", "complement", "complement", "forward", "complement"],
+      "cluster": ["b08_join", "b08_join", "b08_join", "b08_join", "b08_join"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

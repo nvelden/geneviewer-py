@@ -1,0 +1,87 @@
+{
+  "calls": [
+    {
+      "fun": "read_gbk",
+      "args": {}
+    },
+    {
+      "fun": "gbk_features_to_df",
+      "args": {}
+    }
+  ],
+  "input": "inputs/B04.gbk",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "locus_tag",
+        "type": "character"
+      },
+      {
+        "name": "product",
+        "type": "character"
+      },
+      {
+        "name": "note",
+        "type": "character"
+      },
+      {
+        "name": "codon_start",
+        "type": "character"
+      },
+      {
+        "name": "db_xref",
+        "type": "character"
+      },
+      {
+        "name": "db_xref.1",
+        "type": "character"
+      },
+      {
+        "name": "region",
+        "type": "character"
+      },
+      {
+        "name": "pseudo",
+        "type": "character"
+      },
+      {
+        "name": "function.",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      }
+    ],
+    "data": {
+      "locus_tag": ["DEMO_0001", "DEMO_0002"],
+      "product": ["4'-phosphopantetheinyl transferase (PPTase)", "(R)-3-hydroxybutyryl-CoA dehydrogenase"],
+      "note": ["[pseudo] see ref. 12.", "similar to /gene=abcX in other strains"],
+      "codon_start": ["1", null],
+      "db_xref": ["GI:1", null],
+      "db_xref.1": ["UniProtKB:Q1", null],
+      "region": ["10..300", "350..580"],
+      "pseudo": [null, ""],
+      "function.": [null, "says \"hello\""],
+      "cluster": ["B04", "B04"],
+      "strand": ["forward", "forward"],
+      "start": [10, 350],
+      "end": [300, 580]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

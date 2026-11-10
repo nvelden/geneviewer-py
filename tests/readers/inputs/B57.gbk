@@ -1,0 +1,16 @@
+LOCUS       DEMO01                 32000 bp    DNA     linear   PLN 01-JAN-2024
+FEATURES             Location/Qualifiers
+     CDS             join(complement(5441..5600),complement(5095..5373),
+                     complement(5024..5040))
+                     /locus_tag="DEMO_0001"
+     CDS             complement(join(6915..7069,7157..7232))
+                     /locus_tag="DEMO_0002"
+     CDS             join(<10..120,200..>300)
+                     /locus_tag="DEMO_0003"
+     CDS             join(30883..31317,1..108)
+                     /locus_tag="DEMO_0004"
+     CDS             complement(120..920)
+                     /locus_tag="DEMO_0005"
+ORIGIN
+        1 atgaaacgca
+//

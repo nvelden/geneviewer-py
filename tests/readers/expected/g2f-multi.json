@@ -1,0 +1,13 @@
+{
+  "calls": [
+    {
+      "fun": "genbank_to_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/multi.gbk",
+  "data": null,
+  "result": [">AAA.1 Record AAA", "ACGTACGTACGTACGTACGT", ">BBB.1 Record BBB", "TTTTGGGGGCCCCCAAAAAT"],
+  "warnings": [],
+  "error": null
+}

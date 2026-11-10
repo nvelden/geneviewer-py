@@ -1,0 +1,4 @@
+chr1	demo	gene	100	500	0.5	+	0	ID=a
+chr1	demo	gene	600	900	12	+	2	ID=b
+chr1	demo	gene	1000	1200	1e3	-
+  

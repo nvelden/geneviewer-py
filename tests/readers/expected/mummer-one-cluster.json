@@ -1,0 +1,15 @@
+{
+  "calls": [
+    {
+      "fun": "mummer_alignment",
+      "args": {
+        "cluster": ["A"]
+      }
+    }
+  ],
+  "input": "inputs/mummer",
+  "data": null,
+  "result": null,
+  "warnings": [],
+  "error": "At least two clusters must be provided."
+}

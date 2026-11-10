@@ -1,0 +1,13 @@
+{
+  "calls": [
+    {
+      "fun": "read_gff",
+      "args": {}
+    }
+  ],
+  "input": "inputs/does-not-exist.gff3",
+  "data": null,
+  "result": null,
+  "warnings": [],
+  "error": "The specified path does not exist."
+}

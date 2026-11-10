@@ -1,0 +1,63 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/b08_spaces.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "protein",
+        "type": "character"
+      },
+      {
+        "name": "protein_id",
+        "type": "character"
+      },
+      {
+        "name": "location",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "gene": ["sigD", null],
+      "protein": ["putative RNA polymerase sigma factor", "ScnRII"],
+      "protein_id": ["ADX66476.1", "ADX66474.1"],
+      "location": ["3301..3870", "complement(5576..6154)"],
+      "sequence": ["MKTAYIAKQR", "MSDNELLKRL"],
+      "start": [3301, 5576],
+      "end": [3870, 6154],
+      "strand": ["forward", "complement"],
+      "cluster": ["b08_spaces", "b08_spaces"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

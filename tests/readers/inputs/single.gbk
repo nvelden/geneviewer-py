@@ -1,0 +1,7 @@
+LOCUS       AAA                 20 bp    DNA     linear   BCT 01-JAN-2024
+DEFINITION  Record AAA.
+VERSION     AAA.1
+FEATURES             Location/Qualifiers
+ORIGIN
+        1 acgtacgtac gtacgtacgt
+//

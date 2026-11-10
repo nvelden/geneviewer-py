@@ -1,0 +1,54 @@
+{
+  "calls": [
+    {
+      "fun": "read_gbk",
+      "args": {}
+    },
+    {
+      "fun": "gbk_features_to_df",
+      "args": {
+        "feature": "CDS_motif"
+      }
+    }
+  ],
+  "input": "inputs/B03.gbk",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "note",
+        "type": "character"
+      },
+      {
+        "name": "region",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      }
+    ],
+    "data": {
+      "note": ["motif"],
+      "region": ["20..80"],
+      "cluster": ["B03"],
+      "strand": ["forward"],
+      "start": [20],
+      "end": [80]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

@@ -1,0 +1,55 @@
+{
+  "calls": [
+    {
+      "fun": "read_gbk",
+      "args": {}
+    },
+    {
+      "fun": "gbk_features_to_df",
+      "args": {
+        "feature": "gene",
+        "keys": ["gene", "locus_tag", "region", "nokey"]
+      }
+    }
+  ],
+  "input": "inputs/BGC0000001.gbk",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "region",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      }
+    ],
+    "data": {
+      "gene": ["orfP", "abyR", "abyX", "abyH", "abyI", "abyK", "abyA1", "abyA2", "abyA3", "abyA4", "abyA5", "abyB1", "abyB2", "abyB3", "abyC", "abyD", "abyE", "abyF1", "abyF2", "abyF3", "abyF4", "abyV", "abyW", "abyZ", "abyT", "orfU", "orfS"],
+      "region": ["1..1083", "1887..2633", "complement(2646..3836)", "complement(3927..6596)", "6952..7710", "complement(8175..10034)", "10118..11143", "11140..13008", "13005..13241", "13238..13993", "13990..15057", "15054..32399", "32476..43413", "43410..46388", "complement(46457..47149)", "47233..48660", "48731..49738", "49826..51442", "51439..52374", "52371..53222", "53212..54831", "54828..56015", "55978..56229", "complement(56230..56808)", "56933..57829", "complement(57728..58636)", "58727..59320"],
+      "cluster": ["BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001", "BGC0000001"],
+      "strand": ["forward", "forward", "complement", "complement", "forward", "complement", "forward", "forward", "forward", "forward", "forward", "forward", "forward", "forward", "complement", "forward", "forward", "forward", "forward", "forward", "forward", "forward", "forward", "complement", "forward", "complement", "forward"],
+      "start": [1, 1887, 2646, 3927, 6952, 8175, 10118, 11140, 13005, 13238, 13990, 15054, 32476, 43410, 46457, 47233, 48731, 49826, 51439, 52371, 53212, 54828, 55978, 56230, 56933, 57728, 58727],
+      "end": [1083, 2633, 3836, 6596, 7710, 10034, 11143, 13008, 13241, 13993, 15057, 32399, 43413, 46388, 47149, 48660, 49738, 51442, 52374, 53222, 54831, 56015, 56229, 56808, 57829, 58636, 59320]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

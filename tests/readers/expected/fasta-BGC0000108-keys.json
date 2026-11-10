@@ -1,0 +1,41 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {
+        "sequence": false,
+        "keys": ["protein_id", "start", "end", "strand", "nokey"]
+      }
+    }
+  ],
+  "input": "inputs/BGC0000108.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "protein_id",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "protein_id": ["ADX66475.1", "ADX66476.1", "ADX66477.1", "ADX66474.1", "ADX66458.1", "ADD85130.2", "ADX66459.1", "ADX66460.1", "ADX66461.1", "ADX66462.1", "ADX66463.1", "ADX66464.1", "ADX66465.1", "ADX66466.1", "ADX66467.1", "ADX66468.1", "ADX66469.1", "ADX66470.1", "ADX78256.1", "ADX66471.1", "ADX66472.1", "ADX66473.1"],
+      "start": [1, 3301, 4356, 5576, 6555, 10250, 11720, 17836, 23289, 52098, 52999, 54450, 56176, 58194, 59943, 61029, 62267, 62538, 67892, 68613, 69916, 90708],
+      "end": [2247, 3870, 5282, 6154, 10085, 11626, 17785, 23277, 51785, 52865, 54030, 56258, 58059, 59852, 61001, 62216, 62458, 67805, 68563, 69833, 90411, 91901],
+      "strand": ["complement", "complement", "complement", "complement", "forward", "forward", "complement", "complement", "complement", "complement", "complement", "forward", "forward", "forward", "forward", "forward", "forward", "forward", "forward", "complement", "complement", "forward"]
+    }
+  },
+  "warnings": ["The following keys are not column names in the dataframe: nokey."],
+  "error": null
+}

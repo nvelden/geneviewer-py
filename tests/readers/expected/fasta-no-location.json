@@ -1,0 +1,48 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/no_location.fasta",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "location",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "gene": ["a", "b"],
+      "location": ["1..9", null],
+      "sequence": ["MKT", "MAA"],
+      "start": [1, null],
+      "end": [9, null],
+      "cluster": ["no_location", "no_location"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

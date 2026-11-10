@@ -1,0 +1,92 @@
+{
+  "calls": [
+    {
+      "fun": "read_gbk",
+      "args": {}
+    }
+  ],
+  "input": "inputs/B03.gbk",
+  "data": null,
+  "result": {
+    "B03": {
+      "LOCUS": "DEMO01 600 bp DNA linear BCT 01-JAN-2024",
+      "FEATURES": {
+        "source": [
+          [
+            [
+              "region",
+              null
+            ]
+          ]
+        ],
+        "gene": [
+          [
+            [
+              "gene",
+              "abcA"
+            ],
+            [
+              "region",
+              "10..300"
+            ]
+          ],
+          [
+            [
+              "gene",
+              "abcB"
+            ],
+            [
+              "region",
+              "350..580"
+            ]
+          ]
+        ],
+        "CDS": [
+          [
+            [
+              "gene",
+              "abcA"
+            ],
+            [
+              "note",
+              "part of a biosynthetic gene cluster for a polyketide"
+            ],
+            [
+              "locus_tag",
+              "DEMO_0001"
+            ],
+            [
+              "region",
+              "10..300"
+            ]
+          ],
+          [
+            [
+              "gene",
+              "abcB"
+            ],
+            [
+              "region",
+              "350..580"
+            ]
+          ]
+        ],
+        "CDS_motif": [
+          [
+            [
+              "note",
+              "motif"
+            ],
+            [
+              "region",
+              "20..80"
+            ]
+          ]
+        ]
+      },
+      "ORIGIN": "atgaaacgca"
+    }
+  },
+  "warnings": [],
+  "error": null
+}

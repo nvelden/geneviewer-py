@@ -32,10 +32,13 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python }}
-      - run: pip install -e ".[dev]"
+      # MUMmer for the mummer_alignment() fixtures; they are skipped without it
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y mummer
+      - run: pip install -e ".[dev,shiny,align]"
       - run: pytest
 
-  # Draws charts in headless Chromium (playwright); Linux only
+  # Runs the example Shiny app in headless Chromium (playwright); Linux only
   browser:
     runs-on: ubuntu-latest
     steps:
@@ -43,7 +46,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.14"
-      - run: pip install -e ".[dev]"
+      - run: pip install -e ".[dev,shiny]"
       - run: python -m playwright install --with-deps chromium
       - run: pytest tests/browser -m browser
 
