@@ -1,13 +1,14 @@
 # geneviewer for Python
 
+[![PyPI](https://img.shields.io/pypi/v/geneviewer-py)](https://pypi.org/project/geneviewer-py/)
+[![CI](https://github.com/nvelden/geneviewer-py/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/nvelden/geneviewer-py/actions/workflows/ci.yml)
+
 Gene cluster charts for Python and Shiny for Python, drawn by the
 [geneviewer](https://github.com/nvelden/geneviewer-js) JavaScript library.
 It is the Python counterpart of the
 [geneviewer R package](https://github.com/nvelden/geneviewer).
 
-Work in progress; not yet on PyPI.
-
-Documentation: <https://nvelden.github.io/geneviewer-docs/>
+Documentation: <https://nvelden.github.io/geneviewer-docs/python/>
 
 ## Install
 
@@ -50,16 +51,17 @@ app = App(app_ui, server)
 
 `GC()` takes a table with a start and an end column, and each method adds
 or changes a part of the chart, as the `GC_` functions of the R package do.
-[docs/NAMING.md](docs/NAMING.md) lists the Python name of each R function
+[docs/NAMING.md](https://github.com/nvelden/geneviewer-py/blob/main/docs/NAMING.md) lists the Python name of each R function
 and argument.
 
 A chart's events are inputs named after the output, such as
 `input.chart_select()` for a click on a gene, and `zoom_to()` moves the
-zoom slider from the server. `examples/shiny/app.py` shows both, with three
-charts:
+zoom slider from the server. The example app of this repository shows both,
+with three charts:
 
 ```sh
-shiny run examples/shiny/app.py
+git clone https://github.com/nvelden/geneviewer-py
+shiny run geneviewer-py/examples/shiny/app.py
 ```
 
 ## Example datasets
@@ -113,7 +115,7 @@ alignment = gv.mummer_alignment("folder/of/fasta/files", seqtype="nucleotide")
 ```
 
 Results can differ a little from the R package's;
-[docs/differences.md](docs/differences.md) lists where and why.
+[docs/differences.md](https://github.com/nvelden/geneviewer-py/blob/main/docs/differences.md) lists where and why.
 
 ## Development
 
