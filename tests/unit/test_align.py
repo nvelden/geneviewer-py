@@ -96,6 +96,28 @@ def test_mummer_failing_pair_warns(monkeypatch, tmp_path):
     assert sorted(p.name for p in folder.iterdir()) == before
 
 
+def test_mummer_pair_without_alignments(tmp_path):
+    # As R: a pair with nothing in common gives no rows and no warning
+    if not all(shutil.which(c) for c in ("nucmer", "delta-filter", "show-coords")):
+        pytest.skip("MUMmer is not installed")
+    import random
+    import warnings
+
+    rng = random.Random(1)
+    a, b = ("".join(rng.choice("ACGT") for _ in range(6000)) for _ in range(2))
+    (tmp_path / "A.fasta").write_text(f">A\n{a}\n")
+    (tmp_path / "B.fasta").write_text(f">B\n{a[:3000]}{b[:2000]}\n")
+    (tmp_path / "C.fasta").write_text(f">C\n{b[3000:]}\n")
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        result = mummer_alignment(tmp_path, seqtype="nucleotide")
+        none = mummer_alignment(tmp_path, cluster=["B", "C"], seqtype="nucleotide")
+    assert result[["cluster1", "cluster2"]].values.tolist() == [["A", "B"]]
+    assert str(result["start1"].dtype) == "Int64"
+    assert len(none) == 0
+    assert list(none.columns)[:2] == ["start1", "end1"]
+
+
 def test_mummer_paths_without_spaces(monkeypatch, tmp_path):
     folder = tmp_path / "with space"
     folder.mkdir()

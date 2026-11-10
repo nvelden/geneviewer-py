@@ -265,8 +265,10 @@ def mummer_alignment(
         One row per alignment: ``start1``, ``end1``, ``start2``, ``end2``,
         ``length1``, ``length2``, ``identity`` (and for protein
         ``similarity``, ``stop``, ``frame1``, ``frame2``), ``tag1``, ``tag2``,
-        ``cluster1`` and ``cluster2``. ``None`` when no pair aligned. A pair
-        that fails gives a warning and no rows.
+        ``cluster1`` and ``cluster2``. A pair without alignments gives no
+        rows; when no pair has any, the table is empty, without the cluster
+        columns (as R). A pair that fails gives a warning and no rows;
+        ``None`` when every pair fails.
     """
     path = Path(path)
     output_dir = Path(output_dir)
@@ -347,4 +349,8 @@ def mummer_alignment(
 
     if not links:
         return None
-    return pd.concat(links, ignore_index=True)
+    # As R's rbind(): tables without rows are left out, unless all are empty
+    with_rows = [table for table in links if len(table)]
+    if not with_rows:
+        return links[0]
+    return pd.concat(with_rows, ignore_index=True)

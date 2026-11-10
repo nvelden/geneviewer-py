@@ -91,8 +91,8 @@ method renames them, as R does):
 - `protein_blast()` has no `parallel` argument (deprecated and ignored in
   R). It needs Biopython (`pip install "geneviewer-py[align]"`); its
   results can differ a little from R's, see `docs/differences.md`.
-- `mummer_alignment()` returns `None` when no pair aligned, as R returns
-  `NULL`. It runs MUMmer without a shell; the options strings are split as
+- `mummer_alignment()` returns `None` when every pair fails, as R returns
+  `NULL`; a pair without alignments gives no rows. It runs MUMmer without a shell; the options strings are split as
   a shell would. Paths with spaces are refused, as in R (MUMmer's scripts
   need it).
 - `.links(group=)` finds the links as R does, in R's row order (R's

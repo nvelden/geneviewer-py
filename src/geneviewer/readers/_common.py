@@ -368,6 +368,9 @@ def read_lines(path: str | os.PathLike[str]) -> list[str]:
     if raw[:2] == b"\x1f\x8b":
         raw = gzip.decompress(raw)
     text = raw.decode("utf-8", errors="replace")
+    if not text:
+        # An empty file has no lines (not one empty line)
+        return []
     return (
         text.replace("\r\n", "\n")
         .replace("\r", "\n")
