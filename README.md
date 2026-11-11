@@ -1,7 +1,6 @@
 # geneviewer for Python
 
-[![PyPI](https://img.shields.io/pypi/v/geneviewer-py)](https://pypi.org/project/geneviewer-py/)
-[![CI](https://github.com/nvelden/geneviewer-py/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/nvelden/geneviewer-py/actions/workflows/ci.yml)
+[![CI](https://github.com/nvelden/geneviewer-py/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/nvelden/geneviewer-py/actions/workflows/ci.yml) [![PyPI version](https://img.shields.io/pypi/v/geneviewer-py)](https://pypi.org/project/geneviewer-py/) [![PyPI downloads](https://static.pepy.tech/badge/geneviewer-py)](https://pepy.tech/project/geneviewer-py) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 Gene cluster charts for Python and Shiny for Python, drawn by the
 [geneviewer](https://github.com/nvelden/geneviewer-js) JavaScript library.
