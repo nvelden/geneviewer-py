@@ -286,7 +286,8 @@ def get_introns(data: pd.DataFrame) -> pd.DataFrame:
         not pd.isna(t) and re.search("exon|utr", str(t), re.IGNORECASE) is not None
         for t in data["type"]
     ]
-    parts = data[is_part].copy()
+    # A boolean Series: an empty list would select columns, not rows
+    parts = data[pd.Series(is_part, index=data.index, dtype=bool)].copy()
     start = parts["start"].astype("float64")
     end = parts["end"].astype("float64")
     swap = start > end

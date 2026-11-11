@@ -250,3 +250,18 @@ def test_normalize_warnings():
     with warnings.catch_warnings():
         warnings.simplefilter("error")
         GC(POSITIONS, group="grp").normalize()
+
+
+def test_a_chart_without_rows_takes_transcript_and_normalize():
+    data = pd.DataFrame(
+        {
+            "start": pd.Series([], dtype=float),
+            "end": pd.Series([], dtype=float),
+            "name": pd.Series([], dtype=str),
+            "cl": pd.Series([], dtype=str),
+        }
+    )
+    spec = GC(data, cluster="cl").normalize().labels("name").to_spec()
+    assert spec["labels"] == {"label": "name"}
+    spec = GC(data).transcript(transcript="cl").to_spec()
+    assert spec["data"]["start"] == []

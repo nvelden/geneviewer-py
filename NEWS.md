@@ -28,6 +28,11 @@
   genes; they stayed at the old positions. Links given as `data` (e.g.
   alignments) keep their positions, with a warning to add them after
   `normalize()`.
+- A chart of data without rows (or only rows without a start or end) takes
+  the chart's methods: `labels("name")` and `legend()` stopped with "column
+  not found in data", and `normalize()` and `transcript()` with an internal
+  error. The chart has no clusters. (Drawing it needs the next geneviewer
+  JavaScript library.)
 - `genbank_to_fasta()` writes records without a `VERSION` line, named by
   their `ACCESSION`, else their `LOCUS` name, else the file name; without a
   `DEFINITION`, the header is the name only. They were left out without a

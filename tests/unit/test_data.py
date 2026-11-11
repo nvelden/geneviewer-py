@@ -43,8 +43,11 @@ def test_prepare_data_leaves_out_rows_without_start_or_end():
     with pytest.warns(UserWarning, match="filtered out"):
         out = d.prepare_data(data)
     assert out["rowID"].tolist() == [1]
+    # No rows left: the columns stay
     with pytest.warns(UserWarning):
-        assert d.prepare_data(pd.DataFrame({"start": [None], "end": [1]})) is None
+        empty = d.prepare_data(pd.DataFrame({"start": [None], "end": [1]}))
+    assert len(empty) == 0
+    assert list(empty.columns) == ["start", "end", "rowID", "strand"]
 
 
 @pytest.mark.parametrize(
@@ -90,7 +93,9 @@ def test_add_strand_values_as_r_reads_them():
 
 def test_add_strand_no_rows():
     assert d.add_strand(None) is None
-    assert d.add_strand(GENES.iloc[0:0]) is None
+    empty = d.add_strand(GENES.iloc[0:0])
+    assert len(empty) == 0
+    assert list(empty.columns) == [*GENES.columns, "strand"]
 
 
 # chart_fields, clusters ---------------------------------------------------
@@ -118,8 +123,9 @@ def test_chart_fields_after_transcript():
 def test_chart_fields_no_rows():
     data = pd.DataFrame({"start": [None], "end": [1.0], "cluster": ["a"]})
     state = d.chart_fields({"data": data, "fields": {"cluster": "cluster"}})
-    assert state["columns"] is None
+    assert state["columns"] == ["start", "end", "cluster", "rowID", "strand"]
     assert state["clusters"] == []
+    assert d.chart_fields({"data": data})["clusters"] == []
 
 
 def test_get_updated_clusters():
