@@ -17,6 +17,13 @@
   in files whose locations are all forward. Before, such a file had no
   `strand` column, and in a folder with other files its rows got `None`,
   which `GC(strand="strand")` rejects.
+- `read_gff()` and `read_bed()` give the column types of the R package
+  0.2.1, so the files of a folder can be combined when a column holds
+  numbers in one file and text in another (e.g. chromosomes `1` and `X`).
+  `seqid`, `source`, `type`, `strand` and `phase` of GFF files, and
+  `chrom`, `name`, `strand` and `itemRgb` of BED files are always text;
+  `score` is always numbers, `NaN` for a score of `"."`. A score that is not
+  a number becomes `NaN`, with a warning.
 - `read_gbk()` reads the whole sequence (`ORIGIN`) of records of more than
   a million bases; it stopped at base 1,000,020, without a message.
 

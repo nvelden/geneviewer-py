@@ -27,7 +27,7 @@
       },
       {
         "name": "score",
-        "type": "integer"
+        "type": "numeric"
       },
       {
         "name": "strand",
@@ -43,7 +43,7 @@
       },
       {
         "name": "itemRgb",
-        "type": "integer"
+        "type": "character"
       },
       {
         "name": "blockCount",
@@ -71,7 +71,7 @@
       "strand": ["+", "-", "+", "-"],
       "thickStart": [1201, 6001, null, null],
       "thickEnd": [4800, 7000, null, null],
-      "itemRgb": [0, 0, null, null],
+      "itemRgb": ["0", "0", null, null],
       "blockCount": [3, 3, null, null],
       "blockSizes": [
         [500, 400, 600],

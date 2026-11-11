@@ -39,7 +39,7 @@
       },
       {
         "name": "phase",
-        "type": "integer"
+        "type": "character"
       },
       {
         "name": "ID",
@@ -54,7 +54,7 @@
       "end": [500, 900, 1200, null],
       "score": [0.5, 12, 1000, null],
       "strand": ["+", "+", "-", ""],
-      "phase": [0, 2, null, null],
+      "phase": ["0", "2", "", ""],
       "ID": ["a", "b", null, null]
     }
   },

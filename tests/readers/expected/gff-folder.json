@@ -31,7 +31,7 @@
       },
       {
         "name": "score",
-        "type": "character"
+        "type": "numeric"
       },
       {
         "name": "strand",
@@ -84,7 +84,7 @@
       "type": ["gene", "gene", "exon", "gene", "gene", "gene", "exon", "gene", "gene"],
       "start": [100, 100, 100, 1000, 2000, 100, 100, 1000, 2000],
       "end": [500, 900, 400, 1900, 2600, 900, 400, 1900, 2600],
-      "score": [".", ".", ".", ".", ".", ".", ".", ".", "."],
+      "score": [null, null, null, null, null, null, null, null, null],
       "strand": ["+", "+", "+", "-", "+", "+", "+", "-", "+"],
       "phase": [".", ".", "0", ".", ".", ".", "0", ".", "."],
       "ID": ["g1", null, null, null, null, null, null, null, null],

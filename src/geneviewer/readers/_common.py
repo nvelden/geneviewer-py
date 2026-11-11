@@ -116,13 +116,18 @@ def type_convert(values: Sequence[str | None]) -> pd.Series:
     )
 
 
-def read_tsv(lines: Sequence[str], col_names: Sequence[str]) -> pd.DataFrame:
+def read_tsv(
+    lines: Sequence[str],
+    col_names: Sequence[str],
+    text: Iterable[str] = (),
+) -> pd.DataFrame:
     r"""Read tab-separated lines as R's ``read.table()`` with the readers' options.
 
     The options are ``sep = "\\t"``, ``quote = ""``, ``comment.char = ""``,
     ``fill = TRUE`` and ``header = FALSE``: empty lines are left out, short
     rows are filled with empty fields, and every column goes through
-    `type_convert`.
+    `type_convert`, except the columns in ``text`` (R's ``colClasses =
+    "character"``), which stay text, with ``NA`` for ``"NA"``.
 
     Parameters
     ----------
@@ -130,6 +135,8 @@ def read_tsv(lines: Sequence[str], col_names: Sequence[str]) -> pd.DataFrame:
         The lines.
     col_names : sequence of str
         The names of the columns.
+    text : iterable of str
+        The columns read as text.
 
     Returns
     -------
@@ -147,11 +154,50 @@ def read_tsv(lines: Sequence[str], col_names: Sequence[str]) -> pd.DataFrame:
     n = len(col_names)
     if any(len(row) > n for row in rows):
         raise ValueError("more columns than column names")
-    columns = {
-        name: type_convert([row[j] if j < len(row) else "" for row in rows])
-        for j, name in enumerate(col_names)
-    }
+    text = set(text)
+    columns = {}
+    for j, name in enumerate(col_names):
+        values = [row[j] if j < len(row) else "" for row in rows]
+        if name in text:
+            columns[name] = pd.Series(
+                [pd.NA if v == "NA" else v for v in values], dtype=STRING
+            )
+        else:
+            columns[name] = type_convert(values)
     return pd.DataFrame(columns)
+
+
+def score_to_numeric(values: pd.Series) -> pd.Series:
+    """Convert the score column of a GFF or BED file to numbers.
+
+    R's ``score_to_numeric()``: ``"."`` and empty values, no score, become
+    ``NaN``. Other values that are not numbers also become ``NaN``, with a
+    warning that names the first five.
+
+    Parameters
+    ----------
+    values : pandas.Series
+        The score column, as text.
+
+    Returns
+    -------
+    pandas.Series
+        A ``float64`` column.
+    """
+    numbers, lost = [], []
+    for value in values.tolist():
+        text = None if pd.isna(value) else str(value).strip()
+        if text is None or text in (".", ""):
+            numbers.append(math.nan)
+        elif _DOUBLE.match(text):
+            numbers.append(_r_double(text))
+        else:
+            numbers.append(math.nan)
+            if text not in lost:
+                lost.append(text)
+    if lost:
+        warn("Scores that are not numbers were set to NA: " + ", ".join(lost[:5]))
+    return pd.Series(numbers, dtype="float64", index=values.index)
 
 
 # R's names -------------------------------------------------------------------

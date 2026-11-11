@@ -10,7 +10,13 @@ from urllib.parse import unquote_to_bytes
 
 import pandas as pd
 
-from ._common import read_lines, read_tables, read_tsv, widen_attributes
+from ._common import (
+    read_lines,
+    read_tables,
+    read_tsv,
+    score_to_numeric,
+    widen_attributes,
+)
 
 FIELDS = (
     "seqid",
@@ -24,6 +30,9 @@ FIELDS = (
     "attributes",
 )
 PATTERN = r"\.(gff[23]?|gtf)$"
+# Text by definition, also when it looks like a number (a seqid 1), so that
+# the files of a folder can be combined
+TEXT = ("seqid", "source", "type", "score", "strand", "phase", "attributes")
 
 
 def read_gff(
@@ -53,6 +62,9 @@ def read_gff(
         One row per feature: ``seqid``, ``source``, ``type``, ``start``,
         ``end``, ``score``, ``strand``, ``phase``, then the attributes; for a
         folder, ``filename``, the file's name without its extension.
+        ``seqid``, ``source``, ``type``, ``strand`` and ``phase`` are text;
+        ``score`` is numbers, ``NaN`` for ``"."`` (a value that is not a
+        number is ``NaN`` too, with a warning).
 
     Raises
     ------
@@ -93,7 +105,9 @@ def process_gff(path: Path) -> pd.DataFrame:
             break
     # Drop comment and directive lines; '#' inside a line is kept as data
     lines = [line for line in lines if not line.startswith("#")]
-    data = read_tsv(lines, FIELDS)
+    data = read_tsv(lines, FIELDS, text=TEXT)
+    # Numeric, also in files where every score is "." (no score)
+    data["score"] = score_to_numeric(data["score"])
     # The attributes as written, not as type_convert() read them
     rows = [line.split("\t") for line in lines if line != ""]
     attributes = [row[8] if len(row) > 8 else "" for row in rows]
