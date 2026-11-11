@@ -28,6 +28,10 @@
   genes; they stayed at the old positions. Links given as `data` (e.g.
   alignments) keep their positions, with a warning to add them after
   `normalize()`.
+- `genbank_to_fasta()` writes records without a `VERSION` line, named by
+  their `ACCESSION`, else their `LOCUS` name, else the file name; without a
+  `DEFINITION`, the header is the name only. They were left out without a
+  message, so the FASTA file could be empty.
 - `read_gbk()` reads features whose key does not start with a letter, such
   as `5'UTR`, `3'UTR` and `-10_signal`; their lines were added to the
   feature before them. Qualifiers without a value, such as `/pseudo`, are

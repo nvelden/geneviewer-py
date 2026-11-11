@@ -393,7 +393,9 @@ def genbank_to_fasta(
     """Write the sequences of a GenBank file to a FASTA file.
 
     Each record becomes a FASTA record with the header ``>VERSION
-    DEFINITION`` and the sequence of ``ORIGIN`` in capitals.
+    DEFINITION`` and the sequence of ``ORIGIN`` in capitals. A record without
+    a ``VERSION`` is named by its ``ACCESSION``, else its ``LOCUS`` name, else
+    the file name; without a ``DEFINITION`` the header is the name only.
 
     Parameters
     ----------
@@ -430,24 +432,35 @@ def genbank_to_fasta(
     for r, (start, end) in enumerate(zip(starts, ends, strict=True), start=1):
         record = lines[start : end + 1]
         definition = [
-            re.sub(r"[^a-zA-Z0-9]+$", "", re.sub(r"^DEFINITION\s+", "", line))
+            re.sub(r"[^a-zA-Z0-9]+$", "", re.sub(r"^DEFINITION\s*", "", line))
             for line in record
             if line.startswith("DEFINITION")
         ]
+        # The name of the record: its VERSION, else its ACCESSION or LOCUS
+        # name, else the file name
         version = [
-            re.sub(r"^VERSION\s+", "", line)
+            re.sub(r"^VERSION\s*", "", line).strip()
             for line in record
             if line.startswith("VERSION")
         ]
+        names = [v for v in version[:1] if v]
+        for key in ("ACCESSION", "LOCUS"):
+            line = next((x for x in record if re.match(key + r"(\s|$)", x)), None)
+            words = line.split()[1:2] if line is not None else []
+            names += words
+        names.append(file_path_sans_ext(path))
         origin = [i for i, line in enumerate(record) if line.startswith("ORIGIN")]
         if not origin:
             warn(f"Record {r} has no sequence and is skipped.")
             continue
-        if not definition or not version:
-            continue
         sequence = "".join(record[origin[0] + 1 : len(record) - 1])
         sequence = re.sub(r"\s+|[0-9]+", "", sequence).upper()
-        records.append(f">{version[0]} {definition[0]}\n{sequence}")
+        header = (
+            f">{names[0]} {definition[0]}"
+            if definition and definition[0]
+            else f">{names[0]}"
+        )
+        records.append(f"{header}\n{sequence}")
     folder = path.parent if output_dir is None else Path(output_dir)
     fasta = folder / f"{file_path_sans_ext(path)}.fasta"
     fasta.write_text("\n".join(records) + "\n", encoding="utf-8")
