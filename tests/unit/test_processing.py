@@ -184,6 +184,60 @@ def test_normalize_one_cluster_and_other_start_column():
     assert result["original_start"] == [None, None, None, 10, 90, 130]
 
 
+def test_links_made_before_normalize_move_with_their_genes():
+    data = pd.DataFrame(
+        {
+            "s": [10, 100, 150, 10, 60, 110],
+            "e": [40, 130, 180, 40, 90, 140],
+            "name": ["A", "B", "C"] * 2,
+            "cl": [1, 1, 1, 2, 2, 2],
+        }
+    )
+    chart = GC(data, start="s", end="e", cluster="cl", group="name")
+    before = (
+        chart.links("name")
+        .links("name", value1="A", value2="A")
+        .normalize(cluster=1)
+        .to_spec()["links"]
+    )
+    after = (
+        chart.normalize(cluster=1)
+        .links("name")
+        .links("name", value1="A", value2="A")
+        .to_spec()["links"]
+    )
+    columns = ["rowID1", "rowID2", "start1", "end1", "start2", "end2", "s1", "e1"]
+    for old, new in zip(before, after, strict=True):
+        assert {c: old["data"][c] for c in columns} == {
+            c: new["data"][c] for c in columns
+        }
+    assert before[0]["data"]["start1"] == [10, 80, 150]
+
+    one = chart.links("name").normalize(cluster=1).to_spec()["links"]
+    assert one["data"]["end1"] == [40, 110, 180]
+
+
+def test_links_given_as_data_keep_their_positions_after_normalize():
+    data = pd.DataFrame(
+        {"start": [10, 100, 150, 10], "end": [40, 130, 180, 40], "cl": [1, 1, 1, 2]}
+    )
+    alignment = pd.DataFrame(
+        {
+            "cluster1": ["1"],
+            "cluster2": ["2"],
+            "start1": [100],
+            "end1": [120],
+            "start2": [10],
+            "end2": [30],
+            "identity": [90],
+        }
+    )
+    with pytest.warns(UserWarning, match="keep their positions"):
+        spec = GC(data, cluster="cl").links(data=alignment).normalize().to_spec()
+    assert spec["links"]["data"]["start1"] == [100]
+    assert "links" not in GC(data, cluster="cl").normalize().to_spec()
+
+
 def test_normalize_warnings():
     with pytest.warns(UserWarning, match="Please define cluster"):
         GC(POSITIONS).normalize(cluster=1)

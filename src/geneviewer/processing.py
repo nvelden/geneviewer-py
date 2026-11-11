@@ -564,4 +564,62 @@ def normalize(
     # and end
     for field in ("start", "end"):
         data[state[field]] = data[field]
-    return {**spec, "data": data}
+    result = {**spec, "data": data}
+    if spec.get("links") is not None:
+        fields = list(dict.fromkeys(["start", "end", state["start"], state["end"]]))
+        result["links"] = _normalize_links(spec["links"], data, fields)
+    return result
+
+
+def _normalize_links(links: Any, data: pd.DataFrame, fields: list[str]) -> Any:
+    """Put links made before ``normalize()`` at the new positions of their genes.
+
+    R's ``normalize_links()``: links made by ``links(group=)`` name their
+    genes in ``rowID1`` and ``rowID2``, and their positions are those of the
+    genes. Links given as data, e.g. alignments, have positions inside the
+    genes; they keep them, with a warning.
+
+    Parameters
+    ----------
+    links : dict or list of dict
+        The links of the spec: an entry or a list of entries.
+    data : pandas.DataFrame
+        The chart's data with the new positions and ``rowID``.
+    fields : list of str
+        The position columns: ``start``, ``end`` and the columns given as
+        start and end.
+
+    Returns
+    -------
+    dict or list of dict
+        The links.
+    """
+    single = isinstance(links, Mapping)
+    entries = [links] if single else list(links)
+    kept = False
+    position = {row: i for i, row in enumerate(data["rowID"].tolist())}
+    for i, entry in enumerate(entries):
+        links_data = entry.get("data")
+        if not isinstance(links_data, pd.DataFrame) or not {"rowID1", "rowID2"} <= set(
+            links_data.columns
+        ):
+            kept = True
+            continue
+        links_data = links_data.copy()
+        for side in ("1", "2"):
+            rows = [position.get(row) for row in links_data["rowID" + side].tolist()]
+            for field in fields:
+                column = field + side
+                if column not in links_data.columns:
+                    continue
+                values = data[field].tolist()
+                old = links_data[column].tolist()
+                new = [old[j] if r is None else values[r] for j, r in enumerate(rows)]
+                links_data[column] = pd.Series(new, index=links_data.index)
+        entries[i] = {**entry, "data": links_data}
+    if kept:
+        _warn(
+            "Links given as data keep their positions after normalize(). "
+            "Add them after normalize() to place them on the new positions."
+        )
+    return entries[0] if single else entries

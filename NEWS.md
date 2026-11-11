@@ -24,6 +24,10 @@
   `chrom`, `name`, `strand` and `itemRgb` of BED files are always text;
   `score` is always numbers, `NaN` for a score of `"."`. A score that is not
   a number becomes `NaN`, with a warning.
+- Links made with `links(group=)` before `normalize()` move with their
+  genes; they stayed at the old positions. Links given as `data` (e.g.
+  alignments) keep their positions, with a warning to add them after
+  `normalize()`.
 - `read_gbk()` reads the whole sequence (`ORIGIN`) of records of more than
   a million bases; it stopped at base 1,000,020, without a message.
 

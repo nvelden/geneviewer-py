@@ -1731,6 +1731,10 @@ class GC:
     ) -> GC:
         """Normalise the positions of the genes: even gaps between them.
 
+        Links made before by ``links(group=)`` move with their genes. Links
+        given as ``data`` (e.g. alignments) keep their positions, with a
+        warning: add them after ``normalize()``.
+
         Parameters
         ----------
         group : str, optional
