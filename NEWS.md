@@ -1,3 +1,14 @@
+# geneviewer-py (development version)
+
+- `normalize()` spaces the genes over the whole span of their cluster, as
+  documented. It shared the total gap between as many gaps as there are
+  genes, one too many, so every gap was too small and the cluster ended
+  before its last gene did: genes at 10-40, 90-120 and 130-160 became 10-40,
+  60-90 and 110-140, and are now 10-40, 70-100 and 130-160. Genes that are
+  already evenly spaced stay where they are, and a given `gap` is the gap
+  drawn; it was (n - 1) / n of it for n genes. Charts made with
+  `normalize()` change. The R package has the same fix.
+
 # geneviewer-py 0.2.0
 
 - Charts in Jupyter notebooks, with the new `jupyter` extra

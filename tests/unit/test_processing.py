@@ -120,16 +120,30 @@ def normalized(**kwargs):
 
 def test_normalize_keeps_gene_lengths_and_strand():
     data = normalized()
-    assert data["start"] == [100, 388, 525, 862]
-    assert data["end"] == [200, 338, 725, 962]
+    assert data["start"] == [100, 433, 617, 1000]
+    assert data["end"] == [200, 383, 817, 1100]
     assert data["original_start"] == [100, 300, 700, 1000]
     assert data["original_end"] == [200, 250, 900, 1100]
 
 
 def test_normalize_mean_length_and_gap():
     data = normalized(preserve_gene_length=False, gap=0.1)
-    assert data["start"] == [100, 525, 600, 850]
-    assert data["end"] == [275, 350, 775, 1025]
+    assert data["start"] == [100, 550, 650, 925]
+    assert data["end"] == [275, 375, 825, 1100]
+
+
+def test_normalize_keeps_the_range_of_the_cluster():
+    # Evenly spaced genes stay where they are; a given gap is the gap drawn
+    even = pd.DataFrame({"start": [10, 50, 90], "end": [40, 80, 120]})
+    data = GC(even).normalize().to_spec()["data"]
+    assert data["start"] == [10, 50, 90]
+    assert data["end"] == [40, 80, 120]
+    data = GC(even).normalize(gap=0.1).to_spec()["data"]
+    assert data["start"] == [10, 51, 92]
+    assert data["end"] == [40, 81, 122]
+    single = pd.DataFrame({"start": [300], "end": [400]})
+    data = GC(single).normalize(preserve_gene_length=False).to_spec()["data"]
+    assert (data["start"], data["end"]) == ([300], [400])
 
 
 def test_normalize_custom_gaps_only():
@@ -149,7 +163,7 @@ def test_normalize_one_cluster_and_other_start_column():
     )
     spec = GC(data, start="from", end="to", cluster="cl").normalize(cluster=2)
     result = spec.to_spec()["data"]
-    assert result["start"] == [10, 90, 130, 10, 60, 110]
+    assert result["start"] == [10, 90, 130, 10, 70, 130]
     assert result["from"] == result["start"]
     assert result["original_start"] == [None, None, None, 10, 90, 130]
 

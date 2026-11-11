@@ -431,7 +431,8 @@ def _normalize_positions(
     else:
         total_gap = total_length * gap * (n - 1)
     mean_gene_length = (total_length - total_gap) / n
-    step = total_gap / n
+    # The gaps lie between the genes: one fewer than there are genes
+    step = total_gap / (n - 1) if n > 1 else 0.0
 
     if preserve_gene_length:
         gene_length = np.abs(actual_end - actual_start)
