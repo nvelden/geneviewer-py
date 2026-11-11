@@ -10,6 +10,8 @@ It is the Python counterpart of the
 
 Documentation: <https://nvelden.github.io/geneviewer-docs/python/>
 
+<p align="center"><a href="https://nvelden.github.io/geneviewer-shinylive/"><img src="https://raw.githubusercontent.com/nvelden/geneviewer/main/man/figures/geneviewer_promo.gif" width="100%" alt="geneviewer: load GenBank, FASTA or CSV files, add titles, labels and a legend, zoom in with the zoom bar, drag labels, switch the theme and export the SVG"/></a></p>
+
 ## Install
 
 ```sh
