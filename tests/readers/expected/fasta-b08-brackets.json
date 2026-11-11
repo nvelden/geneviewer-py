@@ -54,6 +54,10 @@
         "type": "numeric"
       },
       {
+        "name": "strand",
+        "type": "character"
+      },
+      {
         "name": "cluster",
         "type": "character"
       }
@@ -70,6 +74,7 @@
       "sequence": ["MKTAYIAKQR", "MSDNELLKRL", "MSDNELLKRL"],
       "start": [1, 400, null],
       "end": [300, 900, null],
+      "strand": ["forward", "forward", null],
       "cluster": ["b08_brackets", "b08_brackets", "b08_brackets"]
     }
   },

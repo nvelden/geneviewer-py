@@ -39,9 +39,9 @@ def read_fasta(
     writes them, or ``key=value`` pairs, as in UniProt headers. A key
     repeated in one header keeps its values joined with ``","``. With a
     ``location`` key, the table gets ``start`` and ``end``, the full span of
-    the location, and ``strand`` when a location is on the complement
-    strand. Sequences without any key are left out, with a warning; a file
-    that cannot be read is skipped, with a warning.
+    the location, and ``strand``: ``"complement"`` or ``"forward"``.
+    Sequences without any key are left out, with a warning; a file that
+    cannot be read is skipped, with a warning.
 
     Parameters
     ----------
@@ -137,13 +137,15 @@ def _read_fasta_file(
         ]
         df["start"] = [s[0] for s in spans]
         df["end"] = [s[1] for s in spans]
-        complement = [
-            not pd.isna(v) and "complement" in v for v in df["location"].tolist()
-        ]
-        if any(complement):
-            df["strand"] = pd.array(
-                ["complement" if c else "forward" for c in complement], dtype=STRING
-            )
+        # Also when every location is forward: the files of a folder all get
+        # the column
+        df["strand"] = pd.array(
+            [
+                None if pd.isna(v) else "complement" if "complement" in v else "forward"
+                for v in df["location"].tolist()
+            ],
+            dtype=STRING,
+        )
 
     df["cluster"] = pd.array([cluster_name] * len(df), dtype=STRING)
 

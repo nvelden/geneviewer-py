@@ -30,6 +30,10 @@
         "type": "numeric"
       },
       {
+        "name": "strand",
+        "type": "character"
+      },
+      {
         "name": "cluster",
         "type": "character"
       }
@@ -40,6 +44,7 @@
       "sequence": ["MKT", "MAA"],
       "start": [1, null],
       "end": [9, null],
+      "strand": ["forward", null],
       "cluster": ["no_location", "no_location"]
     }
   },

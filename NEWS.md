@@ -13,6 +13,10 @@
   cluster="genome")`; it stopped with "cannot reindex on an axis with
   duplicate labels". That column is left out of the links. Links by that
   column itself (`group="cluster"`) stop with a message to rename it.
+- `read_fasta()` gives every sequence with a `location` a `strand`, also
+  in files whose locations are all forward. Before, such a file had no
+  `strand` column, and in a folder with other files its rows got `None`,
+  which `GC(strand="strand")` rejects.
 - `read_gbk()` reads the whole sequence (`ORIGIN`) of records of more than
   a million bases; it stopped at base 1,000,020, without a message.
 
