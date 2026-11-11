@@ -202,9 +202,10 @@ def gbk_get_sections(lines: Sequence[str], keys: Sequence[str]) -> dict[str, Any
         Each section found: its text on one line, without its key, except
         ``FEATURES`` (its lines) and ``ORIGIN`` (the letters of the sequence).
     """
-    starts = [
-        i for i, line in enumerate(lines) if re.match(r"^ {0,2}([^ ]+)(?=\s|$)", line)
-    ]
+    # Not the sequence lines of ORIGIN: from base 1,000,001 their position
+    # has no more than two spaces before it
+    section_start = re.compile(r"^ {0,2}(?![0-9])([^ ]+)(?=\s|$)")
+    starts = [i for i, line in enumerate(lines) if section_start.match(line)]
     sections: dict[str, Any] = {}
     for key in keys:
         found = [i for i, line in enumerate(lines) if re.match(r"^\s{0,2}" + key, line)]

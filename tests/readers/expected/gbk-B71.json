@@ -1,0 +1,21 @@
+{
+  "calls": [
+    {
+      "fun": "read_gbk",
+      "args": {}
+    }
+  ],
+  "input": "inputs/B71.gbk",
+  "data": null,
+  "result": {
+    "B71": {
+      "LOCUS": "LONG 100000080 bp DNA linear BCT 01-JAN-2024",
+      "DEFINITION": "Long record.",
+      "VERSION": "LONG.1",
+      "FEATURES": {},
+      "ORIGIN": "aaaaaaaaaaccccccccccggggggggggttttttttttacacacacacgtgtgtgtgtagagagagagctctctctct"
+    }
+  },
+  "warnings": [],
+  "error": null
+}

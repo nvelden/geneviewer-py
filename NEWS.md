@@ -13,6 +13,8 @@
   cluster="genome")`; it stopped with "cannot reindex on an axis with
   duplicate labels". That column is left out of the links. Links by that
   column itself (`group="cluster"`) stop with a message to rename it.
+- `read_gbk()` reads the whole sequence (`ORIGIN`) of records of more than
+  a million bases; it stopped at base 1,000,020, without a message.
 
 # geneviewer-py 0.2.0
 
