@@ -8,6 +8,11 @@
   already evenly spaced stay where they are, and a given `gap` is the gap
   drawn; it was (n - 1) / n of it for n genes. Charts made with
   `normalize()` change. The R package has the same fix.
+- `links(group=)` works on data with a column named `cluster` when the
+  clusters of the chart are another column, e.g. `GC(data,
+  cluster="genome")`; it stopped with "cannot reindex on an axis with
+  duplicate labels". That column is left out of the links. Links by that
+  column itself (`group="cluster"`) stop with a message to rename it.
 
 # geneviewer-py 0.2.0
 

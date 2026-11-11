@@ -41,6 +41,22 @@ def test_links_by_group_columns():
     assert {"rowID1", "rowID2", "strand1", "strand2"} <= set(result.columns)
 
 
+@pytest.mark.parametrize("position", [0, 5])
+def test_links_with_another_column_named_cluster(position):
+    # The clusters are "cl"; a column "cluster" before or after it is not
+    # read in their place, and is left out of the links
+    data = genes(["A", "B", "A", "B"], [1, 1, 2, 2])
+    data.insert(position, "cluster", ["x", "x", "x", "x"])
+    result = links(data)
+    assert list(result["name1"]) == ["g0", "g1"]
+    assert list(result["name2"]) == ["g2", "g3"]
+    assert list(result["cluster1"]) == ["1", "1"]
+    assert list(result["cluster2"]) == ["2", "2"]
+    assert list(result.columns).count("cluster1") == 1
+    with pytest.raises(ValueError, match="cannot be the group of the links"):
+        links(data, group="cluster")
+
+
 def test_links_rows_in_rs_merge_order():
     # R's merge() shell-sorts the rows of a group: with 9 rows they do not
     # keep their order (R: g0 g5 g2 g8 g3 g1 g6 g7 g4)

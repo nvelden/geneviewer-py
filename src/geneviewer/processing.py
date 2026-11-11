@@ -186,6 +186,17 @@ def get_links(
     cluster_column = state["cluster"]
     if cluster_column is None:
         raise ValueError("Please define cluster in GC().")
+    # The links name their clusters in cluster1 and cluster2. Another column
+    # named cluster is left out: it would be read in place of the clusters
+    # of the chart
+    if cluster_column != "cluster" and "cluster" in data.columns:
+        if group == "cluster":
+            raise ValueError(
+                'The column "cluster" cannot be the group of the links when the '
+                f'clusters of the chart are another column ("{cluster_column}"). '
+                "Rename the column."
+            )
+        data = data.drop(columns="cluster")
     data = data.rename(columns={cluster_column: "cluster"})
     data = data[data["cluster"].isin(clusters)]
 
