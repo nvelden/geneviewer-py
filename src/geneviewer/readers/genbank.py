@@ -160,7 +160,7 @@ def gbk_get_feature_keys(lines: Sequence[str]) -> list[str]:
     keys = [
         re.sub(r"^ {5}(\S+).*", r"\1", line, flags=re.S)
         for line in lines
-        if re.match(r"^ {5}[a-zA-Z]\w*", line)
+        if re.match(r"^ {5}\S", line)
     ]
     return list(dict.fromkeys(keys))
 
@@ -225,7 +225,10 @@ def gbk_get_sections(lines: Sequence[str], keys: Sequence[str]) -> dict[str, Any
     return sections
 
 
-_QUALIFIER = re.compile(r'(?:^|(?<= ))/([^\s/="]+)=("(?:[^"]|"")*"|[^\s"]*)')
+# A qualifier without a value, e.g. /pseudo, gets ""
+_QUALIFIER = re.compile(
+    r'(?:^|(?<= ))/([^\s/="]+)(?:=("(?:[^"]|"")*"|[^\s"]*)|(?=\s|$))'
+)
 
 
 def gbk_process_features(text: str, key: str) -> Feature:
@@ -246,13 +249,17 @@ def gbk_process_features(text: str, key: str) -> Feature:
     names, values = [], []
     for match in _QUALIFIER.finditer(text):
         qualifier = match.group(0)
-        name = re.sub(r"^/([^=]+)=.*$", r"\1", qualifier, flags=re.S)
-        value = re.sub(r"^/[^=]+=", "", qualifier)
+        name = re.sub(r"^/([^=]+)(=.*)?$", r"\1", qualifier, flags=re.S)
+        value = re.sub(r"^/[^=]+=", "", qualifier) if "=" in qualifier else ""
         value = re.sub(r'^"(.*)"$', r"\1", value, flags=re.S)
         names.append(name)
         values.append(value.replace('""', '"').strip())
-    region_match = re.match(r".*?" + key + r"\s+(.*?)\s*/.*", text, flags=re.S)
-    region = region_match.group(1) if region_match else None
+    # The location after the key, up to the first qualifier; also for a
+    # feature without qualifiers
+    region = None
+    if text.startswith(key):
+        location = re.sub(r"\s*/.*$", "", text[len(key) :].strip(), flags=re.S)
+        region = location or None
     if "region" in names:
         values[names.index("region")] = region
     else:
@@ -280,12 +287,14 @@ def gbk_get_features(lines: Sequence[str], key: str) -> list[Feature] | None:
     list of Feature or None
         The features; ``None`` when there are none.
     """
-    starts = [
-        i for i, line in enumerate(lines) if re.match(r"^ {5}" + key + r"(\s|$)", line)
+    # The key as written, also with characters such as ' (5'UTR)
+    line_keys = [
+        m.group(1) if (m := re.match(r"^ {5}(\S+)", line)) else None for line in lines
     ]
+    starts = [i for i, line_key in enumerate(line_keys) if line_key == key]
     if not starts:
         return None
-    all_starts = [i for i, line in enumerate(lines) if re.match(r"^ {5}[a-zA-Z]", line)]
+    all_starts = [i for i, line_key in enumerate(line_keys) if line_key is not None]
     result = []
     for start in starts:
         later = [i for i in all_starts if i > start]

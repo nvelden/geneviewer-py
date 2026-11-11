@@ -28,6 +28,11 @@
   genes; they stayed at the old positions. Links given as `data` (e.g.
   alignments) keep their positions, with a warning to add them after
   `normalize()`.
+- `read_gbk()` reads features whose key does not start with a letter, such
+  as `5'UTR`, `3'UTR` and `-10_signal`; their lines were added to the
+  feature before them. Qualifiers without a value, such as `/pseudo`, are
+  kept, with the value `""`, and a feature without qualifiers gets its
+  `region`.
 - `read_gbk()` reads the whole sequence (`ORIGIN`) of records of more than
   a million bases; it stopped at base 1,000,020, without a message.
 

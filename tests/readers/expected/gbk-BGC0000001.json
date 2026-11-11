@@ -3965,6 +3965,10 @@
         "aSModule": [
           [
             [
+              "complete",
+              ""
+            ],
+            [
               "domains",
               "nrpspksdomains_abyB1_PKS_KS.1"
             ],
@@ -3994,6 +3998,10 @@
             ]
           ],
           [
+            [
+              "complete",
+              ""
+            ],
             [
               "domains",
               "nrpspksdomains_abyB1_PKS_KS.2"
@@ -4033,6 +4041,10 @@
           ],
           [
             [
+              "complete",
+              ""
+            ],
+            [
               "domains",
               "nrpspksdomains_abyB1_PKS_KS.3"
             ],
@@ -4070,6 +4082,10 @@
             ]
           ],
           [
+            [
+              "complete",
+              ""
+            ],
             [
               "domains",
               "nrpspksdomains_abyB1_PKS_KS.4"
@@ -4109,6 +4125,10 @@
           ],
           [
             [
+              "complete",
+              ""
+            ],
+            [
               "domains",
               "nrpspksdomains_abyB2_PKS_KS.1"
             ],
@@ -4146,6 +4166,10 @@
             ]
           ],
           [
+            [
+              "complete",
+              ""
+            ],
             [
               "domains",
               "nrpspksdomains_abyB2_PKS_KS.2"
@@ -4188,6 +4212,10 @@
             ]
           ],
           [
+            [
+              "complete",
+              ""
+            ],
             [
               "domains",
               "nrpspksdomains_abyB3_PKS_KS.1"

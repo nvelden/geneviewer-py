@@ -1,0 +1,81 @@
+{
+  "calls": [
+    {
+      "fun": "read_gbk",
+      "args": {}
+    }
+  ],
+  "input": "inputs/B72.gbk",
+  "data": null,
+  "result": {
+    "B72": {
+      "LOCUS": "B72 600 bp DNA linear BCT 01-JAN-2024",
+      "DEFINITION": "B72.",
+      "FEATURES": {
+        "5'UTR": [
+          [
+            [
+              "gene",
+              "utr5"
+            ],
+            [
+              "region",
+              "1..9"
+            ]
+          ]
+        ],
+        "CDS": [
+          [
+            [
+              "gene",
+              "abc"
+            ],
+            [
+              "pseudo",
+              ""
+            ],
+            [
+              "note",
+              "see /x=1 here"
+            ],
+            [
+              "protein_id",
+              "P1"
+            ],
+            [
+              "region",
+              "10..200"
+            ]
+          ]
+        ],
+        "gene": [
+          [
+            [
+              "region",
+              "300..500"
+            ]
+          ]
+        ],
+        "-10_signal": [
+          [
+            [
+              "region",
+              "590..595"
+            ]
+          ]
+        ],
+        "misc_feature": [
+          [
+            [
+              "region",
+              "complement(join(510..520, 530..540))"
+            ]
+          ]
+        ]
+      },
+      "ORIGIN": "acgtacgtac"
+    }
+  },
+  "warnings": [],
+  "error": null
+}
