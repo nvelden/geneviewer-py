@@ -185,8 +185,10 @@ def compute_identity(patterns: Sequence[str], subjects: Sequence[str]) -> pd.Dat
             identity.append(math.nan)
             similarity.append(math.nan)
         else:
-            identity.append(round(matches / length, 3) * 100)
-            similarity.append(round((matches + similar) / length, 3) * 100)
+            # R's round(x, 3) * 100; the outer round drops the float error of
+            # the * 100 (72.89999999999999 is 72.9), which R's JSON hides too
+            identity.append(round(round(matches / length, 3) * 100, 1))
+            similarity.append(round(round((matches + similar) / length, 3) * 100, 1))
     return pd.DataFrame({"identity": identity, "similarity": similarity})
 
 
