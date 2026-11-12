@@ -1,5 +1,8 @@
 # geneviewer-py (development version)
 
+- The package draws with version 0.3.11 of the geneviewer JavaScript
+  library, with the fixes for empty charts, hidden labels and tooltips
+  below.
 - `normalize()` spaces the genes over the whole span of their cluster, as
   documented. It shared the total gap between as many gaps as there are
   genes, one too many, so every gap was too small and the cluster ended
@@ -48,8 +51,7 @@
   The docs of `grid()` say what a `width` number is (pixels).
 - Tooltips (`tooltip()`) show the values of the data as text: markup in a
   value, e.g. in a qualifier of a GenBank file from someone else, ran in the
-  page of who viewed the chart. The `formatter` is still HTML. (Needs the
-  next geneviewer JavaScript library.)
+  page of who viewed the chart. The `formatter` is still HTML.
 - `mummer_alignment()` reads a folder whose path has spaces: the files are
   copied to a working folder in `output_dir` first, so only that path must
   be without spaces.
@@ -64,8 +66,7 @@
 - A chart of data without rows (or only rows without a start or end) takes
   the chart's methods: `labels("name")` and `legend()` stopped with "column
   not found in data", and `normalize()` and `transcript()` with an internal
-  error. The chart has no clusters. (Drawing it needs the next geneviewer
-  JavaScript library.)
+  error. The chart has no clusters and draws as an empty chart.
 - `genbank_to_fasta()` writes records without a `VERSION` line, named by
   their `ACCESSION`, else their `LOCUS` name, else the file name; without a
   `DEFINITION`, the header is the name only. They were left out without a
