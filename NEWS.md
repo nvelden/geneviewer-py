@@ -28,6 +28,16 @@
   genes; they stayed at the old positions. Links given as `data` (e.g.
   alignments) keep their positions, with a warning to add them after
   `normalize()`.
+- `read_bed()` reads files whose columns are separated by spaces (in a file
+  without any tab), and names columns after the twelve of BED `V13`, `V14`,
+  ... (the 13th was `NA.`).
+- `read_fasta()` on a folder without FASTA files stops with "No .fasta files
+  found in the specified directory.", as the other readers; it gave an empty
+  table.
+- `get_introns()` (and `transcript()`): an intron keeps the columns that are
+  the same for all exons and UTRs of its transcript and is missing the
+  others. It copied the exon before it, so a label of each exon, e.g.
+  `labels("exon_id")`, was repeated on the intron after it.
 - Clearer errors for wrong arguments: `grid(margin=)` takes pixels or a
   percentage of a chart height in pixels; `legend(group=)` one column;
   `scale(scale_breaks=)` and `links(measure=)` one value; `links(value1=,

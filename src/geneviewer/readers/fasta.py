@@ -12,8 +12,8 @@ import pandas as pd
 from ._common import (
     STRING,
     bind_rows,
+    dir_files,
     file_path_sans_ext,
-    list_files,
     location_span,
     read_lines,
     warn,
@@ -67,7 +67,8 @@ def read_fasta(
     """
     path = Path(fasta_path)
     if path.is_dir():
-        files = list_files(path, f"\\.{file_extension}$")
+        # A folder without FASTA files is an error, as in the other readers
+        files = dir_files(path, f"\\.{file_extension}$", file_extension)
     elif path.exists():
         files = [path]
     else:

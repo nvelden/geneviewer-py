@@ -237,7 +237,9 @@ def get_introns(data: pd.DataFrame) -> pd.DataFrame:
 
     Exons and UTRs that overlap, nest or touch are one covered region; each
     gap of at least one base between covered regions becomes an intron. An
-    intron row copies the other columns of the exon or UTR before it. Exons
+    intron row has the values of the columns that are the same for all exons
+    and UTRs of its transcript (e.g. its gene or group), and is missing the
+    others (e.g. the name of an exon). Exons
     whose start is after their end (reverse strand) are read as their
     span, and keep their positions in the result.
 
@@ -304,6 +306,19 @@ def get_introns(data: pd.DataFrame) -> pd.DataFrame:
     introns["start"] = covered[gap] + 1
     introns["end"] = following[gap] - 1
     introns["type"] = "intron"
+
+    # An intron belongs to its transcript, not to the exon before it: it
+    # keeps the columns that are the same for all exons and UTRs of the
+    # transcript (e.g. its gene, group or strand), the others are missing.
+    # rowID is numbered again when the chart prepares its data.
+    if len(introns) > 0:
+        by_transcript = parts.groupby("transcript", dropna=False, sort=False)
+        for column in introns.columns:
+            if column in ("start", "end", "type", "transcript", "rowID"):
+                continue
+            varies = by_transcript[column].nunique(dropna=False) > 1
+            mask = introns["transcript"].map(varies).fillna(False).astype(bool)
+            introns[column] = introns[column].where(~mask)
 
     result = pd.concat([data, introns], ignore_index=True)
     for name in ("start", "end"):
