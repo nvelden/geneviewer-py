@@ -28,6 +28,9 @@
   genes; they stayed at the old positions. Links given as `data` (e.g.
   alignments) keep their positions, with a warning to add them after
   `normalize()`.
+- `mummer_alignment()` reads a folder whose path has spaces: the files are
+  copied to a working folder in `output_dir` first, so only that path must
+  be without spaces.
 - `zoom(range=)` and `zoom(min=)` are checked in the `mode` of an earlier
   `zoom()` when the call gives none: `.zoom(mode="absolute").zoom(range=[100,
   2000])` stopped with the error for a relative range.
