@@ -28,6 +28,10 @@
   genes; they stayed at the old positions. Links given as `data` (e.g.
   alignments) keep their positions, with a warning to add them after
   `normalize()`.
+- Tooltips (`tooltip()`) show the values of the data as text: markup in a
+  value, e.g. in a qualifier of a GenBank file from someone else, ran in the
+  page of who viewed the chart. The `formatter` is still HTML. (Needs the
+  next geneviewer JavaScript library.)
 - `mummer_alignment()` reads a folder whose path has spaces: the files are
   copied to a working folder in `output_dir` first, so only that path must
   be without spaces.
