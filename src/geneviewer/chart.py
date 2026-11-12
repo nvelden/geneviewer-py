@@ -1528,7 +1528,12 @@ class GC:
             The chart.
         """
         a = _spec.args(locals(), _ZOOM)
-        check_zoom({name: a[name] for name in _ZOOM if a[name] is not None})
+        # range and min are in the units of the mode of an earlier call when
+        # this one gives none
+        mode = a["mode"]
+        if mode is None and isinstance(self._spec.get("zoom"), Mapping):
+            mode = self._spec["zoom"].get("mode")
+        check_zoom({name: a[name] for name in _ZOOM if a[name] is not None}, mode)
         return self._with(_spec.add_zoom(self._spec, a.spec))
 
     def tooltip(

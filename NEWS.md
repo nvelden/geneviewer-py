@@ -28,6 +28,9 @@
   genes; they stayed at the old positions. Links given as `data` (e.g.
   alignments) keep their positions, with a warning to add them after
   `normalize()`.
+- `zoom(range=)` and `zoom(min=)` are checked in the `mode` of an earlier
+  `zoom()` when the call gives none: `.zoom(mode="absolute").zoom(range=[100,
+  2000])` stopped with the error for a relative range.
 - `show=False` in `labels()`, `coordinates()`, `scale_bar()`,
   `cluster_title()`, `cluster_label()` and `cluster_footer()` hides what an
   earlier call shows, e.g. `.coordinates().coordinates(show=False,

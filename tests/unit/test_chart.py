@@ -298,3 +298,14 @@ def test_show_false_hides_what_an_earlier_call_shows():
     # Hidden labels need no label column, also on a chart without a group
     spec = chart.labels("name").labels(show=False).to_spec()
     assert spec["labels"][1] == {"show": False}
+
+
+def test_zoom_range_and_min_are_in_the_mode_of_an_earlier_call():
+    data = pd.DataFrame({"start": [100, 5000], "end": [900, 9000]})
+    spec = GC(data).zoom(mode="absolute").zoom(range=[100, 2000], min=50).to_spec()
+    assert spec["zoom"] == {"mode": "absolute", "range": [100, 2000], "min": 50}
+    with pytest.raises(ValueError, match="relative 'range'"):
+        GC(data).zoom(mode="relative").zoom(range=[100, 2000])
+    # A new mode in the same call is checked against itself
+    with pytest.raises(ValueError, match="relative 'range'"):
+        GC(data).zoom(mode="absolute").zoom(mode="relative", range=[100, 2000])

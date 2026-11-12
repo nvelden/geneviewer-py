@@ -251,14 +251,19 @@ def check_toolbar(
         )
 
 
-def check_zoom(options: Mapping[str, Any]) -> None:
+def check_zoom(options: Mapping[str, Any], mode: str | None = None) -> None:
     """Check the options of the zoom slider.
 
     Parameters
     ----------
     options : Mapping
         The options given (not ``None``), by their Python names.
+    mode : str, optional
+        The mode that ``range`` and ``min`` are in: of these options, else
+        of an earlier ``zoom()``.
     """
+    if mode is None:
+        mode = options.get("mode")
     for name in ("show", "overview"):
         value = options.get(name)
         if value is not None and not _r.is_bool(value):
@@ -280,7 +285,7 @@ def check_zoom(options: Mapping[str, Any]) -> None:
             or values[0] == values[1]
         ):
             raise ValueError("'range' must be two different numbers: [start, end].")
-        if options.get("mode") != "absolute" and (min(values) < 0 or max(values) > 1):
+        if mode != "absolute" and (min(values) < 0 or max(values) > 1):
             raise ValueError(
                 "A relative 'range' is shares of the clusters, between 0 and 1, "
                 'e.g. [0.25, 0.5]. Use mode="absolute" for base pairs.'
@@ -291,11 +296,7 @@ def check_zoom(options: Mapping[str, Any]) -> None:
             _r.is_number(value) and not _r.is_na(value) and value > 0
         ):
             raise ValueError(f"'{name}' must be a single positive number.")
-    if (
-        options.get("min") is not None
-        and options.get("mode") != "absolute"
-        and options["min"] > 1
-    ):
+    if options.get("min") is not None and mode != "absolute" and options["min"] > 1:
         raise ValueError("A relative 'min' is a share of the slider, between 0 and 1.")
     color = options.get("color")
     if color is not None and not is_str(color):
