@@ -28,6 +28,11 @@
   genes; they stayed at the old positions. Links given as `data` (e.g.
   alignments) keep their positions, with a warning to add them after
   `normalize()`.
+- `show=False` in `labels()`, `coordinates()`, `scale_bar()`,
+  `cluster_title()`, `cluster_label()` and `cluster_footer()` hides what an
+  earlier call shows, e.g. `.coordinates().coordinates(show=False,
+  cluster=2)`; it changed nothing. Hidden labels need no label column. With
+  nothing shown before, the chart is unchanged, as before.
 - A chart of data without rows (or only rows without a start or end) takes
   the chart's methods: `labels("name")` and `legend()` stopped with "column
   not found in data", and `normalize()` and `transcript()` with an internal

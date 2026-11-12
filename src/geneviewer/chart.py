@@ -52,6 +52,18 @@ def _any(value: Any) -> bool:
     return any(bool(v) for v in _r.as_vector(value))
 
 
+def _nothing_to_hide(spec: Any, key: str, show: Any) -> bool:
+    # show=False hides what an earlier call shows; with nothing shown before,
+    # the chart is unchanged (R's nothing_to_hide())
+    values = _r.as_vector(show)
+    return (
+        len(values) > 0
+        and all(isinstance(v, bool) or _r.is_bool(v) for v in values)
+        and not _any(show)
+        and spec.get(key) is None
+    )
+
+
 def _is_flag(value: Any) -> bool:
     return _r.is_bool(value)
 
@@ -348,17 +360,23 @@ class GC:
                     "e.g. 30."
                 )
 
-        if not _any(a["show"]):
+        if _nothing_to_hide(self._spec, "labels", a["show"]):
             return self
         label = a["label"]
+        show = a["show"]
+        # labels(False) is show=False, as the spec records it
         if _is_flag(label):
+            show = label
             label = None
-        if label is None and state["group"] is None:
-            raise ValueError("Please define labels")
-        if label is None:
-            label = state["group"]
+        # Hidden labels need no column: show=False hides the labels of an
+        # earlier call
+        if _any(show):
+            if label is None and state["group"] is None:
+                raise ValueError("Please define labels")
+            if label is None:
+                label = state["group"]
         columns = state["columns"] or []
-        if not all(v in columns for v in _r.as_vector(label)):
+        if label is not None and not all(v in columns for v in _r.as_vector(label)):
             raise ValueError("label column not found in data")
         _data.get_updated_clusters(state["clusters"], a["cluster"])
         return self._with(_spec.add(self._spec, "labels", _spec.flag(a.spec, "label")))
@@ -811,7 +829,7 @@ class GC:
             The chart.
         """
         a = _spec.args(locals(), _CLUSTER_TITLE)
-        if not _any(a["show"]):
+        if _nothing_to_hide(self._spec, "clusterTitle", a["show"]):
             return self
         check_align(a["align"], per_cluster=True)
         check_spacing(a["spacing"], per_cluster=True)
@@ -1043,7 +1061,7 @@ class GC:
             The chart.
         """
         a = _spec.args(locals(), _SCALE_BAR)
-        if not _any(a["show"]):
+        if _nothing_to_hide(self._spec, "scaleBar", a["show"]):
             return self
         _data.check_clusters(self._spec, a["cluster"])
         return self._with(
@@ -1109,7 +1127,7 @@ class GC:
             The chart.
         """
         a = _spec.args(locals(), _CLUSTER_LABEL)
-        if not _any(a["show"]):
+        if _nothing_to_hide(self._spec, "clusterLabel", a["show"]):
             return self
         check_align(a["align"], per_cluster=True)
         check_spacing(a["spacing"], per_cluster=True)
@@ -1153,7 +1171,7 @@ class GC:
             The chart.
         """
         a = _spec.args(locals(), _CLUSTER_FOOTER)
-        if not _any(a["show"]):
+        if _nothing_to_hide(self._spec, "clusterFooter", a["show"]):
             return self
         check_align(a["align"], per_cluster=True)
         check_spacing(a["spacing"], per_cluster=True)
@@ -1209,7 +1227,7 @@ class GC:
         style_by = a["style_by"] if a["style_by"] is not None else state["group"]
         if a["group_style"] is not None and style_by is None:
             raise ValueError("group_style needs a group in GC() or a style_by column")
-        if not _any(a["show"]):
+        if _nothing_to_hide(self._spec, "coordinates", a["show"]):
             return self
         _data.get_updated_clusters(state["clusters"], a["cluster"])
         return self._with(_spec.add(self._spec, "coordinates", a.spec))

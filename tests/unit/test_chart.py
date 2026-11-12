@@ -267,3 +267,34 @@ def test_transcript_names_of_utr_arguments():
         "itemStyleUTRs": [{"index": 0}],
         "groupStyleUTRs": {"A": {"fill": "blue"}},
     }
+
+
+def test_show_false_hides_what_an_earlier_call_shows():
+    data = pd.DataFrame(
+        {
+            "start": [10, 50, 90, 130],
+            "end": [40, 80, 120, 160],
+            "name": ["a", "b", "c", "d"],
+            "cl": [1, 1, 2, 2],
+        }
+    )
+    chart = GC(data, cluster="cl")
+    calls = {
+        "labels": lambda c, **k: c.labels("name", **k),
+        "coordinates": lambda c, **k: c.coordinates(**k),
+        "scaleBar": lambda c, **k: c.scale_bar(**k),
+        "clusterTitle": lambda c, **k: c.cluster_title("t", **k),
+        "clusterLabel": lambda c, **k: c.cluster_label(**k),
+        "clusterFooter": lambda c, **k: c.cluster_footer("f", **k),
+    }
+    for key, call in calls.items():
+        spec = call(call(chart), show=False, cluster=2).to_spec()
+        assert spec[key][1]["show"] is False, key
+        assert spec[key][1]["clusters"] == [2], key
+        # With nothing shown before, nothing is recorded
+        assert key not in call(chart, show=False).to_spec(), key
+        assert key not in call(chart, show=[False, False]).to_spec(), key
+
+    # Hidden labels need no label column, also on a chart without a group
+    spec = chart.labels("name").labels(show=False).to_spec()
+    assert spec["labels"][1] == {"show": False}
