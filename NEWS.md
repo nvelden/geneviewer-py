@@ -28,6 +28,11 @@
   genes; they stayed at the old positions. Links given as `data` (e.g.
   alignments) keep their positions, with a warning to add them after
   `normalize()`.
+- Clearer errors for wrong arguments: `grid(margin=)` takes pixels or a
+  percentage of a chart height in pixels; `legend(group=)` one column;
+  `scale(scale_breaks=)` and `links(measure=)` one value; `links(value1=,
+  value2=)` both or neither, of the same length (a missing `value2` was
+  ignored without a message).
 - `cluster(separate_strands=True, prevent_gene_overlap=True)` warns that
   neither is applied, which is what happens; it said "Resetting to None".
   The docs of `grid()` say what a `width` number is (pixels).

@@ -309,3 +309,33 @@ def test_zoom_range_and_min_are_in_the_mode_of_an_earlier_call():
     # A new mode in the same call is checked against itself
     with pytest.raises(ValueError, match="relative 'range'"):
         GC(data).zoom(mode="absolute").zoom(mode="relative", range=[100, 2000])
+
+
+def test_wrong_arguments_give_a_message_that_names_them():
+    data = pd.DataFrame(
+        {
+            "start": [10, 50, 90, 130],
+            "end": [40, 80, 120, 160],
+            "name": ["a", "b", "c", "d"],
+            "group": ["A", "B", "A", "B"],
+            "cluster": [1, 1, 2, 2],
+        }
+    )
+    chart = GC(data, cluster="cluster", group="group", height="300px")
+    with pytest.raises(ValueError, match="Margins must be pixels"):
+        chart.grid(margin={"top": "2em"})
+    with pytest.raises(ValueError, match="pixel values"):
+        GC(data, height="50vh").grid(margin={"top": "10%"})
+    GC(data, height="50vh").grid(margin={"top": 20})
+    margin = chart.grid(margin={"top": "10%", "bottom": "5px"}).to_spec()["grid"]
+    assert margin["margin"] == {"top": "10%", "bottom": "5px"}
+    with pytest.raises(ValueError, match="single column name"):
+        chart.legend(group=["group", "name"])
+    with pytest.raises(ValueError, match="single True or False"):
+        chart.scale(scale_breaks=[True, False])
+    with pytest.raises(ValueError, match="Invalid measure"):
+        chart.links("group", measure=["identity", "none"])
+    with pytest.raises(ValueError, match="same length"):
+        chart.links("group", value1=["A", "B"], value2=["A"])
+    with pytest.raises(ValueError, match="both 'value1' and 'value2'"):
+        chart.links("group", value1="A")

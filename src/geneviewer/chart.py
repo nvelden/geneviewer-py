@@ -719,6 +719,8 @@ class GC:
         group, show = a["group"], a["show"]
         if _is_flag(group):
             show, group = group, None
+        if group is not None and len(_r.as_vector(group)) != 1:
+            raise ValueError("group must be a single column name")
         if show is True and group is None and state["group"] is None:
             raise ValueError("Please define a group")
         if group is None and state["group"] is not None:
@@ -919,6 +921,28 @@ class GC:
         if margin is not None and a["cluster"] is None:
             top = margin.get("top") if isinstance(margin, Mapping) else None
             bottom = margin.get("bottom") if isinstance(margin, Mapping) else None
+            # Pixels, or a percentage of a chart height in pixels
+            for value in (top, bottom):
+                if value is None:
+                    continue
+                pixels = _r.is_number(value) and math.isfinite(value)
+                text = is_str(value) and re.match(
+                    r"^\s*-?[0-9]*\.?[0-9]+\s*(px|%)?\s*$", value
+                )
+                if not pixels and not text:
+                    raise ValueError(
+                        'Margins must be pixels, e.g. 50 or "50px", or a percentage '
+                        'of the chart height, e.g. "10%".'
+                    )
+                height = self._height
+                chart_pixels = _r.is_number(height) or (
+                    is_str(height) and re.match(r"^\s*[0-9.]+\s*(px)?\s*$", height)
+                )
+                if text and value.strip().endswith("%") and not chart_pixels:
+                    raise ValueError(
+                        "Use pixel values for the top and bottom margins when the "
+                        "chart height is not in pixels, e.g. a percentage."
+                    )
             padding_top = 0 if top is None else get_relative_height(self._height, top)
             padding_bottom = (
                 0 if bottom is None else get_relative_height(self._height, bottom)
@@ -1007,6 +1031,9 @@ class GC:
             The chart.
         """
         a = _spec.args(locals(), _SCALE)
+        # The library turns automatic breaks on or off for all selected clusters
+        if not _r.is_bool(a["scale_breaks"]):
+            raise ValueError("scale_breaks must be a single True or False")
         # Fail early on a padding that is no percentage or base pairs
         if is_str(a["scale_break_padding"]):
             break_padding_bp(a["scale_break_padding"])
@@ -1607,7 +1634,10 @@ class GC:
         data : pandas.DataFrame, optional
             Links to draw instead, e.g. from ``protein_blast()``.
         value1, value2 : list, optional
-            Pairs of group values to link.
+            Pairs of group values to link, of the same length: each value of
+            ``value1`` is linked to the value of ``value2`` in the same place.
+            Give both or neither; with neither, genes of the same group are
+            linked.
         cluster : list, optional
             The clusters to link, at least two. Default: all.
         curve : bool, optional
@@ -1671,6 +1701,22 @@ class GC:
         ):
             raise ValueError("'vmin' must be smaller than 'vmax'.")
 
+        if a["data"] is None and a["group"] is None:
+            raise ValueError("Either 'group' or 'data' must be provided.")
+        # Pairs of groups to link: value1[i] with value2[i]
+        value1, value2 = a["value1"], a["value2"]
+        if (value1 is None) != (value2 is None):
+            raise ValueError(
+                "Give both 'value1' and 'value2', the groups to link in pairs, "
+                "or neither."
+            )
+        if value1 is not None and len(_r.as_vector(value1)) != len(
+            _r.as_vector(value2)
+        ):
+            raise ValueError(
+                "'value1' and 'value2' must have the same length: one pair of "
+                "groups each."
+            )
         if a["data"] is not None:
             links_data = a["data"]
         else:
