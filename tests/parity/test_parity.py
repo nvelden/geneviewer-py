@@ -31,13 +31,7 @@ CASES = Path(__file__).parent / "cases"
 LATER = {}
 
 # Known differences, waiting for a decision: fixture, reason
-DIFFERENCES = {
-    "rd-GC-genes-1": (
-        "R keeps the names of options passed through ..., so prevent_overlap "
-        "and gene_overlap_spacing stay snake_case; Python writes options in "
-        "camelCase. Neither is an option of the library."
-    ),
-}
+DIFFERENCES: dict[str, str] = {}
 
 
 def _frame(columns: dict) -> pd.DataFrame:

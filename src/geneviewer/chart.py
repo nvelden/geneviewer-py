@@ -892,7 +892,9 @@ class GC:
             Margins, e.g. ``{"left": 50, "top": "10%"}``. Top and bottom
             margins of the whole chart are padding of the chart.
         width : str or float, optional
-            Width of the chart (without ``cluster``) or of the clusters.
+            Width of the chart (without ``cluster``) or of the clusters: a
+            number of pixels, e.g. ``600``, or a string such as ``"80%"`` or
+            ``"600px"``.
         height : str or float, optional
             Height of the clusters, e.g. "30%" or 100.
         direction : str
@@ -1296,7 +1298,7 @@ class GC:
         ):
             _warn(
                 "Setting both 'separate_strands' and 'prevent_gene_overlap' to True "
-                "is not supported. Resetting to None."
+                "is not supported. Neither is applied."
             )
         _data.check_clusters(self._spec, a["cluster"])
         return self._with(_spec.add(self._spec, "cluster", a.spec))

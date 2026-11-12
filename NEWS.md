@@ -28,6 +28,9 @@
   genes; they stayed at the old positions. Links given as `data` (e.g.
   alignments) keep their positions, with a warning to add them after
   `normalize()`.
+- `cluster(separate_strands=True, prevent_gene_overlap=True)` warns that
+  neither is applied, which is what happens; it said "Resetting to None".
+  The docs of `grid()` say what a `width` number is (pixels).
 - Tooltips (`tooltip()`) show the values of the data as text: markup in a
   value, e.g. in a qualifier of a GenBank file from someone else, ran in the
   page of who viewed the chart. The `formatter` is still HTML. (Needs the
