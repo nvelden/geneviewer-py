@@ -1,0 +1,53 @@
+{
+  "calls": [
+    {
+      "fun": "read_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/fasta-B73",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "protein_id",
+        "type": "character"
+      },
+      {
+        "name": "location",
+        "type": "character"
+      },
+      {
+        "name": "sequence",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "protein_id": ["p1", "p2", "p3", "p5"],
+      "location": ["complement(1..90)", "100..190", "1..90", null],
+      "sequence": ["MKK", "MAA", "MKK", "MCC"],
+      "start": [1, 100, 1, null],
+      "end": [90, 190, 90, null],
+      "strand": ["complement", "forward", "forward", null],
+      "cluster": ["A", "A", "B", "B"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

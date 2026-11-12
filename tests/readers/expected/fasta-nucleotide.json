@@ -38,6 +38,10 @@
         "type": "numeric"
       },
       {
+        "name": "strand",
+        "type": "character"
+      },
+      {
         "name": "cluster",
         "type": "character"
       }
@@ -50,6 +54,7 @@
       "sequence": ["ATGGGCTATATAAACGTTTTCGCTTTTCCGTTTACGATATATAGTCTACTCTTGTGCAGAATGAATTCTCGTAACTACATAGCACAAGTAGATGTAGTTAACTTTAATCTCACATAG"],
       "start": [29558],
       "end": [29674],
+      "strand": ["forward"],
       "cluster": ["nucleotide"]
     }
   },

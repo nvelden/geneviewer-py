@@ -186,6 +186,17 @@ def get_links(
     cluster_column = state["cluster"]
     if cluster_column is None:
         raise ValueError("Please define cluster in GC().")
+    # The links name their clusters in cluster1 and cluster2. Another column
+    # named cluster is left out: it would be read in place of the clusters
+    # of the chart
+    if cluster_column != "cluster" and "cluster" in data.columns:
+        if group == "cluster":
+            raise ValueError(
+                'The column "cluster" cannot be the group of the links when the '
+                f'clusters of the chart are another column ("{cluster_column}"). '
+                "Rename the column."
+            )
+        data = data.drop(columns="cluster")
     data = data.rename(columns={cluster_column: "cluster"})
     data = data[data["cluster"].isin(clusters)]
 
@@ -226,7 +237,9 @@ def get_introns(data: pd.DataFrame) -> pd.DataFrame:
 
     Exons and UTRs that overlap, nest or touch are one covered region; each
     gap of at least one base between covered regions becomes an intron. An
-    intron row copies the other columns of the exon or UTR before it. Exons
+    intron row has the values of the columns that are the same for all exons
+    and UTRs of its transcript (e.g. its gene or group), and is missing the
+    others (e.g. the name of an exon). Exons
     whose start is after their end (reverse strand) are read as their
     span, and keep their positions in the result.
 
@@ -275,7 +288,8 @@ def get_introns(data: pd.DataFrame) -> pd.DataFrame:
         not pd.isna(t) and re.search("exon|utr", str(t), re.IGNORECASE) is not None
         for t in data["type"]
     ]
-    parts = data[is_part].copy()
+    # A boolean Series: an empty list would select columns, not rows
+    parts = data[pd.Series(is_part, index=data.index, dtype=bool)].copy()
     start = parts["start"].astype("float64")
     end = parts["end"].astype("float64")
     swap = start > end
@@ -292,6 +306,19 @@ def get_introns(data: pd.DataFrame) -> pd.DataFrame:
     introns["start"] = covered[gap] + 1
     introns["end"] = following[gap] - 1
     introns["type"] = "intron"
+
+    # An intron belongs to its transcript, not to the exon before it: it
+    # keeps the columns that are the same for all exons and UTRs of the
+    # transcript (e.g. its gene, group or strand), the others are missing.
+    # rowID is numbered again when the chart prepares its data.
+    if len(introns) > 0:
+        by_transcript = parts.groupby("transcript", dropna=False, sort=False)
+        for column in introns.columns:
+            if column in ("start", "end", "type", "transcript", "rowID"):
+                continue
+            varies = by_transcript[column].nunique(dropna=False) > 1
+            mask = introns["transcript"].map(varies).fillna(False).astype(bool)
+            introns[column] = introns[column].where(~mask)
 
     result = pd.concat([data, introns], ignore_index=True)
     for name in ("start", "end"):
@@ -431,7 +458,8 @@ def _normalize_positions(
     else:
         total_gap = total_length * gap * (n - 1)
     mean_gene_length = (total_length - total_gap) / n
-    step = total_gap / n
+    # The gaps lie between the genes: one fewer than there are genes
+    step = total_gap / (n - 1) if n > 1 else 0.0
 
     if preserve_gene_length:
         gene_length = np.abs(actual_end - actual_start)
@@ -552,4 +580,62 @@ def normalize(
     # and end
     for field in ("start", "end"):
         data[state[field]] = data[field]
-    return {**spec, "data": data}
+    result = {**spec, "data": data}
+    if spec.get("links") is not None:
+        fields = list(dict.fromkeys(["start", "end", state["start"], state["end"]]))
+        result["links"] = _normalize_links(spec["links"], data, fields)
+    return result
+
+
+def _normalize_links(links: Any, data: pd.DataFrame, fields: list[str]) -> Any:
+    """Put links made before ``normalize()`` at the new positions of their genes.
+
+    R's ``normalize_links()``: links made by ``links(group=)`` name their
+    genes in ``rowID1`` and ``rowID2``, and their positions are those of the
+    genes. Links given as data, e.g. alignments, have positions inside the
+    genes; they keep them, with a warning.
+
+    Parameters
+    ----------
+    links : dict or list of dict
+        The links of the spec: an entry or a list of entries.
+    data : pandas.DataFrame
+        The chart's data with the new positions and ``rowID``.
+    fields : list of str
+        The position columns: ``start``, ``end`` and the columns given as
+        start and end.
+
+    Returns
+    -------
+    dict or list of dict
+        The links.
+    """
+    single = isinstance(links, Mapping)
+    entries = [links] if single else list(links)
+    kept = False
+    position = {row: i for i, row in enumerate(data["rowID"].tolist())}
+    for i, entry in enumerate(entries):
+        links_data = entry.get("data")
+        if not isinstance(links_data, pd.DataFrame) or not {"rowID1", "rowID2"} <= set(
+            links_data.columns
+        ):
+            kept = True
+            continue
+        links_data = links_data.copy()
+        for side in ("1", "2"):
+            rows = [position.get(row) for row in links_data["rowID" + side].tolist()]
+            for field in fields:
+                column = field + side
+                if column not in links_data.columns:
+                    continue
+                values = data[field].tolist()
+                old = links_data[column].tolist()
+                new = [old[j] if r is None else values[r] for j, r in enumerate(rows)]
+                links_data[column] = pd.Series(new, index=links_data.index)
+        entries[i] = {**entry, "data": links_data}
+    if kept:
+        _warn(
+            "Links given as data keep their positions after normalize(). "
+            "Add them after normalize() to place them on the new positions."
+        )
+    return entries[0] if single else entries

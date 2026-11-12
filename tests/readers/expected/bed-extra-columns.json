@@ -1,0 +1,92 @@
+{
+  "calls": [
+    {
+      "fun": "read_bed",
+      "args": {}
+    }
+  ],
+  "input": "inputs/extra.bed",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "chrom",
+        "type": "character"
+      },
+      {
+        "name": "chromStart",
+        "type": "numeric"
+      },
+      {
+        "name": "chromEnd",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "character"
+      },
+      {
+        "name": "score",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "thickStart",
+        "type": "numeric"
+      },
+      {
+        "name": "thickEnd",
+        "type": "integer"
+      },
+      {
+        "name": "itemRgb",
+        "type": "character"
+      },
+      {
+        "name": "blockCount",
+        "type": "integer"
+      },
+      {
+        "name": "blockSizes",
+        "type": "list"
+      },
+      {
+        "name": "blockStarts",
+        "type": "list"
+      },
+      {
+        "name": "V13",
+        "type": "character"
+      },
+      {
+        "name": "V14",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "chrom": ["chr1"],
+      "chromStart": [101],
+      "chromEnd": [200],
+      "name": ["a"],
+      "score": [0],
+      "strand": ["+"],
+      "thickStart": [101],
+      "thickEnd": [200],
+      "itemRgb": ["0"],
+      "blockCount": [1],
+      "blockSizes": [
+        [100]
+      ],
+      "blockStarts": [
+        [1]
+      ],
+      "V13": ["x"],
+      "V14": ["y"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

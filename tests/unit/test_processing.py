@@ -41,6 +41,22 @@ def test_links_by_group_columns():
     assert {"rowID1", "rowID2", "strand1", "strand2"} <= set(result.columns)
 
 
+@pytest.mark.parametrize("position", [0, 5])
+def test_links_with_another_column_named_cluster(position):
+    # The clusters are "cl"; a column "cluster" before or after it is not
+    # read in their place, and is left out of the links
+    data = genes(["A", "B", "A", "B"], [1, 1, 2, 2])
+    data.insert(position, "cluster", ["x", "x", "x", "x"])
+    result = links(data)
+    assert list(result["name1"]) == ["g0", "g1"]
+    assert list(result["name2"]) == ["g2", "g3"]
+    assert list(result["cluster1"]) == ["1", "1"]
+    assert list(result["cluster2"]) == ["2", "2"]
+    assert list(result.columns).count("cluster1") == 1
+    with pytest.raises(ValueError, match="cannot be the group of the links"):
+        links(data, group="cluster")
+
+
 def test_links_rows_in_rs_merge_order():
     # R's merge() shell-sorts the rows of a group: with 9 rows they do not
     # keep their order (R: g0 g5 g2 g8 g3 g1 g6 g7 g4)
@@ -120,16 +136,30 @@ def normalized(**kwargs):
 
 def test_normalize_keeps_gene_lengths_and_strand():
     data = normalized()
-    assert data["start"] == [100, 388, 525, 862]
-    assert data["end"] == [200, 338, 725, 962]
+    assert data["start"] == [100, 433, 617, 1000]
+    assert data["end"] == [200, 383, 817, 1100]
     assert data["original_start"] == [100, 300, 700, 1000]
     assert data["original_end"] == [200, 250, 900, 1100]
 
 
 def test_normalize_mean_length_and_gap():
     data = normalized(preserve_gene_length=False, gap=0.1)
-    assert data["start"] == [100, 525, 600, 850]
-    assert data["end"] == [275, 350, 775, 1025]
+    assert data["start"] == [100, 550, 650, 925]
+    assert data["end"] == [275, 375, 825, 1100]
+
+
+def test_normalize_keeps_the_range_of_the_cluster():
+    # Evenly spaced genes stay where they are; a given gap is the gap drawn
+    even = pd.DataFrame({"start": [10, 50, 90], "end": [40, 80, 120]})
+    data = GC(even).normalize().to_spec()["data"]
+    assert data["start"] == [10, 50, 90]
+    assert data["end"] == [40, 80, 120]
+    data = GC(even).normalize(gap=0.1).to_spec()["data"]
+    assert data["start"] == [10, 51, 92]
+    assert data["end"] == [40, 81, 122]
+    single = pd.DataFrame({"start": [300], "end": [400]})
+    data = GC(single).normalize(preserve_gene_length=False).to_spec()["data"]
+    assert (data["start"], data["end"]) == ([300], [400])
 
 
 def test_normalize_custom_gaps_only():
@@ -149,9 +179,63 @@ def test_normalize_one_cluster_and_other_start_column():
     )
     spec = GC(data, start="from", end="to", cluster="cl").normalize(cluster=2)
     result = spec.to_spec()["data"]
-    assert result["start"] == [10, 90, 130, 10, 60, 110]
+    assert result["start"] == [10, 90, 130, 10, 70, 130]
     assert result["from"] == result["start"]
     assert result["original_start"] == [None, None, None, 10, 90, 130]
+
+
+def test_links_made_before_normalize_move_with_their_genes():
+    data = pd.DataFrame(
+        {
+            "s": [10, 100, 150, 10, 60, 110],
+            "e": [40, 130, 180, 40, 90, 140],
+            "name": ["A", "B", "C"] * 2,
+            "cl": [1, 1, 1, 2, 2, 2],
+        }
+    )
+    chart = GC(data, start="s", end="e", cluster="cl", group="name")
+    before = (
+        chart.links("name")
+        .links("name", value1="A", value2="A")
+        .normalize(cluster=1)
+        .to_spec()["links"]
+    )
+    after = (
+        chart.normalize(cluster=1)
+        .links("name")
+        .links("name", value1="A", value2="A")
+        .to_spec()["links"]
+    )
+    columns = ["rowID1", "rowID2", "start1", "end1", "start2", "end2", "s1", "e1"]
+    for old, new in zip(before, after, strict=True):
+        assert {c: old["data"][c] for c in columns} == {
+            c: new["data"][c] for c in columns
+        }
+    assert before[0]["data"]["start1"] == [10, 80, 150]
+
+    one = chart.links("name").normalize(cluster=1).to_spec()["links"]
+    assert one["data"]["end1"] == [40, 110, 180]
+
+
+def test_links_given_as_data_keep_their_positions_after_normalize():
+    data = pd.DataFrame(
+        {"start": [10, 100, 150, 10], "end": [40, 130, 180, 40], "cl": [1, 1, 1, 2]}
+    )
+    alignment = pd.DataFrame(
+        {
+            "cluster1": ["1"],
+            "cluster2": ["2"],
+            "start1": [100],
+            "end1": [120],
+            "start2": [10],
+            "end2": [30],
+            "identity": [90],
+        }
+    )
+    with pytest.warns(UserWarning, match="keep their positions"):
+        spec = GC(data, cluster="cl").links(data=alignment).normalize().to_spec()
+    assert spec["links"]["data"]["start1"] == [100]
+    assert "links" not in GC(data, cluster="cl").normalize().to_spec()
 
 
 def test_normalize_warnings():
@@ -166,3 +250,18 @@ def test_normalize_warnings():
     with warnings.catch_warnings():
         warnings.simplefilter("error")
         GC(POSITIONS, group="grp").normalize()
+
+
+def test_a_chart_without_rows_takes_transcript_and_normalize():
+    data = pd.DataFrame(
+        {
+            "start": pd.Series([], dtype=float),
+            "end": pd.Series([], dtype=float),
+            "name": pd.Series([], dtype=str),
+            "cl": pd.Series([], dtype=str),
+        }
+    )
+    spec = GC(data, cluster="cl").normalize().labels("name").to_spec()
+    assert spec["labels"] == {"label": "name"}
+    spec = GC(data).transcript(transcript="cl").to_spec()
+    assert spec["data"]["start"] == []

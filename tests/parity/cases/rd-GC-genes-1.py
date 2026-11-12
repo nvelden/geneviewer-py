@@ -11,8 +11,6 @@ def build(data):
         marker_size="medium",
         color_scheme=None,
         custom_colors=None,
-        prevent_overlap=False,
-        gene_overlap_spacing=40,
         cluster=1,
         x=1,
         y=50,

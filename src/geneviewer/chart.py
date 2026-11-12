@@ -52,6 +52,18 @@ def _any(value: Any) -> bool:
     return any(bool(v) for v in _r.as_vector(value))
 
 
+def _nothing_to_hide(spec: Any, key: str, show: Any) -> bool:
+    # show=False hides what an earlier call shows; with nothing shown before,
+    # the chart is unchanged (R's nothing_to_hide())
+    values = _r.as_vector(show)
+    return (
+        len(values) > 0
+        and all(isinstance(v, bool) or _r.is_bool(v) for v in values)
+        and not _any(show)
+        and spec.get(key) is None
+    )
+
+
 def _is_flag(value: Any) -> bool:
     return _r.is_bool(value)
 
@@ -348,17 +360,23 @@ class GC:
                     "e.g. 30."
                 )
 
-        if not _any(a["show"]):
+        if _nothing_to_hide(self._spec, "labels", a["show"]):
             return self
         label = a["label"]
+        show = a["show"]
+        # labels(False) is show=False, as the spec records it
         if _is_flag(label):
+            show = label
             label = None
-        if label is None and state["group"] is None:
-            raise ValueError("Please define labels")
-        if label is None:
-            label = state["group"]
+        # Hidden labels need no column: show=False hides the labels of an
+        # earlier call
+        if _any(show):
+            if label is None and state["group"] is None:
+                raise ValueError("Please define labels")
+            if label is None:
+                label = state["group"]
         columns = state["columns"] or []
-        if not all(v in columns for v in _r.as_vector(label)):
+        if label is not None and not all(v in columns for v in _r.as_vector(label)):
             raise ValueError("label column not found in data")
         _data.get_updated_clusters(state["clusters"], a["cluster"])
         return self._with(_spec.add(self._spec, "labels", _spec.flag(a.spec, "label")))
@@ -701,6 +719,8 @@ class GC:
         group, show = a["group"], a["show"]
         if _is_flag(group):
             show, group = group, None
+        if group is not None and len(_r.as_vector(group)) != 1:
+            raise ValueError("group must be a single column name")
         if show is True and group is None and state["group"] is None:
             raise ValueError("Please define a group")
         if group is None and state["group"] is not None:
@@ -811,7 +831,7 @@ class GC:
             The chart.
         """
         a = _spec.args(locals(), _CLUSTER_TITLE)
-        if not _any(a["show"]):
+        if _nothing_to_hide(self._spec, "clusterTitle", a["show"]):
             return self
         check_align(a["align"], per_cluster=True)
         check_spacing(a["spacing"], per_cluster=True)
@@ -874,7 +894,9 @@ class GC:
             Margins, e.g. ``{"left": 50, "top": "10%"}``. Top and bottom
             margins of the whole chart are padding of the chart.
         width : str or float, optional
-            Width of the chart (without ``cluster``) or of the clusters.
+            Width of the chart (without ``cluster``) or of the clusters: a
+            number of pixels, e.g. ``600``, or a string such as ``"80%"`` or
+            ``"600px"``.
         height : str or float, optional
             Height of the clusters, e.g. "30%" or 100.
         direction : str
@@ -899,6 +921,28 @@ class GC:
         if margin is not None and a["cluster"] is None:
             top = margin.get("top") if isinstance(margin, Mapping) else None
             bottom = margin.get("bottom") if isinstance(margin, Mapping) else None
+            # Pixels, or a percentage of a chart height in pixels
+            for value in (top, bottom):
+                if value is None:
+                    continue
+                pixels = _r.is_number(value) and math.isfinite(value)
+                text = is_str(value) and re.match(
+                    r"^\s*-?[0-9]*\.?[0-9]+\s*(px|%)?\s*$", value
+                )
+                if not pixels and not text:
+                    raise ValueError(
+                        'Margins must be pixels, e.g. 50 or "50px", or a percentage '
+                        'of the chart height, e.g. "10%".'
+                    )
+                height = self._height
+                chart_pixels = _r.is_number(height) or (
+                    is_str(height) and re.match(r"^\s*[0-9.]+\s*(px)?\s*$", height)
+                )
+                if text and value.strip().endswith("%") and not chart_pixels:
+                    raise ValueError(
+                        "Use pixel values for the top and bottom margins when the "
+                        "chart height is not in pixels, e.g. a percentage."
+                    )
             padding_top = 0 if top is None else get_relative_height(self._height, top)
             padding_bottom = (
                 0 if bottom is None else get_relative_height(self._height, bottom)
@@ -987,6 +1031,9 @@ class GC:
             The chart.
         """
         a = _spec.args(locals(), _SCALE)
+        # The library turns automatic breaks on or off for all selected clusters
+        if not _r.is_bool(a["scale_breaks"]):
+            raise ValueError("scale_breaks must be a single True or False")
         # Fail early on a padding that is no percentage or base pairs
         if is_str(a["scale_break_padding"]):
             break_padding_bp(a["scale_break_padding"])
@@ -1043,7 +1090,7 @@ class GC:
             The chart.
         """
         a = _spec.args(locals(), _SCALE_BAR)
-        if not _any(a["show"]):
+        if _nothing_to_hide(self._spec, "scaleBar", a["show"]):
             return self
         _data.check_clusters(self._spec, a["cluster"])
         return self._with(
@@ -1109,7 +1156,7 @@ class GC:
             The chart.
         """
         a = _spec.args(locals(), _CLUSTER_LABEL)
-        if not _any(a["show"]):
+        if _nothing_to_hide(self._spec, "clusterLabel", a["show"]):
             return self
         check_align(a["align"], per_cluster=True)
         check_spacing(a["spacing"], per_cluster=True)
@@ -1153,7 +1200,7 @@ class GC:
             The chart.
         """
         a = _spec.args(locals(), _CLUSTER_FOOTER)
-        if not _any(a["show"]):
+        if _nothing_to_hide(self._spec, "clusterFooter", a["show"]):
             return self
         check_align(a["align"], per_cluster=True)
         check_spacing(a["spacing"], per_cluster=True)
@@ -1209,7 +1256,7 @@ class GC:
         style_by = a["style_by"] if a["style_by"] is not None else state["group"]
         if a["group_style"] is not None and style_by is None:
             raise ValueError("group_style needs a group in GC() or a style_by column")
-        if not _any(a["show"]):
+        if _nothing_to_hide(self._spec, "coordinates", a["show"]):
             return self
         _data.get_updated_clusters(state["clusters"], a["cluster"])
         return self._with(_spec.add(self._spec, "coordinates", a.spec))
@@ -1278,7 +1325,7 @@ class GC:
         ):
             _warn(
                 "Setting both 'separate_strands' and 'prevent_gene_overlap' to True "
-                "is not supported. Resetting to None."
+                "is not supported. Neither is applied."
             )
         _data.check_clusters(self._spec, a["cluster"])
         return self._with(_spec.add(self._spec, "cluster", a.spec))
@@ -1510,7 +1557,12 @@ class GC:
             The chart.
         """
         a = _spec.args(locals(), _ZOOM)
-        check_zoom({name: a[name] for name in _ZOOM if a[name] is not None})
+        # range and min are in the units of the mode of an earlier call when
+        # this one gives none
+        mode = a["mode"]
+        if mode is None and isinstance(self._spec.get("zoom"), Mapping):
+            mode = self._spec["zoom"].get("mode")
+        check_zoom({name: a[name] for name in _ZOOM if a[name] is not None}, mode)
         return self._with(_spec.add_zoom(self._spec, a.spec))
 
     def tooltip(
@@ -1582,7 +1634,10 @@ class GC:
         data : pandas.DataFrame, optional
             Links to draw instead, e.g. from ``protein_blast()``.
         value1, value2 : list, optional
-            Pairs of group values to link.
+            Pairs of group values to link, of the same length: each value of
+            ``value1`` is linked to the value of ``value2`` in the same place.
+            Give both or neither; with neither, genes of the same group are
+            linked.
         cluster : list, optional
             The clusters to link, at least two. Default: all.
         curve : bool, optional
@@ -1646,6 +1701,22 @@ class GC:
         ):
             raise ValueError("'vmin' must be smaller than 'vmax'.")
 
+        if a["data"] is None and a["group"] is None:
+            raise ValueError("Either 'group' or 'data' must be provided.")
+        # Pairs of groups to link: value1[i] with value2[i]
+        value1, value2 = a["value1"], a["value2"]
+        if (value1 is None) != (value2 is None):
+            raise ValueError(
+                "Give both 'value1' and 'value2', the groups to link in pairs, "
+                "or neither."
+            )
+        if value1 is not None and len(_r.as_vector(value1)) != len(
+            _r.as_vector(value2)
+        ):
+            raise ValueError(
+                "'value1' and 'value2' must have the same length: one pair of "
+                "groups each."
+            )
         if a["data"] is not None:
             links_data = a["data"]
         else:
@@ -1730,6 +1801,10 @@ class GC:
         custom_gaps: dict[str, float] = _MISSING,
     ) -> GC:
         """Normalise the positions of the genes: even gaps between them.
+
+        Links made before by ``links(group=)`` move with their genes. Links
+        given as ``data`` (e.g. alignments) keep their positions, with a
+        warning: add them after ``normalize()``.
 
         Parameters
         ----------

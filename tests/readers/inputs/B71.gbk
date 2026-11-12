@@ -1,0 +1,10 @@
+LOCUS       LONG             100000080 bp    DNA     linear   BCT 01-JAN-2024
+DEFINITION  Long record.
+VERSION     LONG.1
+FEATURES             Location/Qualifiers
+ORIGIN
+   999961 aaaaaaaaaa cccccccccc
+  1000021 gggggggggg tttttttttt
+ 10000021 acacacacac gtgtgtgtgt
+100000021 agagagagag ctctctctct
+//

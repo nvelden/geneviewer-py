@@ -1,0 +1,48 @@
+{
+  "calls": [
+    {
+      "fun": "read_bed",
+      "args": {}
+    }
+  ],
+  "input": "inputs/score-text.bed",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "chrom",
+        "type": "character"
+      },
+      {
+        "name": "chromStart",
+        "type": "numeric"
+      },
+      {
+        "name": "chromEnd",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "character"
+      },
+      {
+        "name": "score",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "chrom": ["1", "1", "X"],
+      "chromStart": [1, 201, 401],
+      "chromEnd": [100, 300, 500],
+      "name": ["a", "b", "c"],
+      "score": [null, 500, null],
+      "strand": ["+", "-", "+"]
+    }
+  },
+  "warnings": ["Scores that are not numbers were set to NA: low"],
+  "error": null
+}

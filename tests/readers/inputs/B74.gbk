@@ -1,0 +1,24 @@
+LOCUS       LOC1   10 bp
+ACCESSION   ACC1 ACC2
+DEFINITION  Thing.
+FEATURES             Location/Qualifiers
+ORIGIN
+        1 acgtacgtac
+//
+LOCUS       LOC2   10 bp
+FEATURES             Location/Qualifiers
+ORIGIN
+        1 acgtacgtac
+//
+VERSION     V.1
+DEFINITION  Other thing.
+FEATURES             Location/Qualifiers
+ORIGIN
+        1 acgtacgtac
+//
+VERSION
+ACCESSION
+FEATURES             Location/Qualifiers
+ORIGIN
+        1 acgtacgtac
+//

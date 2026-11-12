@@ -1,0 +1,63 @@
+{
+  "calls": [
+    {
+      "fun": "read_gff",
+      "args": {}
+    }
+  ],
+  "input": "inputs/score-text.gff3",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "seqid",
+        "type": "character"
+      },
+      {
+        "name": "source",
+        "type": "character"
+      },
+      {
+        "name": "type",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "integer"
+      },
+      {
+        "name": "end",
+        "type": "integer"
+      },
+      {
+        "name": "score",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "phase",
+        "type": "character"
+      },
+      {
+        "name": "ID",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "seqid": ["chr1", "chr1", "chr1", "chr1", "chr1"],
+      "source": ["demo", "demo", "demo", "demo", "demo"],
+      "type": ["gene", "gene", "gene", "gene", "gene"],
+      "start": [100, 600, 1000, 1300, 1500],
+      "end": [500, 900, 1200, 1400, 1600],
+      "score": [null, 7, null, null, 31],
+      "strand": ["+", "+", "+", "+", "+"],
+      "phase": [".", ".", ".", ".", "."],
+      "ID": ["a", "b", "c", "d", "e"]
+    }
+  },
+  "warnings": ["Scores that are not numbers were set to NA: high"],
+  "error": null
+}

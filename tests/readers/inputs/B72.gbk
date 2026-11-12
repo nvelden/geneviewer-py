@@ -1,0 +1,17 @@
+LOCUS       B72                      600 bp    DNA     linear   BCT 01-JAN-2024
+DEFINITION  B72.
+FEATURES             Location/Qualifiers
+     5'UTR           1..9
+                     /gene="utr5"
+     CDS             10..200
+                     /gene="abc"
+                     /pseudo
+                     /note="see /x=1 here"
+                     /protein_id="P1"
+     gene            300..500
+     -10_signal      590..595
+     misc_feature    complement(join(510..520,
+                     530..540))
+ORIGIN
+        1 acgtacgtac
+//

@@ -160,7 +160,7 @@ def gbk_get_feature_keys(lines: Sequence[str]) -> list[str]:
     keys = [
         re.sub(r"^ {5}(\S+).*", r"\1", line, flags=re.S)
         for line in lines
-        if re.match(r"^ {5}[a-zA-Z]\w*", line)
+        if re.match(r"^ {5}\S", line)
     ]
     return list(dict.fromkeys(keys))
 
@@ -202,9 +202,10 @@ def gbk_get_sections(lines: Sequence[str], keys: Sequence[str]) -> dict[str, Any
         Each section found: its text on one line, without its key, except
         ``FEATURES`` (its lines) and ``ORIGIN`` (the letters of the sequence).
     """
-    starts = [
-        i for i, line in enumerate(lines) if re.match(r"^ {0,2}([^ ]+)(?=\s|$)", line)
-    ]
+    # Not the sequence lines of ORIGIN: from base 1,000,001 their position
+    # has no more than two spaces before it
+    section_start = re.compile(r"^ {0,2}(?![0-9])([^ ]+)(?=\s|$)")
+    starts = [i for i, line in enumerate(lines) if section_start.match(line)]
     sections: dict[str, Any] = {}
     for key in keys:
         found = [i for i, line in enumerate(lines) if re.match(r"^\s{0,2}" + key, line)]
@@ -224,7 +225,10 @@ def gbk_get_sections(lines: Sequence[str], keys: Sequence[str]) -> dict[str, Any
     return sections
 
 
-_QUALIFIER = re.compile(r'(?:^|(?<= ))/([^\s/="]+)=("(?:[^"]|"")*"|[^\s"]*)')
+# A qualifier without a value, e.g. /pseudo, gets ""
+_QUALIFIER = re.compile(
+    r'(?:^|(?<= ))/([^\s/="]+)(?:=("(?:[^"]|"")*"|[^\s"]*)|(?=\s|$))'
+)
 
 
 def gbk_process_features(text: str, key: str) -> Feature:
@@ -245,13 +249,17 @@ def gbk_process_features(text: str, key: str) -> Feature:
     names, values = [], []
     for match in _QUALIFIER.finditer(text):
         qualifier = match.group(0)
-        name = re.sub(r"^/([^=]+)=.*$", r"\1", qualifier, flags=re.S)
-        value = re.sub(r"^/[^=]+=", "", qualifier)
+        name = re.sub(r"^/([^=]+)(=.*)?$", r"\1", qualifier, flags=re.S)
+        value = re.sub(r"^/[^=]+=", "", qualifier) if "=" in qualifier else ""
         value = re.sub(r'^"(.*)"$', r"\1", value, flags=re.S)
         names.append(name)
         values.append(value.replace('""', '"').strip())
-    region_match = re.match(r".*?" + key + r"\s+(.*?)\s*/.*", text, flags=re.S)
-    region = region_match.group(1) if region_match else None
+    # The location after the key, up to the first qualifier; also for a
+    # feature without qualifiers
+    region = None
+    if text.startswith(key):
+        location = re.sub(r"\s*/.*$", "", text[len(key) :].strip(), flags=re.S)
+        region = location or None
     if "region" in names:
         values[names.index("region")] = region
     else:
@@ -279,12 +287,14 @@ def gbk_get_features(lines: Sequence[str], key: str) -> list[Feature] | None:
     list of Feature or None
         The features; ``None`` when there are none.
     """
-    starts = [
-        i for i, line in enumerate(lines) if re.match(r"^ {5}" + key + r"(\s|$)", line)
+    # The key as written, also with characters such as ' (5'UTR)
+    line_keys = [
+        m.group(1) if (m := re.match(r"^ {5}(\S+)", line)) else None for line in lines
     ]
+    starts = [i for i, line_key in enumerate(line_keys) if line_key == key]
     if not starts:
         return None
-    all_starts = [i for i, line in enumerate(lines) if re.match(r"^ {5}[a-zA-Z]", line)]
+    all_starts = [i for i, line_key in enumerate(line_keys) if line_key is not None]
     result = []
     for start in starts:
         later = [i for i in all_starts if i > start]
@@ -383,7 +393,9 @@ def genbank_to_fasta(
     """Write the sequences of a GenBank file to a FASTA file.
 
     Each record becomes a FASTA record with the header ``>VERSION
-    DEFINITION`` and the sequence of ``ORIGIN`` in capitals.
+    DEFINITION`` and the sequence of ``ORIGIN`` in capitals. A record without
+    a ``VERSION`` is named by its ``ACCESSION``, else its ``LOCUS`` name, else
+    the file name; without a ``DEFINITION`` the header is the name only.
 
     Parameters
     ----------
@@ -420,24 +432,35 @@ def genbank_to_fasta(
     for r, (start, end) in enumerate(zip(starts, ends, strict=True), start=1):
         record = lines[start : end + 1]
         definition = [
-            re.sub(r"[^a-zA-Z0-9]+$", "", re.sub(r"^DEFINITION\s+", "", line))
+            re.sub(r"[^a-zA-Z0-9]+$", "", re.sub(r"^DEFINITION\s*", "", line))
             for line in record
             if line.startswith("DEFINITION")
         ]
+        # The name of the record: its VERSION, else its ACCESSION or LOCUS
+        # name, else the file name
         version = [
-            re.sub(r"^VERSION\s+", "", line)
+            re.sub(r"^VERSION\s*", "", line).strip()
             for line in record
             if line.startswith("VERSION")
         ]
+        names = [v for v in version[:1] if v]
+        for key in ("ACCESSION", "LOCUS"):
+            line = next((x for x in record if re.match(key + r"(\s|$)", x)), None)
+            words = line.split()[1:2] if line is not None else []
+            names += words
+        names.append(file_path_sans_ext(path))
         origin = [i for i, line in enumerate(record) if line.startswith("ORIGIN")]
         if not origin:
             warn(f"Record {r} has no sequence and is skipped.")
             continue
-        if not definition or not version:
-            continue
         sequence = "".join(record[origin[0] + 1 : len(record) - 1])
         sequence = re.sub(r"\s+|[0-9]+", "", sequence).upper()
-        records.append(f">{version[0]} {definition[0]}\n{sequence}")
+        header = (
+            f">{names[0]} {definition[0]}"
+            if definition and definition[0]
+            else f">{names[0]}"
+        )
+        records.append(f"{header}\n{sequence}")
     folder = path.parent if output_dir is None else Path(output_dir)
     fasta = folder / f"{file_path_sans_ext(path)}.fasta"
     fasta.write_text("\n".join(records) + "\n", encoding="utf-8")

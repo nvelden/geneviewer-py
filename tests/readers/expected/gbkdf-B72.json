@@ -1,0 +1,67 @@
+{
+  "calls": [
+    {
+      "fun": "read_gbk",
+      "args": {}
+    },
+    {
+      "fun": "gbk_features_to_df",
+      "args": {}
+    }
+  ],
+  "input": "inputs/B72.gbk",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "gene",
+        "type": "character"
+      },
+      {
+        "name": "pseudo",
+        "type": "character"
+      },
+      {
+        "name": "note",
+        "type": "character"
+      },
+      {
+        "name": "protein_id",
+        "type": "character"
+      },
+      {
+        "name": "region",
+        "type": "character"
+      },
+      {
+        "name": "cluster",
+        "type": "character"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      },
+      {
+        "name": "start",
+        "type": "numeric"
+      },
+      {
+        "name": "end",
+        "type": "numeric"
+      }
+    ],
+    "data": {
+      "gene": ["abc"],
+      "pseudo": [""],
+      "note": ["see /x=1 here"],
+      "protein_id": ["P1"],
+      "region": ["10..200"],
+      "cluster": ["B72"],
+      "strand": ["forward"],
+      "start": [10],
+      "end": [200]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

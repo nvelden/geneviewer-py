@@ -109,11 +109,15 @@ def add_strand(
     Returns
     -------
     pandas.DataFrame or None
-        A new data frame with a ``strand`` column; ``None`` for no rows.
+        A new data frame with a ``strand`` column; ``None`` for ``None``.
     """
-    if data is None or len(data) == 0:
+    if data is None:
         return None
     data = data.copy()
+    # Data without rows keeps its columns, with an empty strand
+    if len(data) == 0:
+        data["strand"] = pd.Series([], dtype=object)
+        return data
     columns = list(data.columns)
     if strand is None and "strand" in columns:
         strand = "strand"
@@ -161,8 +165,8 @@ def chart_fields(spec: Mapping[str, Any]) -> dict[str, Any]:
     dict
         The column names ``start``, ``end``, ``cluster``, ``group`` and
         ``strand`` (``None`` when not given); ``columns``, the names of the
-        columns of the prepared data (``None`` when it has no rows); and
-        ``clusters``, the names of the clusters in order.
+        columns of the prepared data; and ``clusters``, the names of the
+        clusters in order (none when the data has no rows).
     """
     fields = spec.get("fields") or {}
     state: dict[str, Any] = {
@@ -182,12 +186,13 @@ def chart_fields(spec: Mapping[str, Any]) -> dict[str, Any]:
         kept = data[state["start"]].notna() & data[state["end"]].notna()
     else:
         kept = pd.Series(False, index=data.index)
-    columns = None
-    if kept.any():
-        columns = list(data.columns)
-        columns += [c for c in ("rowID", "start", "end", "strand") if c not in columns]
+    # Also for data without rows: its columns can still be named
+    columns = list(data.columns)
+    columns += [c for c in ("rowID", "start", "end", "strand") if c not in columns]
     state["columns"] = columns
-    if state["cluster"] is None:
+    if not kept.any():
+        state["clusters"] = []
+    elif state["cluster"] is None:
         state["clusters"] = ["cluster"]
     elif state["cluster"] not in data.columns:
         state["clusters"] = []
@@ -241,6 +246,8 @@ def state_clusters(data: pd.DataFrame, cluster: str | None) -> list[str]:
     list of str
         The names, in order.
     """
+    if len(data) == 0:
+        return []
     if cluster is None:
         return ["cluster"]
     return list(dict.fromkeys(_r.as_character(value) for value in data[cluster]))

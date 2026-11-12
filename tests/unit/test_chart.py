@@ -267,3 +267,75 @@ def test_transcript_names_of_utr_arguments():
         "itemStyleUTRs": [{"index": 0}],
         "groupStyleUTRs": {"A": {"fill": "blue"}},
     }
+
+
+def test_show_false_hides_what_an_earlier_call_shows():
+    data = pd.DataFrame(
+        {
+            "start": [10, 50, 90, 130],
+            "end": [40, 80, 120, 160],
+            "name": ["a", "b", "c", "d"],
+            "cl": [1, 1, 2, 2],
+        }
+    )
+    chart = GC(data, cluster="cl")
+    calls = {
+        "labels": lambda c, **k: c.labels("name", **k),
+        "coordinates": lambda c, **k: c.coordinates(**k),
+        "scaleBar": lambda c, **k: c.scale_bar(**k),
+        "clusterTitle": lambda c, **k: c.cluster_title("t", **k),
+        "clusterLabel": lambda c, **k: c.cluster_label(**k),
+        "clusterFooter": lambda c, **k: c.cluster_footer("f", **k),
+    }
+    for key, call in calls.items():
+        spec = call(call(chart), show=False, cluster=2).to_spec()
+        assert spec[key][1]["show"] is False, key
+        assert spec[key][1]["clusters"] == [2], key
+        # With nothing shown before, nothing is recorded
+        assert key not in call(chart, show=False).to_spec(), key
+        assert key not in call(chart, show=[False, False]).to_spec(), key
+
+    # Hidden labels need no label column, also on a chart without a group
+    spec = chart.labels("name").labels(show=False).to_spec()
+    assert spec["labels"][1] == {"show": False}
+
+
+def test_zoom_range_and_min_are_in_the_mode_of_an_earlier_call():
+    data = pd.DataFrame({"start": [100, 5000], "end": [900, 9000]})
+    spec = GC(data).zoom(mode="absolute").zoom(range=[100, 2000], min=50).to_spec()
+    assert spec["zoom"] == {"mode": "absolute", "range": [100, 2000], "min": 50}
+    with pytest.raises(ValueError, match="relative 'range'"):
+        GC(data).zoom(mode="relative").zoom(range=[100, 2000])
+    # A new mode in the same call is checked against itself
+    with pytest.raises(ValueError, match="relative 'range'"):
+        GC(data).zoom(mode="absolute").zoom(mode="relative", range=[100, 2000])
+
+
+def test_wrong_arguments_give_a_message_that_names_them():
+    data = pd.DataFrame(
+        {
+            "start": [10, 50, 90, 130],
+            "end": [40, 80, 120, 160],
+            "name": ["a", "b", "c", "d"],
+            "group": ["A", "B", "A", "B"],
+            "cluster": [1, 1, 2, 2],
+        }
+    )
+    chart = GC(data, cluster="cluster", group="group", height="300px")
+    with pytest.raises(ValueError, match="Margins must be pixels"):
+        chart.grid(margin={"top": "2em"})
+    with pytest.raises(ValueError, match="pixel values"):
+        GC(data, height="50vh").grid(margin={"top": "10%"})
+    GC(data, height="50vh").grid(margin={"top": 20})
+    margin = chart.grid(margin={"top": "10%", "bottom": "5px"}).to_spec()["grid"]
+    assert margin["margin"] == {"top": "10%", "bottom": "5px"}
+    with pytest.raises(ValueError, match="single column name"):
+        chart.legend(group=["group", "name"])
+    with pytest.raises(ValueError, match="single True or False"):
+        chart.scale(scale_breaks=[True, False])
+    with pytest.raises(ValueError, match="Invalid measure"):
+        chart.links("group", measure=["identity", "none"])
+    with pytest.raises(ValueError, match="same length"):
+        chart.links("group", value1=["A", "B"], value2=["A"])
+    with pytest.raises(ValueError, match="both 'value1' and 'value2'"):
+        chart.links("group", value1="A")

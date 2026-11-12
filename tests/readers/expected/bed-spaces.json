@@ -1,0 +1,48 @@
+{
+  "calls": [
+    {
+      "fun": "read_bed",
+      "args": {}
+    }
+  ],
+  "input": "inputs/spaces.bed",
+  "data": null,
+  "result": {
+    "columns": [
+      {
+        "name": "chrom",
+        "type": "character"
+      },
+      {
+        "name": "chromStart",
+        "type": "numeric"
+      },
+      {
+        "name": "chromEnd",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "character"
+      },
+      {
+        "name": "score",
+        "type": "numeric"
+      },
+      {
+        "name": "strand",
+        "type": "character"
+      }
+    ],
+    "data": {
+      "chrom": ["chr1", "chr1"],
+      "chromStart": [101, 301],
+      "chromEnd": [200, 400],
+      "name": ["a", "b"],
+      "score": [0, 5],
+      "strand": ["+", "-"]
+    }
+  },
+  "warnings": [],
+  "error": null
+}

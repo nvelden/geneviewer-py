@@ -31,7 +31,7 @@
       },
       {
         "name": "score",
-        "type": "character"
+        "type": "numeric"
       },
       {
         "name": "strand",
@@ -60,7 +60,7 @@
       "type": ["gene", "gene", "gene"],
       "start": [100, 1000, 2000],
       "end": [900, 1900, 2600],
-      "score": [".", ".", "."],
+      "score": [null, null, null],
       "strand": ["+", "-", "+"],
       "phase": [".", ".", "."],
       "ID": ["g1", "g2", "g3"],

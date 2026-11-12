@@ -96,6 +96,24 @@ def test_mummer_failing_pair_warns(monkeypatch, tmp_path):
     assert sorted(p.name for p in folder.iterdir()) == before
 
 
+def test_mummer_input_folder_with_a_space(tmp_path):
+    if not all(shutil.which(c) for c in ("nucmer", "delta-filter", "show-coords")):
+        pytest.skip("MUMmer is not installed")
+    import random
+
+    rng = random.Random(1)
+    seq = "".join(rng.choice("ACGT") for _ in range(3000))
+    folder = tmp_path / "my sequences"
+    folder.mkdir()
+    (folder / "A.fasta").write_text(f">a\n{seq}\n")
+    (folder / "B.fasta").write_text(f">b\n{seq}\n")
+    out = tmp_path / "out"
+    links = mummer_alignment(folder, seqtype="nucleotide", output_dir=out)
+    assert len(links) > 0
+    # The input folder is left as it was
+    assert sorted(p.name for p in folder.iterdir()) == ["A.fasta", "B.fasta"]
+
+
 def test_mummer_pair_without_alignments(tmp_path):
     # As R: a pair with nothing in common gives no rows and no warning
     if not all(shutil.which(c) for c in ("nucmer", "delta-filter", "show-coords")):
@@ -121,8 +139,8 @@ def test_mummer_pair_without_alignments(tmp_path):
 def test_mummer_paths_without_spaces(monkeypatch, tmp_path):
     folder = tmp_path / "with space"
     folder.mkdir()
-    with pytest.raises(ValueError, match="directory path without spaces"):
-        mummer_alignment(folder)
+    with pytest.raises(ValueError, match="output directory path without spaces"):
+        mummer_alignment(folder, output_dir=folder)
     # A relative path: this checkout's path can have spaces
     monkeypatch.chdir(MUMMER_INPUTS.parent)
     with pytest.raises(ValueError, match="file names without spaces"):

@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from ._common import read_lines, read_tables, read_tsv
+from ._common import read_lines, read_tables, read_tsv, score_to_numeric
 
 FIELDS = (
     "chrom",
@@ -25,6 +25,9 @@ FIELDS = (
     "blockStarts",
 )
 PATTERN = r"\.bed[0-9]*$"
+# Text by definition, also when it looks like a number (a chrom 1), so that
+# the files of a folder can be combined
+TEXT = ("chrom", "name", "score", "strand", "itemRgb", "blockSizes", "blockStarts")
 # UCSC directives and comments, wherever they appear; words inside
 # chromosome or feature names are data, not declarations
 _HEADER = re.compile(r"^\s*(track|browser)(\s|$)|^\s*(#|$)")
@@ -50,8 +53,12 @@ def read_bed(path: str | os.PathLike[str]) -> pd.DataFrame:
     pandas.DataFrame
         One row per feature, with as many of the twelve BED columns as the
         first line has (``chrom``, ``chromStart``, ``chromEnd``, ``name``,
-        ...). ``blockSizes`` and ``blockStarts`` are lists of numbers. For a
-        folder, ``filename``: the file's name without its extension.
+        ...); columns after these twelve are ``V13``, ``V14``, ... Columns
+        are separated by tabs, or by spaces in a file without any tab.
+        ``chrom``, ``name``, ``strand`` and ``itemRgb`` are text and
+        ``score`` is numbers, ``NaN`` for ``"."``. ``blockSizes`` and
+        ``blockStarts`` are lists of numbers. For a folder, ``filename``: the
+        file's name without its extension.
 
     Raises
     ------
@@ -88,12 +95,19 @@ def process_bed(path: Path) -> pd.DataFrame:
         The table of `read_bed`, without ``filename``.
     """
     lines = [line for line in read_lines(path) if not _HEADER.search(line)]
+    # Columns are separated by tabs; a file without any tab by spaces
+    if not any("\t" in line for line in lines):
+        lines = ["\t".join(line.split()) for line in lines]
     if lines:
         parts = _split_tabs(lines[0])
-        used = FIELDS[: len(parts)]
+        # Columns after the twelve of BED are V13, V14, ...
+        extra = tuple(f"V{i}" for i in range(13, len(parts) + 1))
+        used = (FIELDS + extra)[: len(parts)]
     else:
         used = FIELDS
-    data = read_tsv(lines, used)
+    data = read_tsv(lines, used, text=TEXT)
+    if "score" in data.columns:
+        data["score"] = score_to_numeric(data["score"])
     raw = [line.split("\t") for line in lines if line != ""]
 
     # 0-based starts to 1-based. BED ends are exclusive, so they are already

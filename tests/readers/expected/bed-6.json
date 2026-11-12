@@ -27,7 +27,7 @@
       },
       {
         "name": "score",
-        "type": "integer"
+        "type": "numeric"
       },
       {
         "name": "strand",

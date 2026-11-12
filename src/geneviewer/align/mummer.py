@@ -243,7 +243,8 @@ def mummer_alignment(
     Parameters
     ----------
     path : path
-        The folder of sequence files. No spaces (MUMmer's scripts need it).
+        The folder of sequence files. Its path may have spaces; the names of
+        the files may not.
     cluster : list of str, optional
         The clusters, in order. Default: every file, by name.
     maptype : str
@@ -257,7 +258,8 @@ def mummer_alignment(
     remove_files : bool
         Whether to remove MUMmer's files afterwards. Default True.
     output_dir : path
-        Where the working folder goes. Default: the temporary folder.
+        Where the working folder goes, without spaces in its path (MUMmer
+        cannot use it otherwise). Default: the temporary folder.
 
     Returns
     -------
@@ -277,8 +279,8 @@ def mummer_alignment(
             "The specified directory does not exist. Please check the file path."
         )
     output_dir.mkdir(parents=True, exist_ok=True)
-    if " " in str(path):
-        raise ValueError("MUMmer requires a directory path without spaces.")
+    # The files are copied to a folder of their own in output_dir, so only
+    # its path must not have spaces
     if " " in str(output_dir):
         raise ValueError("MUMmer requires an output directory path without spaces.")
 

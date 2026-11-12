@@ -1,3 +1,84 @@
+# geneviewer-py (development version)
+
+- The package draws with version 0.3.11 of the geneviewer JavaScript
+  library, with the fixes for empty charts, hidden labels and tooltips
+  below.
+- `normalize()` spaces the genes over the whole span of their cluster, as
+  documented. It shared the total gap between as many gaps as there are
+  genes, one too many, so every gap was too small and the cluster ended
+  before its last gene did: genes at 10-40, 90-120 and 130-160 became 10-40,
+  60-90 and 110-140, and are now 10-40, 70-100 and 130-160. Genes that are
+  already evenly spaced stay where they are, and a given `gap` is the gap
+  drawn; it was (n - 1) / n of it for n genes. Charts made with
+  `normalize()` change. The R package has the same fix.
+- `links(group=)` works on data with a column named `cluster` when the
+  clusters of the chart are another column, e.g. `GC(data,
+  cluster="genome")`; it stopped with "cannot reindex on an axis with
+  duplicate labels". That column is left out of the links. Links by that
+  column itself (`group="cluster"`) stop with a message to rename it.
+- `read_fasta()` gives every sequence with a `location` a `strand`, also
+  in files whose locations are all forward. Before, such a file had no
+  `strand` column, and in a folder with other files its rows got `None`,
+  which `GC(strand="strand")` rejects.
+- `read_gff()` and `read_bed()` give the column types of the R package
+  0.2.1, so the files of a folder can be combined when a column holds
+  numbers in one file and text in another (e.g. chromosomes `1` and `X`).
+  `seqid`, `source`, `type`, `strand` and `phase` of GFF files, and
+  `chrom`, `name`, `strand` and `itemRgb` of BED files are always text;
+  `score` is always numbers, `NaN` for a score of `"."`. A score that is not
+  a number becomes `NaN`, with a warning.
+- Links made with `links(group=)` before `normalize()` move with their
+  genes; they stayed at the old positions. Links given as `data` (e.g.
+  alignments) keep their positions, with a warning to add them after
+  `normalize()`.
+- `read_bed()` reads files whose columns are separated by spaces (in a file
+  without any tab), and names columns after the twelve of BED `V13`, `V14`,
+  ... (the 13th was `NA.`).
+- `read_fasta()` on a folder without FASTA files stops with "No .fasta files
+  found in the specified directory.", as the other readers; it gave an empty
+  table.
+- `get_introns()` (and `transcript()`): an intron keeps the columns that are
+  the same for all exons and UTRs of its transcript and is missing the
+  others. It copied the exon before it, so a label of each exon, e.g.
+  `labels("exon_id")`, was repeated on the intron after it.
+- Clearer errors for wrong arguments: `grid(margin=)` takes pixels or a
+  percentage of a chart height in pixels; `legend(group=)` one column;
+  `scale(scale_breaks=)` and `links(measure=)` one value; `links(value1=,
+  value2=)` both or neither, of the same length (a missing `value2` was
+  ignored without a message).
+- `cluster(separate_strands=True, prevent_gene_overlap=True)` warns that
+  neither is applied, which is what happens; it said "Resetting to None".
+  The docs of `grid()` say what a `width` number is (pixels).
+- Tooltips (`tooltip()`) show the values of the data as text: markup in a
+  value, e.g. in a qualifier of a GenBank file from someone else, ran in the
+  page of who viewed the chart. The `formatter` is still HTML.
+- `mummer_alignment()` reads a folder whose path has spaces: the files are
+  copied to a working folder in `output_dir` first, so only that path must
+  be without spaces.
+- `zoom(range=)` and `zoom(min=)` are checked in the `mode` of an earlier
+  `zoom()` when the call gives none: `.zoom(mode="absolute").zoom(range=[100,
+  2000])` stopped with the error for a relative range.
+- `show=False` in `labels()`, `coordinates()`, `scale_bar()`,
+  `cluster_title()`, `cluster_label()` and `cluster_footer()` hides what an
+  earlier call shows, e.g. `.coordinates().coordinates(show=False,
+  cluster=2)`; it changed nothing. Hidden labels need no label column. With
+  nothing shown before, the chart is unchanged, as before.
+- A chart of data without rows (or only rows without a start or end) takes
+  the chart's methods: `labels("name")` and `legend()` stopped with "column
+  not found in data", and `normalize()` and `transcript()` with an internal
+  error. The chart has no clusters and draws as an empty chart.
+- `genbank_to_fasta()` writes records without a `VERSION` line, named by
+  their `ACCESSION`, else their `LOCUS` name, else the file name; without a
+  `DEFINITION`, the header is the name only. They were left out without a
+  message, so the FASTA file could be empty.
+- `read_gbk()` reads features whose key does not start with a letter, such
+  as `5'UTR`, `3'UTR` and `-10_signal`; their lines were added to the
+  feature before them. Qualifiers without a value, such as `/pseudo`, are
+  kept, with the value `""`, and a feature without qualifiers gets its
+  `region`.
+- `read_gbk()` reads the whole sequence (`ORIGIN`) of records of more than
+  a million bases; it stopped at base 1,000,020, without a message.
+
 # geneviewer-py 0.2.0
 
 - Charts in Jupyter notebooks, with the new `jupyter` extra

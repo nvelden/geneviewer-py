@@ -1,0 +1,13 @@
+{
+  "calls": [
+    {
+      "fun": "genbank_to_fasta",
+      "args": {}
+    }
+  ],
+  "input": "inputs/B74.gbk",
+  "data": null,
+  "result": [">ACC1 Thing", "ACGTACGTAC", ">LOC2", "ACGTACGTAC", ">V.1 Other thing", "ACGTACGTAC", ">B74", "ACGTACGTAC"],
+  "warnings": [],
+  "error": null
+}

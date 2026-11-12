@@ -1,0 +1,5 @@
+chr1	demo	gene	100	500	high	+	.	ID=a
+chr1	demo	gene	600	900	 7 	+	.	ID=b
+chr1	demo	gene	1000	1200	high	+	.	ID=c
+chr1	demo	gene	1300	1400	NA	+	.	ID=d
+chr1	demo	gene	1500	1600	0x1F	+	.	ID=e
