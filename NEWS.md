@@ -1,4 +1,4 @@
-# geneviewer-py (development version)
+# geneviewer-py 0.2.1
 
 - The package draws with version 0.3.11 of the geneviewer JavaScript
   library, with the fixes for empty charts, hidden labels and tooltips
